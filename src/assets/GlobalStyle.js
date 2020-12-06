@@ -23,6 +23,12 @@ const GlobalStyle = createGlobalStyle`
     h4 {
         font-size: 2rem;
         color: white;
+        font-weight: lighter;
+    }
+    h5 {
+        font-size: 1.6rem;
+        color: white;
+        font-weight: lighter;
     }
     span {
         color: #fde00d;
