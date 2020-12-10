@@ -11,11 +11,15 @@ const Council = () => {
     return (
         <CouncilSection>
             <h2>Meet the <span>Council</span></h2>
+            {/* The List of Cards. 
+            Each Card represents a persona.*/}
             <Cards>
                 <Card>
+                    {/* Image Container holds the profile image. */}
                     <div className="image-container">
                         <img src={ProfilePlaceholder} alt="Placeholder Profile" />
                     </div>
+                    {/* Bio Container holds the persona details. */}
                     <div className="bio-container">
                         <p>Member Name</p>
                         <p><span>Member Position</span></p>
@@ -94,6 +98,8 @@ const CouncilSection = styled.div`
 `
 
 const Cards = styled.div`
+    /* Flex wrap wraps the cards inside the container. 
+    This makes the list responsive on mobile. */
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -101,6 +107,8 @@ const Cards = styled.div`
 `
 
 const Card = styled.div`
+    /* Flex basis 30% keeps around a max of 3 cards per row
+    on larger screen sizes. */
     flex-basis: 30%;
     display: flex;
     margin: 0 1.5rem 1.5rem 0;
@@ -108,6 +116,7 @@ const Card = styled.div`
         border-radius: 0.5rem;
         overflow: hidden;
         img {
+            /* Adjusting the image size per card */
             width: 8rem;
             height: 100%;
             object-fit: cover;
