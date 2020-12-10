@@ -13,7 +13,7 @@ import { AnimateSharedLayout } from 'framer-motion';
 
 const Statements = () => {
     return (
-        <StatementStyle>
+        <StatementSection>
             <AnimateSharedLayout>
                 {/* Each DropToggle element is a clickable dropdown section */}
                 <DropToggle title="Our Vision Statement">
@@ -33,7 +33,7 @@ const Statements = () => {
                     </div>
                 </DropToggle>
             </AnimateSharedLayout>
-        </StatementStyle>
+        </StatementSection>
     )
 }
 
@@ -41,7 +41,7 @@ const Statements = () => {
 // We use the name "StatementStyle" because using Statement
 // would conflict between the Statement component and Statement
 // Styled component
-const StatementStyle = styled.div`
+const StatementSection = styled.div`
     min-height: 90vh;
     display: block;
     /* Padding to adjust space around whole component */
