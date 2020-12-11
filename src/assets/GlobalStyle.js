@@ -2,6 +2,11 @@
 
 import { createGlobalStyle } from 'styled-components';
 
+// Color Variables
+const mainBackground = "#0b1320";
+const mainFontColor = "white";
+const accentColor = "#fde00d";
+
 const GlobalStyle = createGlobalStyle`
     * {
         /* Removing padding and margin from whole site */
@@ -11,31 +16,31 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
         /* Background Color and Font for whole website */
-        background: #0b1320;
+        background: ${mainBackground};
         font-family: 'Inter', sans-serif;
         /* Prevents side-scrolling from any overflow */
         overflow-x: hidden;
     }
     h2 {
         font-size: 4rem;
-        color: white;
+        color: ${mainFontColor};
     }
     h4 {
         font-size: 2rem;
-        color: white;
+        color: ${mainFontColor};
         font-weight: lighter;
     }
     h5 {
         font-size: 1.6rem;
-        color: white;
+        color: ${mainFontColor};
         font-weight: lighter;
     }
     span {
-        color: #fde00d;
+        color: ${accentColor};
     }
     p {
         padding: 1.5rem 0rem;
-        color: white;
+        color: ${mainFontColor};
         font-size: 1.4rem;
     }
     button {
@@ -43,15 +48,15 @@ const GlobalStyle = createGlobalStyle`
         font-size: 1.1rem;
         cursor: pointer;
         padding: 1rem 2rem;
-        border: 3px solid #fde00d;
+        border: 3px solid ${accentColor};
         border-radius: 1rem;
         background: transparent;
-        color: white;
+        color: ${mainFontColor};
         /* Adding a transition for hover */
         transition: all 0.5s ease;
         font-family: 'Inter', sans-serif;
         &:hover {
-            background-color: #fde00d;
+            background-color: ${accentColor};
             color: black;
         }
     }
