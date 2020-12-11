@@ -6,6 +6,8 @@ import Landing from './pages/Landing';
 import FAQ from './pages/FAQ';
 // Importing Footer
 import Footer from './components/global/Footer';
+// Importing Nav
+import Nav from './components/global/Nav';
 // Importing Global Styling
 import GlobalStyle from './assets/GlobalStyle';
 // Router Imports
@@ -15,6 +17,7 @@ function App() {
     return (
         <div className="App">
             <GlobalStyle />
+            <Nav />
             <Switch>
                 <Route path="/" exact>
                     <Landing />
