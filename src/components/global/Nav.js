@@ -53,6 +53,10 @@ const StyledNav = styled.nav`
     a {
         color: white;
         text-decoration: none;
+        transition: color ease 0.3s;
+        &:hover {
+            color: #fde00d;
+        }
     }
     ul {
         display: flex;
@@ -65,6 +69,17 @@ const StyledNav = styled.nav`
     }
     @media (max-width: 870px) {
         flex-direction: column;
+        ul {
+            padding-top: 1rem;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            li {
+                padding: 0.5rem 0rem;
+            }
+        }
+    }
+    @media (max-width: 660px) {
         padding: 1rem 1rem;
         #logo {
             /* Inline block is needed so padding/margin
@@ -73,8 +88,9 @@ const StyledNav = styled.nav`
             margin: 1rem;
         }
         ul {
+            /* Column so nav elements are stacked vertically */
             flex-direction: column;
-            padding: 1rem;
+            padding: 0.5rem;
             justify-content: space-around;
             align-items: center;
             width: 100%;
