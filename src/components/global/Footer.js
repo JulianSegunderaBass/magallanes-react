@@ -37,10 +37,15 @@ const Footer = () => {
 // Styled Components
 const FooterStyle = styled.div`
     background: black;
-    padding: 3rem 10rem;
+    padding: 2rem 2rem;
 `
 const Socials = styled.div`
     text-align: center;
+    @media (max-width: 870px) {
+        h5 {
+            font-size: 1.2rem;
+        }
+    }
 `
 const SocialLinks = styled.div`
     margin: 1.2rem auto; 
@@ -57,7 +62,16 @@ const SocialLinks = styled.div`
 const Contact = styled.div`
     text-align: center;
     h5 {
-        padding: 1.5rem 0rem;
+        padding: 1.5rem 0rem 0rem 0rem;
+    }
+    @media (max-width: 870px) {
+        h5 {
+            font-size: 1.2rem;
+            padding: 0;
+        }
+        p {
+            font-size: 1rem;
+        }
     }
 `
 

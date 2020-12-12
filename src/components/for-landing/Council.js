@@ -90,10 +90,15 @@ const Council = () => {
 // Styled Components
 const CouncilSection = styled.div`
     min-height: 90vh;
-    padding: 5rem 10rem;
+    padding: 2rem 2rem;
     h2 {
         font-weight: lighter;
         margin-bottom: 2rem;
+    }
+    @media (max-width: 870px) {
+        h2 {
+            text-align: center;
+        }
     }
 `
 

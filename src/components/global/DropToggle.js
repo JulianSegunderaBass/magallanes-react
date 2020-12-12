@@ -3,6 +3,8 @@
 // Wrap toggling elements with the "DropToggle" component in other files
 
 import React, { useState } from 'react';
+// Importing Styled Components
+import styled from 'styled-components';
 // Importing Framer Motion
 import { motion } from 'framer-motion';
 
@@ -18,17 +20,29 @@ const DropToggle = ({children, title}) => {
         // motion.div so "Animate Shared Layout" works where
         // component is used
         // Toggled State is flipped with each click
-        <motion.div className="toggle-element" layout onClick={() => setToggle(!toggle)}>
-            <motion.h4 layout>
+        <ToggleElement className="toggle-element" layout onClick={() => setToggle(!toggle)}>
+            <Title layout>
                 {title}
-            </motion.h4>
+            </Title>
             {/* Is toggle true? If so, render children,
             if not, render nothing */}
             {toggle ? children : ""}
             {/* Line beneath each toggle element */}
             <div className="line"></div>
-        </motion.div>
+        </ToggleElement>
     )
 }
+
+// Styled Components
+const ToggleElement = styled(motion.div)`
+
+`
+
+const Title = styled(motion.h4)`
+    transition: color ease 0.3s;
+    &:hover {
+        color: #fde00d;
+    }
+`
 
 export default DropToggle;

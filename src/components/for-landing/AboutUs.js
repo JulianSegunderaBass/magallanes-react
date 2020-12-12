@@ -34,6 +34,12 @@ const AboutSection = styled.div`
     justify-content: space-between;
     /* Padding to adjust space around whole component */
     padding: 5rem 10rem;
+    @media (max-width: 870px) {
+        /* Display block helps the image take up more width */
+        display: block;
+        padding: 2rem 2rem;
+        text-align: center;
+    }
 `
 
 const TextSection = styled.div`
@@ -42,6 +48,12 @@ const TextSection = styled.div`
     padding-right: 5rem;
     h2 {
         font-weight: lighter;
+    }
+    @media (max-width: 870px) {
+        padding: 0;
+        button {
+            margin: 2rem 0rem 5rem 0rem;
+        }
     }
 `
 

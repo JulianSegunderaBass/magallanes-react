@@ -62,6 +62,10 @@ const FaqSectionStyle = styled.div`
             padding: 1rem 0rem;
         }
     }
+    @media (max-width: 660px) {
+        padding: 2rem 2rem;
+        /* text-align: center; */
+    }
 `
 
 export default FaqSection;
