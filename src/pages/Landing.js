@@ -6,14 +6,28 @@ import React from 'react';
 import AboutUs from '../components/for-landing/AboutUs';
 import Statements from '../components/for-landing/Statements';
 import Council from '../components/for-landing/Council';
+// Importing Animations Library
+import { motion } from 'framer-motion';
+// Importing Specific Animations
+import { pageLoad } from '../assets/Animations';
+// Importing Auto Scroll component
+import AutoScroll from '../assets/AutoScroll';
 
 const Landing = () => {
     return (
-        <div>
+        // Motion (animated) div as root component
+        <motion.div 
+            variants={pageLoad} 
+            initial="hidden" 
+            animate="show" 
+            exit="exit"
+        >
+            {/* Auto Scrolling Component */}
+            <AutoScroll />
             <AboutUs />
             <Statements />
             <Council />
-        </div>
+        </motion.div>
     )
 }
 

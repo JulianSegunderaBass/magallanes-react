@@ -4,10 +4,26 @@
 import React from 'react';
 // Page Components
 import FaqSection from '../components/for-faq/FaqSection';
+// Importing Animations Library
+import { motion } from 'framer-motion';
+// Importing Specific Animations
+import { pageLoad } from '../assets/Animations';
+// Importing Auto Scroll component
+import AutoScroll from '../assets/AutoScroll';
 
 const FAQ = () => {
     return (
-        <FaqSection />
+        // Motion (animated) div as root component
+        <motion.div 
+            variants={pageLoad} 
+            initial="hidden" 
+            animate="show" 
+            exit="exit"
+        >
+            {/* Auto Scrolling Component */}
+            <AutoScroll />
+            <FaqSection />
+        </motion.div>
     )
 }
 

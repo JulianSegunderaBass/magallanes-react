@@ -64,7 +64,6 @@ const FaqSectionStyle = styled.div`
     }
     @media (max-width: 660px) {
         padding: 2rem 2rem;
-        /* text-align: center; */
     }
 `
 
