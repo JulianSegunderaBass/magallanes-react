@@ -5,8 +5,6 @@ import React from 'react';
 import styled from 'styled-components';
 // Importing React Icons
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
-// Importing Link
-import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -18,15 +16,15 @@ const Footer = () => {
                 <SocialLinks>
                 {/* Social Links is the container
                 specifically for the links */}
-                        <Link to="https://www.facebook.com/barangay.magallanes.7" className="social-link">
+                        <a href="https://www.facebook.com/barangay.magallanes.7" className="social-link">
                             <FaFacebook size="3rem" color="cornflowerblue" />
-                        </Link>
-                        <Link to="placeholder-twitter-link" className="social-link">
+                        </a>
+                        <a href="https://www.facebook.com/barangay.magallanes.7" className="social-link">
                             <FaTwitter size="3rem" color="lightblue" />
-                        </Link>
-                        <Link to="placeholder-instagram-link" className="social-link">
+                        </a>
+                        <a href="https://www.facebook.com/barangay.magallanes.7" className="social-link">
                             <FaInstagram size="3rem" color="yellow" />
-                        </Link>
+                        </a>
                 </SocialLinks>
             </Socials>
             <Contact>
