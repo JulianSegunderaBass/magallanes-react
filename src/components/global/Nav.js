@@ -13,7 +13,9 @@ import { useLocation } from 'react-router-dom';
 const Nav = () => {
     return (
         <StyledNav>
+            {/* Brand link as the logo */}
             <h1><Link to="/" id="logo">Barangay Magallanes</Link></h1>
+            {/* List of Link Elements */}
             <ul>
                 <li>
                     <Link to="/">Home</Link>
@@ -33,6 +35,12 @@ const Nav = () => {
 }
 
 // Styled Components
+
+// Color variables
+const navBackground = "black";
+const hoverColor = "#fde00d";
+const linkColor = "white";
+
 const StyledNav = styled.nav`
     min-height: 10vh;
     display: flex;
@@ -40,7 +48,7 @@ const StyledNav = styled.nav`
     justify-content: space-around;
     align-items: center;
     padding: 1rem 5rem;
-    background: black;
+    background: ${navBackground};
     position: sticky;
     top: 0;
     z-index: 5;
@@ -51,11 +59,11 @@ const StyledNav = styled.nav`
         letter-spacing: 1px;
     }
     a {
-        color: white;
+        color: ${linkColor};
         text-decoration: none;
         transition: color ease 0.3s;
         &:hover {
-            color: #fde00d;
+            color: ${hoverColor};
         }
     }
     ul {

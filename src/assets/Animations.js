@@ -29,3 +29,36 @@ export const pageLoad = {
         }
     }
 }
+
+// A "slide up" animation for header elements
+export const revealUp = {
+    hidden: {
+        y: 200
+    },
+    show: {
+        y: 0,
+        transition: {
+            duration: 0.35,
+            ease: "easeOut",
+            when: "beforeChildren",
+            staggerChildren: 0.25
+        }
+    }
+}
+
+// Animation to scale an image within a container
+// with overflow set to "hidden"
+export const imageAnim = {
+    hidden: {
+        scale: 1.5,
+        opacity: 0
+    },
+    show: {
+        scale: 1,
+        opacity: 1,
+        transition: {
+            duration: 0.75,
+            ease: "easeOut"
+        }
+    }
+}

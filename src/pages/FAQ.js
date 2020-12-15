@@ -4,9 +4,8 @@
 import React from 'react';
 // Page Components
 import FaqSection from '../components/for-faq/FaqSection';
-// Importing Animations Library
+// Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
-// Importing Specific Animations
 import { pageLoad } from '../assets/Animations';
 // Importing Auto Scroll component
 import AutoScroll from '../assets/AutoScroll';

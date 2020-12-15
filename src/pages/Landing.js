@@ -6,9 +6,8 @@ import React from 'react';
 import AboutUs from '../components/for-landing/AboutUs';
 import Statements from '../components/for-landing/Statements';
 import Council from '../components/for-landing/Council';
-// Importing Animations Library
+// Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
-// Importing Specific Animations
 import { pageLoad } from '../assets/Animations';
 // Importing Auto Scroll component
 import AutoScroll from '../assets/AutoScroll';
