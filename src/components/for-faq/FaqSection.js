@@ -39,6 +39,10 @@ const FaqSection = () => {
 // We use the name "FaqSectionStyle" because using FaqSection
 // would conflict between the FaqSection component and FaqSection
 // Styled component
+
+// Color Variables
+const lineColor = "#fde00d";
+
 const FaqSectionStyle = styled.div`
     min-height: 90vh;
     display: block;
@@ -48,7 +52,7 @@ const FaqSectionStyle = styled.div`
     /* These styling lines carry over to DropTogge.js to 
     style the elements over there as well */
     .line {
-        background: #fde00d;
+        background: ${lineColor};
         height: 0.2rem;
         margin: 2rem 0rem;
     }
@@ -60,6 +64,7 @@ const FaqSectionStyle = styled.div`
         padding: 1rem 0rem;
         p {
             padding: 1rem 0rem;
+            line-height: 2rem;
         }
     }
     @media (max-width: 660px) {

@@ -41,6 +41,10 @@ const Statements = () => {
 // We use the name "StatementStyle" because using Statement
 // would conflict between the Statement component and Statement
 // Styled component
+
+// Color Variables
+const lineColor = "#fde00d";
+
 const StatementSection = styled.div`
     min-height: 90vh;
     display: block;
@@ -50,7 +54,7 @@ const StatementSection = styled.div`
     /* These styling lines carry over to DropTogge.js to 
     style the elements over there as well */
     .line {
-        background: #fde00d;
+        background: ${lineColor};
         height: 0.2rem;
         margin: 2rem 0rem;
     }
@@ -62,6 +66,7 @@ const StatementSection = styled.div`
         padding: 1rem 0rem;
         p {
             padding: 1rem 0rem;
+            line-height: 2rem;
         }
     }
     @media (max-width: 660px) {
