@@ -90,13 +90,20 @@ const Council = () => {
 // Styled Components
 const CouncilSection = styled.div`
     min-height: 90vh;
-    padding: 2rem 2rem;
+    padding: 5rem 10rem;
     h2 {
         font-weight: lighter;
         margin-bottom: 2rem;
     }
+    @media (max-width: 1090px) {
+        h2 {
+            padding: 0 5rem 0 5rem;
+        }
+        padding: 2rem 2rem;
+    }
     @media (max-width: 870px) {
         h2 {
+            padding: 0;
             text-align: center;
         }
     }
@@ -112,9 +119,6 @@ const Cards = styled.div`
 `
 
 const Card = styled.div`
-    /* Flex basis 30% keeps around a max of 3 cards per row
-    on larger screen sizes. */
-    flex-basis: 30%;
     display: flex;
     margin: 0 1.5rem 1.5rem 0;
     .image-container {
@@ -132,6 +136,14 @@ const Card = styled.div`
             padding: 0;
             margin: 0.5rem 0.5rem;
         }
+        @media (max-width: 660px) {
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    }
+    @media (max-width: 660px) {
+        margin: 1rem 0;
     }
 `
 
