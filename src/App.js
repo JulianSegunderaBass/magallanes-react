@@ -6,8 +6,8 @@ import Landing from './pages/Landing';
 import FAQ from './pages/FAQ';
 // Importing Footer
 import Footer from './components/global/Footer';
-// Importing Nav
-import Nav from './components/global/Nav';
+// Importing Side Navigation
+import SideNav from './components/global/SideNav';
 // Importing Global Styling
 import GlobalStyle from './assets/GlobalStyle';
 // Router Imports
@@ -28,7 +28,7 @@ function App() {
         // Note: The Navbar and Footer stay constant on all paths
         <div className="App">
             <GlobalStyle />
-            <Nav />
+            <SideNav />
             {/* Wrapping the Switch with Animate Presence */}
             {/* exitBeforeEnter says to wait until current component 
             is closed before animating the next component */}

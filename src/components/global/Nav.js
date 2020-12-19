@@ -1,4 +1,7 @@
 // The Navigation Bar present on all pages
+// NOTE: This is the OLD component version of the nav.
+// This was replaced with the "SideNav.js" component.
+// Kindly avoid from deleting this file in case it is needed later.
 
 import React from 'react';
 // Importing Styled Components
