@@ -21,9 +21,20 @@ const Council = () => {
                     </div>
                     {/* Bio Container holds the persona details. */}
                     <div className="bio-container">
-                        <p>Member Name</p>
-                        <p><span>Member Position</span></p>
-                        <p>email@domain.com</p>
+                        <p>Julian Terry S. Bass</p>
+                        <p><span>Member Position - Student Programmer</span></p>
+                        <p className="email">jsbass@student.apc.edu.ph</p>
+                        <p>1234-567-8900</p>
+                    </div>
+                </Card>
+                <Card>
+                    <div className="image-container">
+                        <img src={ProfilePlaceholder} alt="Placeholder Profile" />
+                    </div>
+                    <div className="bio-container">
+                        <p>Rainer Maalik Mercado</p>
+                        <p><span>Member Position - Head Student Programmer</span></p>
+                        <p className="email">rmmercado@student.apc.edu.ph</p>
                         <p>1234-567-8900</p>
                     </div>
                 </Card>
@@ -34,7 +45,7 @@ const Council = () => {
                     <div className="bio-container">
                         <p>Member Name</p>
                         <p><span>Member Position</span></p>
-                        <p>email@domain.com</p>
+                        <p className="email">email@domain.com</p>
                         <p>1234-567-8900</p>
                     </div>
                 </Card>
@@ -45,7 +56,7 @@ const Council = () => {
                     <div className="bio-container">
                         <p>Member Name</p>
                         <p><span>Member Position</span></p>
-                        <p>email@domain.com</p>
+                        <p className="email">email@domain.com</p>
                         <p>1234-567-8900</p>
                     </div>
                 </Card>
@@ -56,7 +67,7 @@ const Council = () => {
                     <div className="bio-container">
                         <p>Member Name</p>
                         <p><span>Member Position</span></p>
-                        <p>email@domain.com</p>
+                        <p className="email">email@domain.com</p>
                         <p>1234-567-8900</p>
                     </div>
                 </Card>
@@ -67,7 +78,7 @@ const Council = () => {
                     <div className="bio-container">
                         <p>Member Name</p>
                         <p><span>Member Position</span></p>
-                        <p>email@domain.com</p>
+                        <p className="email">email@domain.com</p>
                         <p>1234-567-8900</p>
                     </div>
                 </Card>
@@ -78,7 +89,7 @@ const Council = () => {
                     <div className="bio-container">
                         <p>Member Name</p>
                         <p><span>Member Position</span></p>
-                        <p>email@domain.com</p>
+                        <p className="email">email@domain.com</p>
                         <p>1234-567-8900</p>
                     </div>
                 </Card>
@@ -86,6 +97,9 @@ const Council = () => {
         </CouncilSection>
     )
 }
+
+// Color Variables
+const cardBackground = "#071b3d";
 
 // Styled Components
 const CouncilSection = styled.div`
@@ -110,40 +124,57 @@ const CouncilSection = styled.div`
 `
 
 const Cards = styled.div`
-    /* Flex wrap wraps the cards inside the container. 
-    This makes the list responsive on mobile. */
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
+    /* Grid display with two columns by default */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Creating a small gap between cards */
+    grid-gap: 1rem;
+    @media (max-width: 870px) {
+        /* Stacks cards in one column for smaller screens */
+        grid-template-columns: 1fr;
+    }
 `
 
 const Card = styled.div`
-    display: flex;
-    margin: 0 1.5rem 1.5rem 0;
+    /* Two-column grid inside each card
+    Second column (bio text) takes up
+    proportionally more space */
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    background: ${cardBackground};
+    /* Border radius creates rounded corners */
+    border-radius: 0.5rem;
+    overflow: hidden;
     .image-container {
-        border-radius: 0.5rem;
         overflow: hidden;
         img {
-            /* Adjusting the image size per card */
-            width: 8rem;
+            /* Adjusting the image size per card.
+            Image size is proportional to 
+            image container */
+            width: 100%;
             height: 100%;
             object-fit: cover;
         }
     }
     .bio-container {
+        /* Wrapping settings to break words 
+        that have spaces */
+        overflow-wrap: break-word;
+        word-wrap: break-word;      
+        .email {
+            /* Wrapping settings to break email
+            which doesn't have any spaces */
+            word-break: break-all;
+        }
         p {
             padding: 0;
             margin: 0.5rem 0.5rem;
         }
-        @media (max-width: 660px) {
+        @media (max-width: 870px) {
             p {
                 font-size: 1.2rem;
             }
         }
-    }
-    @media (max-width: 660px) {
-        margin: 1rem 0;
     }
 `
 
