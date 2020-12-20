@@ -30,4 +30,4 @@ export const SideNavData = [
         icon: <FaIcons.FaNewspaper />,
         cName: "nav-text"
     }
-]
+];

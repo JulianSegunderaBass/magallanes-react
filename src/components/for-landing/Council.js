@@ -2,8 +2,8 @@
 // On the Landing Page
 
 import React from 'react';
-// Importing Images
-import ProfilePlaceholder from '../../assets/images/ProfilePlaceholder.png';
+// Importing Council Data
+import { CouncilData } from './CouncilData';
 // Importing Styled Components
 import styled from 'styled-components';
 
@@ -14,85 +14,24 @@ const Council = () => {
             {/* The List of Cards. 
             Each Card represents a persona.*/}
             <Cards>
-                <Card>
-                    {/* Image Container holds the profile image. */}
-                    <div className="image-container">
-                        <img src={ProfilePlaceholder} alt="Placeholder Profile" />
-                    </div>
-                    {/* Bio Container holds the persona details. */}
-                    <div className="bio-container">
-                        <p>Julian Terry S. Bass</p>
-                        <p><span>Member Position - Student Programmer</span></p>
-                        <p className="email">jsbass@student.apc.edu.ph</p>
-                        <p>1234-567-8900</p>
-                    </div>
-                </Card>
-                <Card>
-                    <div className="image-container">
-                        <img src={ProfilePlaceholder} alt="Placeholder Profile" />
-                    </div>
-                    <div className="bio-container">
-                        <p>Rainer Maalik Mercado</p>
-                        <p><span>Member Position - Head Student Programmer</span></p>
-                        <p className="email">rmmercado@student.apc.edu.ph</p>
-                        <p>1234-567-8900</p>
-                    </div>
-                </Card>
-                <Card>
-                    <div className="image-container">
-                        <img src={ProfilePlaceholder} alt="Placeholder Profile" />
-                    </div>
-                    <div className="bio-container">
-                        <p>Member Name</p>
-                        <p><span>Member Position</span></p>
-                        <p className="email">email@domain.com</p>
-                        <p>1234-567-8900</p>
-                    </div>
-                </Card>
-                <Card>
-                    <div className="image-container">
-                        <img src={ProfilePlaceholder} alt="Placeholder Profile" />
-                    </div>
-                    <div className="bio-container">
-                        <p>Member Name</p>
-                        <p><span>Member Position</span></p>
-                        <p className="email">email@domain.com</p>
-                        <p>1234-567-8900</p>
-                    </div>
-                </Card>
-                <Card>
-                    <div className="image-container">
-                        <img src={ProfilePlaceholder} alt="Placeholder Profile" />
-                    </div>
-                    <div className="bio-container">
-                        <p>Member Name</p>
-                        <p><span>Member Position</span></p>
-                        <p className="email">email@domain.com</p>
-                        <p>1234-567-8900</p>
-                    </div>
-                </Card>
-                <Card>
-                    <div className="image-container">
-                        <img src={ProfilePlaceholder} alt="Placeholder Profile" />
-                    </div>
-                    <div className="bio-container">
-                        <p>Member Name</p>
-                        <p><span>Member Position</span></p>
-                        <p className="email">email@domain.com</p>
-                        <p>1234-567-8900</p>
-                    </div>
-                </Card>
-                <Card>
-                    <div className="image-container">
-                        <img src={ProfilePlaceholder} alt="Placeholder Profile" />
-                    </div>
-                    <div className="bio-container">
-                        <p>Member Name</p>
-                        <p><span>Member Position</span></p>
-                        <p className="email">email@domain.com</p>
-                        <p>1234-567-8900</p>
-                    </div>
-                </Card>
+                {/* This function maps through the Council Data JS file,
+                and returns a styled Card with that specific
+                array object's information and index. */}
+                {CouncilData.map((member, index) => {
+                    return (
+                        <Card key={index}>
+                            <div className="image-container">
+                                <img src={member.profileImage} alt={member.alternateImageText} />
+                            </div>
+                            <div className="bio-container">
+                                <p>{member.memberName}</p>
+                                <p><span>{member.memberPosition}</span></p>
+                                <p className="email">{member.memberEmail}</p>
+                                <p>{member.memberContact}</p>
+                            </div>
+                        </Card>
+                    )
+                })}
             </Cards>
         </CouncilSection>
     )
