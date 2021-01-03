@@ -1,8 +1,6 @@
 // Data holding the Council Member information
 // Imported into the Council component
 
-import React from 'react';
-
 // Notes: This array of objects represents a Council Member per object.
 // The images are taken from hosted sources online as of now.
 // Data here is currently experimental.

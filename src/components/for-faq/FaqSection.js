@@ -9,27 +9,26 @@ import DropToggle from '../global/DropToggle';
 import { motion } from 'framer-motion';
 // Importing "AnimateSharedLayout" - detects a change with the toggling
 import { AnimateSharedLayout } from 'framer-motion';
+// Importing FAQ Questions Data
+import { FaqData } from './FaqData';
 
 const FaqSection = () => {
     return (
         <FaqSectionStyle>
             <AnimateSharedLayout>
                 {/* Each DropToggle element is a clickable dropdown section */}
-                <DropToggle title="FAQ 1">
-                    <div className="drop-content">
-                        <p>This is placeholder text for dropdown faq answer content.</p>
-                    </div>
-                </DropToggle>
-                <DropToggle title="FAQ 2">
-                    <div className="drop-content">
-                        <p>This is placeholder text for dropdown faq answer content.</p>
-                    </div>
-                </DropToggle>
-                <DropToggle title="FAQ 3">
-                    <div className="drop-content">
-                        <p>This is placeholder text for dropdown faq answer content.</p>
-                    </div>
-                </DropToggle>
+                {/* This function maps through the FAQ Data JS file,
+                and returns a styled toggle component with that specific
+                array object's information and index. */}
+                {FaqData.map((question, index) => {
+                    return (
+                        <DropToggle title={question.faqTitle} key={index}>
+                            <div className="drop-content">
+                                <p>{question.faqContent}</p>
+                            </div>
+                        </DropToggle>
+                    )
+                })}
             </AnimateSharedLayout>
         </FaqSectionStyle>
     )
