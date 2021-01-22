@@ -5,6 +5,7 @@ import React from 'react';
 import Landing from './pages/Landing';
 import FAQ from './pages/FAQ';
 import NewsPage from './pages/NewsPage';
+import NewsForm from './pages/NewsForm';
 // Importing Footer
 import Footer from './components/global/Footer';
 // Importing Side Navigation
@@ -47,6 +48,9 @@ function App() {
                     </Route>
                     <Route path="/news" exact>
                         <NewsPage />
+                    </Route>
+                    <Route path="/create-news-announcement" exact>
+                        <NewsForm />
                     </Route>
                 </Switch>
             </AnimatePresence>

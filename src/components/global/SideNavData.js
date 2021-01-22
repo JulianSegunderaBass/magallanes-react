@@ -25,6 +25,12 @@ export const SideNavData = [
         cName: "nav-text"
     },
     {
+        title: "News Form",
+        path: "/create-news-announcement",
+        icon: <FaIcons.FaNewspaper />,
+        cName: "nav-text"
+    },
+    {
         title: "Service Offerings",
         path: "#",
         icon: <FaIcons.FaNewspaper />,

@@ -46,6 +46,22 @@ export const revealUp = {
     }
 }
 
+// A "slide up" animation for the news form
+export const newsFormReveal = {
+    hidden: {
+        y: 320
+    },
+    show: {
+        y: 0,
+        transition: {
+            duration: 0.50,
+            ease: "easeOut",
+            when: "beforeChildren",
+            staggerChildren: 0.25
+        }
+    }
+}
+
 // Animation to scale an image within a container
 // with overflow set to "hidden"
 export const imageAnim = {
