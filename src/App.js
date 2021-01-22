@@ -4,6 +4,7 @@ import React from 'react';
 // Importing Pages
 import Landing from './pages/Landing';
 import FAQ from './pages/FAQ';
+import NewsPage from './pages/NewsPage';
 // Importing Footer
 import Footer from './components/global/Footer';
 // Importing Side Navigation
@@ -43,6 +44,9 @@ function App() {
                     </Route>
                     <Route path="/faq" exact>
                         <FAQ />
+                    </Route>
+                    <Route path="/news" exact>
+                        <NewsPage />
                     </Route>
                 </Switch>
             </AnimatePresence>

@@ -20,7 +20,7 @@ export const SideNavData = [
     },
     {
         title: "News Reports",
-        path: "#",
+        path: "/news",
         icon: <AiIcons.AiOutlineAlert />,
         cName: "nav-text"
     },
