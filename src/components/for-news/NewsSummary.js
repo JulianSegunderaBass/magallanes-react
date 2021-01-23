@@ -30,6 +30,14 @@ const NewsCard = styled.div`
         height: 0.5rem;
         background: #fde00d;
     }
+    @media (max-width: 870px) {
+        h4 {
+            font-size: 1.5rem;
+        }
+        .divider {
+            width: 20%;
+        }
+    }
 `
 
 export default NewsSummary;

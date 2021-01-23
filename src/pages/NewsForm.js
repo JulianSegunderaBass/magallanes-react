@@ -22,6 +22,7 @@ const NewsForm = () => {
                 <form>
                     <input type="text" placeholder="Enter your news headline here" />
                     <textarea rows="10" cols="50" placeholder="Enter your news content here" />
+                    <button>Submit</button>
                 </form>
             </FormSection>
         </MainContainer>
@@ -37,18 +38,24 @@ const MainContainer = styled(motion.div)`
     @media (max-width: 1500px) {
         flex-direction: column;
     }
+    @media (max-width: 870px) {
+        padding: 2rem 2rem;
+        min-height: 45vh;
+    }
 `
 
 const Hide = styled.div`
-    height: 45vh;
     overflow: hidden;
-    @media (max-width: 1500px) {
-        height: 20vh;
-    }
 `
 
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
+    @media (max-width: 870px) {
+        padding: 0;
+        h2 {
+            font-size: 2rem;
+        }
+    }
 `
 
 const FormSection = styled.div`
@@ -64,6 +71,21 @@ const FormSection = styled.div`
         input {
             width: 100%;
         }
+        @media (max-width: 1500px) {
+            textarea {
+                width: 100%;
+            }
+        }
+        @media (max-width: 870px) {
+            input, textarea {
+                font-size: 1rem;
+            }
+            button {
+                display: block;
+                margin: 1.5rem auto 0 auto;
+            }
+        }
+        
     }
 `
 

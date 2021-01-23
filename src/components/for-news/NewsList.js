@@ -7,13 +7,13 @@ import NewsSummary from './NewsSummary';
 import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
-import { revealUp } from '../../assets/Animations';
+import { strongRevealUp } from '../../assets/Animations';
 
 const NewsList = ({newsItems}) => {
     return (
         <MainContainer>
             <Hide>
-                <HeaderSection variants={revealUp}>
+                <HeaderSection variants={strongRevealUp}>
                     <h2>Browse the latest updates from Barangay</h2>
                     <div className="divider"></div>
                 </HeaderSection>
@@ -34,11 +34,16 @@ const NewsList = ({newsItems}) => {
 const MainContainer = styled.div`
     min-height: 90vh;
     padding: 5rem 10rem;
+    @media (max-width: 1090px) {
+        padding: 2rem 2rem;
+    }
 `
 const Hide = styled.div`
     margin-bottom: 5rem;
-    height: 25vh;
     overflow: hidden;
+    @media (max-width: 870px) {
+        margin-bottom: 2rem;
+    }
 `
 
 const HeaderSection = styled(motion.div)`
@@ -49,6 +54,11 @@ const HeaderSection = styled(motion.div)`
         width: 100%;
         height: 0.3rem;
         background: white;
+    }
+    @media (max-width: 870px) {
+        h2 {
+            font-size: 2rem;
+        }
     }
 `
 
