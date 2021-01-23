@@ -8,8 +8,21 @@ import { motion } from 'framer-motion';
 import { pageLoad, newsFormReveal } from '../assets/Animations';
 // Redux Imports
 import { useDispatch } from 'react-redux';
+// Redux action to dispatch data
+import { createAnnouncement } from '../redux-store/actions/NewsActions';
 
 const NewsForm = () => {
+    // Allowing the form to dispatch action
+    const dispatch = useDispatch();
+    // Setting a local state for the form entry
+    const [newsAnnouncement, setNewsAnnouncement] = useState({
+        heading: '',
+        body: ''
+    });
+    // Submit function to dispatch action with data
+    const handleSubmit = () => {
+        dispatch(createAnnouncement(newsAnnouncement));
+    }
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>
@@ -19,10 +32,19 @@ const NewsForm = () => {
                 </TextSection>
             </Hide>
             <FormSection>
-                <form>
-                    <input type="text" placeholder="Enter your news headline here" />
-                    <textarea rows="10" cols="50" placeholder="Enter your news content here" />
-                    <button>Submit</button>
+                <form onSubmit={handleSubmit}>
+                    <input 
+                        type="text" 
+                        placeholder="Enter your news headline here" 
+                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, heading: e.target.value})}
+                    />
+                    <textarea 
+                        rows="10" 
+                        cols="50" 
+                        placeholder="Enter your news content here" 
+                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, body: e.target.value})}
+                    />
+                    <button>Create Announcement</button>
                 </form>
             </FormSection>
         </MainContainer>

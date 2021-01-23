@@ -2,9 +2,13 @@
 
 import NewsReducer from './NewsReducer';
 import { combineReducers } from 'redux';
+// Importing special Firebase Firestore Reducer
+import { firestoreReducer } from 'redux-firestore';
 
 const RootReducer = combineReducers({
-    NewsAnnouncements: NewsReducer
+    NewsAnnouncements: NewsReducer,
+    // Premade reducer that connects with firestore
+    firestore: firestoreReducer
 });
 
 export default RootReducer;
