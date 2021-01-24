@@ -3,15 +3,18 @@
 import React from 'react';
 // Page Components
 import NewsList from '../components/for-news/NewsList';
+// Animations
 import { motion } from 'framer-motion';
 import { pageLoad } from '../assets/Animations';
 // Importing Auto Scroll component
 import AutoScroll from '../assets/AutoScroll';
 // Redux Connection
 import { useSelector } from 'react-redux';
+// Firestore Imports
+import { firestoreConnect } from 'react-redux-firebase';
 
 const NewsPage = () => {
-    const announcements = useSelector((state) => state.NewsAnnouncements.newsAnnouncements);
+    const announcements = useSelector((state) => state.firestore.ordered.NewsAnnouncements);
     return (
         <motion.div 
             variants={pageLoad} 
@@ -24,4 +27,7 @@ const NewsPage = () => {
     )
 }
 
-export default NewsPage;
+// Older, funky code for Firestore connection
+export default firestoreConnect([
+    {collection: 'NewsAnnouncements'}
+])(NewsPage);

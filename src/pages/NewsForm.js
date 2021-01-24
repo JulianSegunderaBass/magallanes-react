@@ -20,7 +20,8 @@ const NewsForm = () => {
         body: ''
     });
     // Submit function to dispatch action with data
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
     }
     return (
