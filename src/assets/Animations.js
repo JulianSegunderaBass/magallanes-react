@@ -46,6 +46,38 @@ export const revealUp = {
     }
 }
 
+// A higher-offset "slide up" animation for header elements
+export const strongRevealUp = {
+    hidden: {
+        y: 400
+    },
+    show: {
+        y: 0,
+        transition: {
+            duration: 0.50,
+            ease: "easeOut",
+            when: "beforeChildren",
+            staggerChildren: 0.25
+        }
+    }
+}
+
+// A "slide up" animation for the news form
+export const newsFormReveal = {
+    hidden: {
+        y: 600
+    },
+    show: {
+        y: 0,
+        transition: {
+            duration: 0.75,
+            ease: "easeOut",
+            when: "beforeChildren",
+            staggerChildren: 0.25
+        }
+    }
+}
+
 // Animation to scale an image within a container
 // with overflow set to "hidden"
 export const imageAnim = {

@@ -20,8 +20,14 @@ export const SideNavData = [
     },
     {
         title: "News Reports",
-        path: "#",
+        path: "/news",
         icon: <AiIcons.AiOutlineAlert />,
+        cName: "nav-text"
+    },
+    {
+        title: "News Form",
+        path: "/create-news-announcement",
+        icon: <FaIcons.FaNewspaper />,
         cName: "nav-text"
     },
     {
