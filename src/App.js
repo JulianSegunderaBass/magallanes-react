@@ -9,7 +9,7 @@ import NewsForm from './pages/NewsForm';
 // Importing Footer
 import Footer from './components/global/Footer';
 // Importing Side Navigation
-import SideNav from './components/global/SideNav';
+import SideNav from './components/global/navigation/SideNav';
 // Importing Global Styling
 import GlobalStyle from './assets/GlobalStyle';
 // Router Imports
