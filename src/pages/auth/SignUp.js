@@ -1,58 +1,70 @@
-// Page for creating a news announcement and sending data to Firebase Firestore
+// Page for Signing Up as admin
 
 import React, { useState } from 'react';
 // Importing Styled Components
 import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
-import { pageLoad, newsFormReveal } from '../assets/Animations';
+import { pageLoad, newsFormReveal } from '../../assets/Animations';
 // Redux Imports
 import { useDispatch } from 'react-redux';
-// Redux action to dispatch data
-import { createAnnouncement } from '../redux-store/actions/NewsActions';
 
-const NewsForm = () => {
-    // Allowing the form to dispatch action
-    const dispatch = useDispatch();
+const SignUp = () => {
     // Setting a local state for the form entry
-    const [newsAnnouncement, setNewsAnnouncement] = useState({
-        heading: '',
-        body: ''
+    const [profile, setProfile] = useState({
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: ''
     });
-    // Submit function to dispatch action with data
     const handleSubmit = (e) => {
+        // Prevents page refreshing
         e.preventDefault();
-        dispatch(createAnnouncement(newsAnnouncement));
+        console.log("Signed Up");
+        console.log(profile);
     }
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>
                 <TextSection variants={newsFormReveal}>
-                    <h2>News Announcement <span>Form</span></h2>
-                    <p>The News Information Page will update with your post</p>
+                    <h2>Sign <span>Up</span></h2>
+                    <p>This Sign Up form is currently experimental</p>
                 </TextSection>
             </Hide>
             <FormSection>
                 <form onSubmit={handleSubmit}>
                     <input 
+                        type="email" 
+                        placeholder="email" 
+                        onChange={(e) => setProfile({...profile, email: e.target.value})}
+                        required
+                    />
+                    <input 
+                        type="password" 
+                        placeholder="password" 
+                        onChange={(e) => setProfile({...profile, password: e.target.value})}
+                        required
+                    />
+                    <input 
                         type="text" 
-                        placeholder="Enter your news headline here" 
-                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, heading: e.target.value})}
+                        placeholder="First Name" 
+                        onChange={(e) => setProfile({...profile, firstName: e.target.value})}
                         required
                     />
-                    <textarea 
-                        rows="10" 
-                        cols="50" 
-                        placeholder="Enter your news content here" 
-                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, body: e.target.value})}
+                    <input 
+                        type="text" 
+                        placeholder="Last Name" 
+                        onChange={(e) => setProfile({...profile, lastName: e.target.value})}
                         required
                     />
-                    <button>Create Announcement</button>
+                    <button>Sign Up</button>
                 </form>
             </FormSection>
         </MainContainer>
     )
 }
+
+// Styled Components
 
 // Styled Components
 
@@ -85,7 +97,7 @@ const TextSection = styled(motion.div)`
 
 const FormSection = styled.div`
     form {
-        input, textarea {
+        input {
             display: block;
             margin-bottom: 2rem;
             font-size: 1.5rem;
@@ -96,13 +108,8 @@ const FormSection = styled.div`
         input {
             width: 100%;
         }
-        @media (max-width: 1500px) {
-            textarea {
-                width: 100%;
-            }
-        }
         @media (max-width: 870px) {
-            input, textarea {
+            input {
                 font-size: 1rem;
             }
             button {
@@ -114,4 +121,4 @@ const FormSection = styled.div`
     }
 `
 
-export default NewsForm;
+export default SignUp;

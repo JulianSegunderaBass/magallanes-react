@@ -22,6 +22,7 @@ const NewsPage = () => {
             animate="show" 
             exit="exit"
         >
+            <AutoScroll />
             <NewsList newsItems={announcements} />
         </motion.div>
     )

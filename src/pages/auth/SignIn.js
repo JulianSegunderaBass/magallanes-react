@@ -1,53 +1,49 @@
-// Page for creating a news announcement and sending data to Firebase Firestore
+// Page for Signing In as admin
 
 import React, { useState } from 'react';
 // Importing Styled Components
 import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
-import { pageLoad, newsFormReveal } from '../assets/Animations';
+import { pageLoad, newsFormReveal } from '../../assets/Animations';
 // Redux Imports
 import { useDispatch } from 'react-redux';
-// Redux action to dispatch data
-import { createAnnouncement } from '../redux-store/actions/NewsActions';
 
-const NewsForm = () => {
-    // Allowing the form to dispatch action
-    const dispatch = useDispatch();
+const SignIn = () => {
     // Setting a local state for the form entry
-    const [newsAnnouncement, setNewsAnnouncement] = useState({
-        heading: '',
-        body: ''
+    const [profile, setProfile] = useState({
+        email: '',
+        password: ''
     });
-    // Submit function to dispatch action with data
     const handleSubmit = (e) => {
+        // Prevents page refreshing
         e.preventDefault();
-        dispatch(createAnnouncement(newsAnnouncement));
+        console.log("Signed In");
+        console.log(profile);
     }
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>
                 <TextSection variants={newsFormReveal}>
-                    <h2>News Announcement <span>Form</span></h2>
-                    <p>The News Information Page will update with your post</p>
+                    <h2>Sign <span>In</span></h2>
+                    <p>This Sign In form is currently experimental</p>
                 </TextSection>
             </Hide>
             <FormSection>
                 <form onSubmit={handleSubmit}>
                     <input 
-                        type="text" 
-                        placeholder="Enter your news headline here" 
-                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, heading: e.target.value})}
+                        type="email" 
+                        placeholder="email" 
+                        onChange={(e) => setProfile({...profile, email: e.target.value})}
                         required
                     />
-                    <textarea 
-                        rows="10" 
-                        cols="50" 
-                        placeholder="Enter your news content here" 
-                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, body: e.target.value})}
+                    <input 
+                        type="password" 
+                        placeholder="password" 
+                        onChange={(e) => setProfile({...profile, password: e.target.value})}
                         required
                     />
-                    <button>Create Announcement</button>
+                    <button>Sign In</button>
                 </form>
             </FormSection>
         </MainContainer>
@@ -85,7 +81,7 @@ const TextSection = styled(motion.div)`
 
 const FormSection = styled.div`
     form {
-        input, textarea {
+        input {
             display: block;
             margin-bottom: 2rem;
             font-size: 1.5rem;
@@ -96,13 +92,8 @@ const FormSection = styled.div`
         input {
             width: 100%;
         }
-        @media (max-width: 1500px) {
-            textarea {
-                width: 100%;
-            }
-        }
         @media (max-width: 870px) {
-            input, textarea {
+            input {
                 font-size: 1rem;
             }
             button {
@@ -114,4 +105,4 @@ const FormSection = styled.div`
     }
 `
 
-export default NewsForm;
+export default SignIn;

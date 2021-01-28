@@ -5,8 +5,8 @@ import React from 'react';
 // Importing Styled Components
 import styled from 'styled-components';
 // Importing all production Icons with code names
-import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
+import * as MdIcons from 'react-icons/md';
 // Link Component
 import { Link } from 'react-router-dom';
 
@@ -34,6 +34,20 @@ const SignedOutLinks = () => {
                 <Link to='/news'>
                     <AiIcons.AiOutlineAlert />
                     <span>News Reports</span>
+                </Link>
+            </li>
+            <li>
+                {/* Link: Sign In Page */}
+                <Link to='/sign-in'>
+                    <MdIcons.MdPerson />
+                    <span>Sign In</span>
+                </Link>
+            </li>
+            <li>
+                {/* Link: Sign Up Page */}
+                <Link to='/sign-up'>
+                    <MdIcons.MdPersonAdd />
+                    <span>Sign Up</span>
                 </Link>
             </li>
         </ListContainer>

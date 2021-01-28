@@ -6,11 +6,15 @@ import styled from 'styled-components';
 // Importing all production Icons with code names
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
+import * as ImIcons from 'react-icons/im';
 // Link Component
 import { Link } from 'react-router-dom';
 
 
 const SignedInLinks = () => {
+    const handleSignOut = () => {
+
+    }
     return (
         <ListContainer>
             {/* Each li below is a nav element */}
@@ -43,6 +47,14 @@ const SignedInLinks = () => {
                     <span>News Form</span>
                 </Link>
             </li>
+            <li>
+                {/* Link: News Form Page */}
+                {/* NOTE: News Form only visible when user(admin) is logged in */}
+                <a onClick={handleSignOut}>
+                    <ImIcons.ImExit />
+                    <span>Log Out</span>
+                </a>
+            </li>
         </ListContainer>
     )
 }
@@ -73,6 +85,7 @@ const ListContainer = styled.div`
             padding: 0 1.2rem;
             border-radius: 4px;
             &:hover {
+                cursor: pointer;
                 background-color: ${hoverColor};
             }
         }

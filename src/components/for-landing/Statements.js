@@ -6,8 +6,6 @@ import React from 'react';
 import styled from 'styled-components';
 // Importing "DropToggle" Component for toggling functionality
 import DropToggle from '../global/DropToggle';
-// Importing Framer Motion
-import { motion } from 'framer-motion';
 // Importing "AnimateSharedLayout" - detects a change with the toggling
 import { AnimateSharedLayout } from 'framer-motion';
 

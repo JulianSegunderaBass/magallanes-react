@@ -13,7 +13,7 @@ import RootReducer from './redux-store/reducers/RootReducer';
 // Firebase Library Imports
 import firebase from 'firebase/app';
 import { reduxFirestore, getFirestore, createFirestoreInstance } from 'redux-firestore';
-import { reactReduxFirebase, ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase';
+import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase';
 // Firebase Config Import
 import FirebaseConfig from './config/FirebaseConfig';
 

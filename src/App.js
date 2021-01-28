@@ -6,6 +6,8 @@ import Landing from './pages/Landing';
 import FAQ from './pages/FAQ';
 import NewsPage from './pages/NewsPage';
 import NewsForm from './pages/NewsForm';
+import SignIn from './pages/auth/SignIn';
+import SignUp from './pages/auth/SignUp';
 // Importing Footer
 import Footer from './components/global/Footer';
 // Importing Side Navigation
@@ -51,6 +53,12 @@ function App() {
                     </Route>
                     <Route path="/create-news-announcement" exact>
                         <NewsForm />
+                    </Route>
+                    <Route path="/sign-in" exact>
+                        <SignIn />
+                    </Route>
+                    <Route path="/sign-up" exact>
+                        <SignUp />
                     </Route>
                 </Switch>
             </AnimatePresence>
