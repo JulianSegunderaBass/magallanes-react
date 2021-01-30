@@ -1,4 +1,4 @@
-// The list of navigation links for when an admin is signed in
+// The list of navigation links for when a user is signed in
 
 import React from 'react';
 // Importing Styled Components
@@ -9,11 +9,15 @@ import * as AiIcons from 'react-icons/ai';
 import * as ImIcons from 'react-icons/im';
 // Link Component
 import { Link } from 'react-router-dom';
-
+// Importing Redux hooks and actions
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { signOutUser } from '../../../redux-store/actions/AuthActions';
 
 const SignedInLinks = () => {
+    const dispatch = useDispatch();
     const handleSignOut = () => {
-
+        dispatch(signOutUser());
     }
     return (
         <ListContainer>
@@ -48,8 +52,7 @@ const SignedInLinks = () => {
                 </Link>
             </li>
             <li>
-                {/* Link: News Form Page */}
-                {/* NOTE: News Form only visible when user(admin) is logged in */}
+                {/* Log out option to sign user out */}
                 <a onClick={handleSignOut}>
                     <ImIcons.ImExit />
                     <span>Log Out</span>

@@ -1,5 +1,5 @@
-// The list of navigation links for when an admin is NOT signed in
-// These links assume the reader is just a regular viewer
+// The list of navigation links for when a user is NOT signed in
+// These links assume the reader is just a regular viewer with no account
 
 import React from 'react';
 // Importing Styled Components

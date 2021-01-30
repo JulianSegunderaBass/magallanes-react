@@ -20,7 +20,6 @@ const SignUp = () => {
     const handleSubmit = (e) => {
         // Prevents page refreshing
         e.preventDefault();
-        console.log("Signed Up");
         console.log(profile);
     }
     return (

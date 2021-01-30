@@ -6,10 +6,16 @@ import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
 import { pageLoad, newsFormReveal } from '../../assets/Animations';
-// Redux Imports
+// Importing Redux hooks and actions
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { signInUser } from '../../redux-store/actions/AuthActions';
 
 const SignIn = () => {
+    const dispatch = useDispatch();
+    const authError = useSelector((state) => state.auth.authError);
+    const isEmpty = useSelector((state) => state.firebase.auth.isEmpty);
+
     // Setting a local state for the form entry
     const [profile, setProfile] = useState({
         email: '',
@@ -18,8 +24,7 @@ const SignIn = () => {
     const handleSubmit = (e) => {
         // Prevents page refreshing
         e.preventDefault();
-        console.log("Signed In");
-        console.log(profile);
+        dispatch(signInUser(profile));
     }
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
@@ -27,6 +32,9 @@ const SignIn = () => {
                 <TextSection variants={newsFormReveal}>
                     <h2>Sign <span>In</span></h2>
                     <p>This Sign In form is currently experimental</p>
+                    <div>
+                        {authError ? <p className="red-text">{authError}</p> : isEmpty ? null : <p className="green-text">Login Success</p>}
+                    </div>
                 </TextSection>
             </Hide>
             <FormSection>
@@ -71,6 +79,12 @@ const Hide = styled.div`
 
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
+    .red-text {
+        color: red;
+    }
+    .green-text {
+        color: green;
+    }
     @media (max-width: 870px) {
         padding: 0;
         h2 {
