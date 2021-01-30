@@ -19,8 +19,14 @@ const SignedInLinks = () => {
     const handleSignOut = () => {
         dispatch(signOutUser());
     }
+
+    const emailCredential = useSelector((state) => state.firebase.auth.email);
+
     return (
         <ListContainer>
+            <li>
+                <span id="email-credential">{emailCredential}</span>
+            </li>
             {/* Each li below is a nav element */}
             <li>
                 {/* Link: Home Page */}
@@ -64,6 +70,7 @@ const SignedInLinks = () => {
 
 // Color Variables
 const itemColor = "#f5f5f5";
+const nameColor = "#fde00d";
 const hoverColor = "#1a83ff";
 
 // Styled Components
@@ -95,6 +102,9 @@ const ListContainer = styled.div`
         span {
             margin-left: 1rem;
             color: ${itemColor};
+        }
+        #email-credential {
+            color: ${nameColor};
         }
     }
 `
