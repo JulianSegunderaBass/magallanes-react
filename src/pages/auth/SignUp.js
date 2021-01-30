@@ -10,7 +10,7 @@ import { pageLoad, newsFormReveal } from '../../assets/Animations';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 // Importing Redirect Feature
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 const SignUp = () => {
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const SignUp = () => {
 
     // If user ID is already present (meaning user is already logged in),
     // redirect user to home page
-    if (auth.uid) return <Redirect to='/' />
+    // if (auth.uid) return <Redirect to='/' />
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>

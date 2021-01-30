@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 // Redux action to dispatch data
 import { createAnnouncement } from '../redux-store/actions/NewsActions';
 // Importing Redirect Feature
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 const NewsForm = () => {
     const auth = useSelector((state) => state.firebase.auth);
@@ -32,7 +32,7 @@ const NewsForm = () => {
 
     // If user ID is NOT present (meaning user is not logged in),
     // redirect user to home page to hide news form page
-    if (!auth.uid) return <Redirect to='/' />
+    // if (!auth.uid) return <Redirect to='/' />
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>

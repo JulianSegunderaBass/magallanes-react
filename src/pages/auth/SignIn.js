@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { signInUser } from '../../redux-store/actions/AuthActions';
 // Importing Redirect Feature
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const SignIn = () => {
 
     // If user ID is already present (meaning user is already logged in),
     // redirect user to home page
-    if (auth.uid) return <Redirect to='/' />
+    // if (auth.uid) return <Redirect to='/' />
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>
