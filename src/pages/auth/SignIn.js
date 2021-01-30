@@ -10,11 +10,13 @@ import { pageLoad, newsFormReveal } from '../../assets/Animations';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { signInUser } from '../../redux-store/actions/AuthActions';
+// Importing Redirect Feature
+import { Redirect } from 'react-router-dom';
 
 const SignIn = () => {
     const dispatch = useDispatch();
     const authError = useSelector((state) => state.auth.authError);
-    const isEmpty = useSelector((state) => state.firebase.auth.isEmpty);
+    const auth = useSelector((state) => state.firebase.auth);
 
     // Setting a local state for the form entry
     const [profile, setProfile] = useState({
@@ -26,6 +28,10 @@ const SignIn = () => {
         e.preventDefault();
         dispatch(signInUser(profile));
     }
+
+    // If user ID is already present (meaning user is already logged in),
+    // redirect user to home page
+    if (auth.uid) return <Redirect to='/' />
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>
@@ -33,7 +39,7 @@ const SignIn = () => {
                     <h2>Sign <span>In</span></h2>
                     <p>This Sign In form is currently experimental</p>
                     <div>
-                        {authError ? <p className="red-text">{authError}</p> : isEmpty ? null : <p className="green-text">Login Success</p>}
+                        {authError ? <p className="red-text">{authError}</p> : auth.isEmpty ? null : <p className="green-text">Login Success</p>}
                     </div>
                 </TextSection>
             </Hide>

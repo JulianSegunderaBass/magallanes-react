@@ -8,8 +8,14 @@ import { motion } from 'framer-motion';
 import { pageLoad, newsFormReveal } from '../../assets/Animations';
 // Redux Imports
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+// Importing Redirect Feature
+import { Redirect } from 'react-router-dom';
 
 const SignUp = () => {
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => state.firebase.auth);
+
     // Setting a local state for the form entry
     const [profile, setProfile] = useState({
         email: '',
@@ -22,6 +28,10 @@ const SignUp = () => {
         e.preventDefault();
         console.log(profile);
     }
+
+    // If user ID is already present (meaning user is already logged in),
+    // redirect user to home page
+    if (auth.uid) return <Redirect to='/' />
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>
