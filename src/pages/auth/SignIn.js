@@ -1,62 +1,63 @@
-// Page for creating a news announcement and sending data to Firebase Firestore
+// Page for Signing In as admin
 
 import React, { useState } from 'react';
 // Importing Styled Components
 import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
-import { pageLoad, newsFormReveal } from '../assets/Animations';
-// Redux Imports
-import { useDispatch } from 'react-redux';
+import { pageLoad, newsFormReveal } from '../../assets/Animations';
+// Importing Redux hooks and actions
 import { useSelector } from 'react-redux';
-// Redux action to dispatch data
-import { createAnnouncement } from '../redux-store/actions/NewsActions';
+import { useDispatch } from 'react-redux';
+import { signInUser } from '../../redux-store/actions/AuthActions';
 // Importing Redirect Feature
 // import { Redirect } from 'react-router-dom';
 
-const NewsForm = () => {
+const SignIn = () => {
+    const dispatch = useDispatch();
+    const authError = useSelector((state) => state.auth.authError);
     const auth = useSelector((state) => state.firebase.auth);
 
-    // Allowing the form to dispatch action
-    const dispatch = useDispatch();
     // Setting a local state for the form entry
-    const [newsAnnouncement, setNewsAnnouncement] = useState({
-        heading: '',
-        body: ''
+    const [profile, setProfile] = useState({
+        email: '',
+        password: ''
     });
-    // Submit function to dispatch action with data
     const handleSubmit = (e) => {
+        // Prevents page refreshing
         e.preventDefault();
-        dispatch(createAnnouncement(newsAnnouncement));
+        dispatch(signInUser(profile));
     }
 
-    // If user ID is NOT present (meaning user is not logged in),
-    // redirect user to home page to hide news form page
-    // if (!auth.uid) return <Redirect to='/' />
+    // If user ID is already present (meaning user is already logged in),
+    // redirect user to home page
+    // if (auth.uid) return <Redirect to='/' />
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <Hide>
                 <TextSection variants={newsFormReveal}>
-                    <h2>News Announcement <span>Form</span></h2>
-                    <p>The News Information Page will update with your post</p>
+                    <h2>Sign <span>In</span></h2>
+                    <p>This Sign In form is currently experimental</p>
+                    <div>
+                        {authError ? <p className="red-text">{authError}</p> : auth.isEmpty ? null : <p className="green-text">Login Success</p>}
+                    </div>
                 </TextSection>
             </Hide>
             <FormSection>
                 <form onSubmit={handleSubmit}>
                     <input 
-                        type="text" 
-                        placeholder="Enter your news headline here" 
-                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, heading: e.target.value})}
+                        type="email" 
+                        placeholder="email" 
+                        onChange={(e) => setProfile({...profile, email: e.target.value})}
                         required
                     />
-                    <textarea 
-                        rows="10" 
-                        cols="50" 
-                        placeholder="Enter your news content here" 
-                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, body: e.target.value})}
+                    <input 
+                        type="password" 
+                        placeholder="password" 
+                        onChange={(e) => setProfile({...profile, password: e.target.value})}
                         required
                     />
-                    <button>Create Announcement</button>
+                    <button>Sign In</button>
                 </form>
             </FormSection>
         </MainContainer>
@@ -84,6 +85,12 @@ const Hide = styled.div`
 
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
+    .red-text {
+        color: red;
+    }
+    .green-text {
+        color: green;
+    }
     @media (max-width: 870px) {
         padding: 0;
         h2 {
@@ -94,7 +101,7 @@ const TextSection = styled(motion.div)`
 
 const FormSection = styled.div`
     form {
-        input, textarea {
+        input {
             display: block;
             margin-bottom: 2rem;
             font-size: 1.5rem;
@@ -105,13 +112,8 @@ const FormSection = styled.div`
         input {
             width: 100%;
         }
-        @media (max-width: 1500px) {
-            textarea {
-                width: 100%;
-            }
-        }
         @media (max-width: 870px) {
-            input, textarea {
+            input {
                 font-size: 1rem;
             }
             button {
@@ -123,4 +125,4 @@ const FormSection = styled.div`
     }
 `
 
-export default NewsForm;
+export default SignIn;

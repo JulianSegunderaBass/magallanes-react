@@ -3,24 +3,31 @@
 import React, { useState } from 'react';
 // Importing Styled Components
 import styled from 'styled-components';
-// Link Import to replace a tags
-import { Link } from 'react-router-dom';
 // Importing all production Icons with code names
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-// Importing Side Nav Data File
-import { SideNavData } from './SideNavData';
 // Importing IconContext to help systematically change colors
 import { IconContext } from 'react-icons';
+// Link Import to replace a tags
+import { Link } from 'react-router-dom';
+// Importing conditional links
+import SignedInLinks from './SignedInLinks';
+import SignedOutLinks from './SignedOutLinks';
+// For connecting to Redux state
+import { useSelector } from 'react-redux';
 
 const SideNav = () => {
-
     // State and Function to display side navigation menu
     const [sideNav, setSideNav] = useState(false);
-
     const showSideNav = () => {
         setSideNav(!sideNav);
     }
+
+    // Connecting to Redux auth status
+    const auth = useSelector((state) => state.firebase.auth);
+    // Variable that determines what set of links to show
+    // depending on whether a logged uid is present or not
+    const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />;
 
     return (
         <RootContainer>
@@ -42,19 +49,11 @@ const SideNav = () => {
                                 <AiIcons.AiOutlineClose />
                             </Link>
                         </NavToggle>
-                        {/* Mapping through the data file */}
-                        {/* Creating an li element with the 
-                        object properties */}
-                        {SideNavData.map((item, index) => {
-                            return (
-                                <li key={index} className={item.cName}>
-                                    <Link to={item.path}>
-                                        {item.icon}
-                                        <span>{item.title}</span>
-                                    </Link>
-                                </li>
-                            )
-                        })}
+                        {/* Conditionally rendering the right set of navigation options
+                        depending on user auth status */}
+                        {/* auth.isLoaded makes sure the data is loaded
+                        before making the decision */}
+                        {auth.isLoaded && links}
                     </NavMenuItems>
                 </nav>
             </IconContext.Provider>
@@ -64,8 +63,6 @@ const SideNav = () => {
 
 // Color Variables
 const backgroundColor = "#060b26"
-const itemColor = "#f5f5f5";
-const hoverColor = "#1a83ff";
 
 // Styled Components
 
@@ -88,39 +85,11 @@ const RootContainer = styled.div`
         left: 0;
         transition: 350ms;
     }
-    .nav-text {
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        padding: 8px 0px 8px 16px;
-        list-style: none;
-        height: 60px;
-        /* The actual links inside the li elements
-        rendered by mapping */
-        a {
-            text-decoration: none;
-            color: ${itemColor};
-            font-size: 1.2rem;
-            width: 95%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            padding: 0 1.2rem;
-            border-radius: 4px;
-            &:hover {
-                background-color: ${hoverColor};
-            }
-        }
-    }
     /* Styling the menu toggle icons */
     .menu-bars {
         margin-left: 2rem;
         font-size: 2rem;
         background: none;
-    }
-    span {
-        margin-left: 1rem;
-        color: ${itemColor};
     }
 `
 
