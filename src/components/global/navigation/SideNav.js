@@ -13,15 +13,21 @@ import { Link } from 'react-router-dom';
 // Importing conditional links
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
+// For connecting to Redux state
+import { useSelector } from 'react-redux';
 
 const SideNav = () => {
-
     // State and Function to display side navigation menu
     const [sideNav, setSideNav] = useState(false);
-
     const showSideNav = () => {
         setSideNav(!sideNav);
     }
+
+    // Connecting to Redux auth status
+    const auth = useSelector((state) => state.firebase.auth);
+    // Variable that determines what set of links to show
+    // depending on whether a logged uid is present or not
+    const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />;
 
     return (
         <RootContainer>
@@ -45,8 +51,9 @@ const SideNav = () => {
                         </NavToggle>
                         {/* Conditionally rendering the right set of navigation options
                         depending on user auth status */}
-                        <SignedInLinks />
-                        <SignedOutLinks />
+                        {/* auth.isLoaded makes sure the data is loaded
+                        before making the decision */}
+                        {auth.isLoaded && links}
                     </NavMenuItems>
                 </nav>
             </IconContext.Provider>
