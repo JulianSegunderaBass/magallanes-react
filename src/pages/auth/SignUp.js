@@ -9,11 +9,13 @@ import { pageLoad, newsFormReveal } from '../../assets/Animations';
 // Redux Imports
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { signUpUser } from '../../redux-store/actions/AuthActions';
 // Importing Redirect Feature
 // import { Redirect } from 'react-router-dom';
 
 const SignUp = () => {
     const dispatch = useDispatch();
+    const authError = useSelector((state) => state.auth.authError);
     const auth = useSelector((state) => state.firebase.auth);
 
     // Setting a local state for the form entry
@@ -26,7 +28,7 @@ const SignUp = () => {
     const handleSubmit = (e) => {
         // Prevents page refreshing
         e.preventDefault();
-        console.log(profile);
+        dispatch(signUpUser(profile));
     }
 
     // If user ID is already present (meaning user is already logged in),
@@ -37,7 +39,10 @@ const SignUp = () => {
             <Hide>
                 <TextSection variants={newsFormReveal}>
                     <h2>Sign <span>Up</span></h2>
-                    <p>This Sign Up form is currently experimental</p>
+                    <p>This Sign Up form is currently experimental.</p>
+                    <div>
+                        {authError ? <p className="red-text">{authError}</p> : auth.isEmpty ? null : <p className="green-text">Signup Success</p>}
+                    </div>
                 </TextSection>
             </Hide>
             <FormSection>
@@ -96,6 +101,12 @@ const Hide = styled.div`
 
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
+    .red-text {
+        color: red;
+    }
+    .green-text {
+        color: green;
+    }
     @media (max-width: 870px) {
         padding: 0;
         h2 {

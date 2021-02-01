@@ -27,3 +27,36 @@ export const signOutUser = () => {
         });
     }
 }
+
+// For Signing Up
+export const signUpUser = (newUser) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        // Communicating between Firebase Auth service 
+        // and Firestore users collection
+        const firebase = getFirebase();
+        const firestore = getFirestore();
+        firebase.auth().createUserWithEmailAndPassword(
+            // Step 1: create new user in auth service
+            newUser.email,
+            newUser.password
+        ).then((response) => {
+            // Step 2: create user record in collection
+            // response has information about the user we just created
+            // Note: if this collection doesn't exist, it will be created automatically
+            return firestore.collection('users').doc(response.user.uid).set({
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                currentBenefits: {
+                    benefit_1: 'Test Benefit 1',
+                    benefit_2: 'Test Benefit 2',
+                    benefit_3: 'Test Benefit 3'
+                }
+            });
+        }).then(() => {
+            // Step 3: dispatching successful signup action
+            dispatch({type: 'SIGNUP_SUCCESS'});
+        }).catch(error => {
+            dispatch({type: 'SIGNUP_ERROR', error});
+        });
+    }
+}
