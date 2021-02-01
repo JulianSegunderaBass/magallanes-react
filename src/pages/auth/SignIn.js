@@ -37,7 +37,7 @@ const SignIn = () => {
             <Hide>
                 <TextSection variants={newsFormReveal}>
                     <h2>Sign <span>In</span></h2>
-                    <p>This Sign In form is currently experimental</p>
+                    <p>This Sign In form is currently experimental.</p>
                     <div>
                         {authError ? <p className="red-text">{authError}</p> : auth.isEmpty ? null : <p className="green-text">Login Success</p>}
                     </div>

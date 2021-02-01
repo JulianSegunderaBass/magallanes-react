@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as ImIcons from 'react-icons/im';
+import * as MdIcons from 'react-icons/md';
 // Link Component
 import { Link } from 'react-router-dom';
 // Importing Redux hooks and actions
@@ -20,12 +21,16 @@ const SignedInLinks = () => {
         dispatch(signOutUser());
     }
 
+    const profileData = useSelector((state) => state.firebase.profile);
     const emailCredential = useSelector((state) => state.firebase.auth.email);
 
     return (
         <ListContainer>
             <li>
-                <span id="email-credential">{emailCredential}</span>
+                <div className="credential-container">
+                    <span className="credential" id="user-name">{profileData.firstName} {profileData.lastName}</span>
+                    <span className="credential">{emailCredential}</span>
+                </div>
             </li>
             {/* Each li below is a nav element */}
             <li>
@@ -51,10 +56,18 @@ const SignedInLinks = () => {
             </li>
             <li>
                 {/* Link: News Form Page */}
-                {/* NOTE: News Form only visible when user(admin) is logged in */}
+                {/* NOTE: News Form only visible when user is logged in */}
                 <Link to='/create-news-announcement'>
                     <FaIcons.FaNewspaper />
                     <span>News Form</span>
+                </Link>
+            </li>
+            <li>
+                {/* Link: Profile Page */}
+                {/* NOTE: Profile Page only visible when user is logged in */}
+                <Link to='/my-profile'>
+                    <MdIcons.MdPerson />
+                    <span>My Profile</span>
                 </Link>
             </li>
             <li>
@@ -70,7 +83,7 @@ const SignedInLinks = () => {
 
 // Color Variables
 const itemColor = "#f5f5f5";
-const nameColor = "#fde00d";
+const credentialColor = "#fde00d";
 const hoverColor = "#1a83ff";
 
 // Styled Components
@@ -103,8 +116,16 @@ const ListContainer = styled.div`
             margin-left: 1rem;
             color: ${itemColor};
         }
-        #email-credential {
-            color: ${nameColor};
+        .credential-container {
+            .credential {
+                color: ${credentialColor};
+                display: block;
+                margin-bottom: 0.5rem;
+                margin-left: 0rem;
+            }
+            #user-name {
+                font-size: 1.2rem;
+            }
         }
     }
 `

@@ -8,6 +8,7 @@ import NewsPage from './pages/NewsPage';
 import NewsForm from './pages/NewsForm';
 import SignIn from './pages/auth/SignIn';
 import SignUp from './pages/auth/SignUp';
+import ProfilePage from './pages/ProfilePage';
 // Importing Footer
 import Footer from './components/global/Footer';
 // Importing Side Navigation
@@ -59,6 +60,9 @@ function App() {
                     </Route>
                     <Route path="/sign-up" exact>
                         <SignUp />
+                    </Route>
+                    <Route path="/my-profile" exact>
+                        <ProfilePage />
                     </Route>
                 </Switch>
             </AnimatePresence>

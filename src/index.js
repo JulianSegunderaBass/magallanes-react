@@ -30,10 +30,16 @@ const store = createStore(
     )
 );
 
+const config = {
+    userProfile: 'users',
+    useFirestoreForProfile: true
+};
+
 // Some clunky Firebase code
 const reactReduxFirebaseProps = {
     firebase,
-    config: FirebaseConfig,
+    // config: FirebaseConfig,
+    config,
     dispatch: store.dispatch,
     createFirestoreInstance
 };
