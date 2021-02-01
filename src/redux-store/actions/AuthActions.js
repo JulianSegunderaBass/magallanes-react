@@ -46,6 +46,7 @@ export const signUpUser = (newUser) => {
             return firestore.collection('users').doc(response.user.uid).set({
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
+                createdAt: new Date(),
                 currentBenefits: {
                     benefit_1: 'Test Benefit 1',
                     benefit_2: 'Test Benefit 2',
