@@ -36,7 +36,7 @@ const DropToggle = ({children, title}) => {
 // Styled Components
 
 // Color variable for hover effect
-const hoverColor = "#fde00d";
+const hoverColor = "#E63946";
 
 const ToggleElement = styled(motion.div)`
 

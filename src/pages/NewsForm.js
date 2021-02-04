@@ -63,6 +63,9 @@ const NewsForm = () => {
     )
 }
 
+// Color Variables
+const boxBorder = "#1D3557";
+
 // Styled Components
 
 const MainContainer = styled(motion.div)`
@@ -99,7 +102,7 @@ const FormSection = styled.div`
             margin-bottom: 2rem;
             font-size: 1.5rem;
             padding: 0.5rem;
-            border: none;
+            border: 2px solid ${boxBorder};
             outline: none;
         }
         input {

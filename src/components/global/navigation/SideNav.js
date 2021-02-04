@@ -62,7 +62,7 @@ const SideNav = () => {
 }
 
 // Color Variables
-const backgroundColor = "#060b26"
+const backgroundColor = "#031926"
 
 // Styled Components
 

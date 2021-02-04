@@ -38,7 +38,7 @@ const Council = () => {
 }
 
 // Color Variables
-const cardBackground = "#071b3d";
+const cardBackground = "#C7D1C4";
 
 // Styled Components
 const CouncilSection = styled.div`

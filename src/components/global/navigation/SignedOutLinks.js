@@ -55,8 +55,9 @@ const SignedOutLinks = () => {
 }
 
 // Color Variables
-const itemColor = "#f5f5f5";
-const hoverColor = "#1a83ff";
+const itemColor = "#F1FAEE";
+const hoverBackgroundColor = "#A8DADC";
+const hoverItemColor = "#031926";
 
 // Styled Components
 const ListContainer = styled.div`
@@ -67,8 +68,6 @@ const ListContainer = styled.div`
         padding: 8px 0px 8px 16px;
         list-style: none;
         height: 60px;
-        /* The actual links inside the li elements
-        rendered by mapping */
         a {
             text-decoration: none;
             color: ${itemColor};
@@ -80,7 +79,12 @@ const ListContainer = styled.div`
             padding: 0 1.2rem;
             border-radius: 4px;
             &:hover {
-                background-color: ${hoverColor};
+                cursor: pointer;
+                background-color: ${hoverBackgroundColor};
+                span {
+                    color: ${hoverItemColor};
+                    font-weight: bold;
+                }
             }
         }
         span {

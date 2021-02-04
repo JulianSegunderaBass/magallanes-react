@@ -41,7 +41,7 @@ const Statements = () => {
 // Styled component
 
 // Color Variables
-const lineColor = "#fde00d";
+const lineColor = "#E63946";
 
 const StatementSection = styled.div`
     min-height: 90vh;

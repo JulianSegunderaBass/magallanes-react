@@ -17,13 +17,13 @@ const Footer = () => {
                 {/* Social Links is the container
                 specifically for the links */}
                         <a href="https://www.facebook.com/barangay.magallanes.7" className="social-link">
-                            <FaFacebook size="3rem" color="cornflowerblue" />
+                            <FaFacebook size="3rem" color="#1D3557" />
                         </a>
                         <a href="https://www.facebook.com/barangay.magallanes.7" className="social-link">
-                            <FaTwitter size="3rem" color="lightblue" />
+                            <FaTwitter size="3rem" color="#031926" />
                         </a>
                         <a href="https://www.facebook.com/barangay.magallanes.7" className="social-link">
-                            <FaInstagram size="3rem" color="yellow" />
+                            <FaInstagram size="3rem" color="#E63946" />
                         </a>
                 </SocialLinks>
             </Socials>
@@ -40,7 +40,7 @@ const Footer = () => {
 // Styled Components
 
 // Color variables
-const footerBackground = "black";
+const footerBackground = "#C7D1C4";
 
 const FooterStyle = styled.div`
     background: ${footerBackground};
