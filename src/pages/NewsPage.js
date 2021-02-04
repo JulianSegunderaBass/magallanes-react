@@ -29,6 +29,7 @@ const NewsPage = () => {
 }
 
 // Older, funky code for Firestore connection
+// Ordering announcements according to time
 export default firestoreConnect([
-    {collection: 'NewsAnnouncements'}
+    {collection: 'NewsAnnouncements', orderBy: ['createdAt', 'desc']}
 ])(NewsPage);
