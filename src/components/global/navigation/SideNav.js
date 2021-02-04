@@ -32,7 +32,7 @@ const SideNav = () => {
     return (
         <RootContainer>
             {/* Context provider helps set colors for all icons */}
-            <IconContext.Provider value={{color: '#fff'}}>
+            <IconContext.Provider value={{color: '#F1FAEE'}}>
                 <NavBar>
                     {/* onClick event to toggle state and side bar */}
                     <Link to="#" className="menu-bars">
@@ -99,6 +99,10 @@ const NavBar = styled.div`
     display: flex;
     justify-content: start;
     align-items: center;
+    /* Fixed for scrolling */
+    position: fixed;
+    width: 100%;
+    top: 0;
 `
 
 // The ul holding the nav items

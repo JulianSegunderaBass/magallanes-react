@@ -16,6 +16,7 @@ import { createAnnouncement } from '../redux-store/actions/NewsActions';
 
 const NewsForm = () => {
     const auth = useSelector((state) => state.firebase.auth);
+    const newsAnnouncementError = useSelector((state) => state.NewsAnnouncements.newsAnnouncementError);
 
     // Allowing the form to dispatch action
     const dispatch = useDispatch();
@@ -39,6 +40,9 @@ const NewsForm = () => {
                 <TextSection variants={newsFormReveal}>
                     <h2>News Announcement <span>Form</span></h2>
                     <p>The News Information Page will update with your post</p>
+                    {/* <div>
+                        {newsAnnouncementError ? <p className="red-text">{newsAnnouncementError}</p> : <p className="green-text">Announcement Posted</p>}
+                    </div> */}
                 </TextSection>
             </Hide>
             <FormSection>
@@ -65,6 +69,8 @@ const NewsForm = () => {
 
 // Color Variables
 const boxBorder = "#1D3557";
+const warningText = "#AB0A0A";
+const successText = "#137D2D";
 
 // Styled Components
 
@@ -87,6 +93,12 @@ const Hide = styled.div`
 
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
+    .red-text {
+        color: ${warningText};
+    }
+    .green-text {
+        color: ${successText};
+    }
     @media (max-width: 870px) {
         padding: 0;
         h2 {

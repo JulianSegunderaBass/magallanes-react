@@ -20,6 +20,10 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Inter', sans-serif;
         /* Prevents side-scrolling from any overflow */
         overflow-x: hidden;
+        /* Pushing body content down
+        to make way for fixed navbar */
+        position: relative;
+        margin-top: 10vh;
     }
     h2 {
         font-size: 4rem;
