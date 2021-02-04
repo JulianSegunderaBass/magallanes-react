@@ -32,6 +32,10 @@ const ProfilePage = () => {
     )
 }
 
+// Color Variables
+const mainFontColor = "#1D3557";
+const dividerColor = "#1D3557";
+
 // Styled Components
 
 const ProfileContainer = styled(motion.div)`
@@ -45,16 +49,16 @@ const ProfileContainer = styled(motion.div)`
         padding: 0 3rem;
         li {
             font-size: 1.8rem;
-            color: white;
+            color: ${mainFontColor};
         }
     }
     #email {
-        color: white;
+        color: ${mainFontColor};
     }
     .divider {
         width: 100%;
         height: 0.3rem;
-        background: white;
+        background: ${dividerColor};
         margin-bottom: 3rem;
     }
     @media (max-width: 1090px) {
@@ -68,7 +72,7 @@ const ProfileContainer = styled(motion.div)`
             font-size: 1.5rem
         }
         #email {
-            color: white;
+            color: ${mainFontColor};
             font-size: 1.2rem;
         }
     }

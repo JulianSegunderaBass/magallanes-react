@@ -64,6 +64,11 @@ const SignIn = () => {
     )
 }
 
+// Color Variables
+const boxBorder = "#1D3557";
+const warningText = "#AB0A0A";
+const successText = "#137D2D";
+
 // Styled Components
 
 const MainContainer = styled(motion.div)`
@@ -86,10 +91,10 @@ const Hide = styled.div`
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
     .red-text {
-        color: red;
+        color: ${warningText};
     }
     .green-text {
-        color: green;
+        color: ${successText};
     }
     @media (max-width: 870px) {
         padding: 0;
@@ -103,18 +108,17 @@ const FormSection = styled.div`
     form {
         input {
             display: block;
+            width: 175%;
             margin-bottom: 2rem;
             font-size: 1.5rem;
             padding: 0.5rem;
-            border: none;
+            border: 2px solid ${boxBorder};
             outline: none;
-        }
-        input {
-            width: 100%;
         }
         @media (max-width: 870px) {
             input {
                 font-size: 1rem;
+                width: 100%;
             }
             button {
                 display: block;

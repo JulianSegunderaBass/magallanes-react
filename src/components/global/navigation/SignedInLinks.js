@@ -82,9 +82,10 @@ const SignedInLinks = () => {
 }
 
 // Color Variables
-const itemColor = "#f5f5f5";
-const credentialColor = "#fde00d";
-const hoverColor = "#1a83ff";
+const itemColor = "#F1FAEE";
+const credentialColor = "#F1FAEE";
+const hoverBackgroundColor = "#A8DADC";
+const hoverItemColor = "#031926";
 
 // Styled Components
 const ListContainer = styled.div`
@@ -95,8 +96,6 @@ const ListContainer = styled.div`
         padding: 8px 0px 8px 16px;
         list-style: none;
         height: 60px;
-        /* The actual links inside the li elements
-        rendered by mapping */
         a {
             text-decoration: none;
             color: ${itemColor};
@@ -109,7 +108,11 @@ const ListContainer = styled.div`
             border-radius: 4px;
             &:hover {
                 cursor: pointer;
-                background-color: ${hoverColor};
+                background-color: ${hoverBackgroundColor};
+                span {
+                    color: ${hoverItemColor};
+                    font-weight: bold;
+                }
             }
         }
         span {
@@ -125,6 +128,7 @@ const ListContainer = styled.div`
             }
             #user-name {
                 font-size: 1.2rem;
+                font-weight: bold;
             }
         }
     }

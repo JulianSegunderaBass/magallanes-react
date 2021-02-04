@@ -3,9 +3,9 @@
 import { createGlobalStyle } from 'styled-components';
 
 // Color Variables
-const mainBackground = "#0b1320";
-const mainFontColor = "white";
-const accentColor = "#fde00d";
+const mainBackground = "#F1FAEE";
+const mainFontColor = "#1D3557";
+const accentColor = "#E63946";
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -42,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 1.5rem 0rem;
         color: ${mainFontColor};
         font-size: 1.4rem;
+        font-weight: bold;
     }
     button {
         font-weight: bold;
@@ -57,7 +58,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Inter', sans-serif;
         &:hover {
             background-color: ${accentColor};
-            color: black;
+            color: #F1FAEE;
         }
     }
 `

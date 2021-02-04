@@ -14,21 +14,28 @@ const NewsSummary = ({newsItem}) => {
     )
 }
 
+// Color Variables
+const cardBackground = "#C7D1C4";
+const dividerColor = "#E63946"
+
 // Styled Components
 
 const NewsCard = styled.div`
     margin-bottom: 2.5rem;
     padding: 1.5rem;
-    background: #071b3d;
+    background: ${cardBackground};
     border-radius: 2rem;
     h4 {
         font-weight: bold;
         margin-bottom: 0.5rem;
     }
+    p {
+        font-weight: lighter;
+    }
     .divider {
         width: 7%;
         height: 0.5rem;
-        background: #fde00d;
+        background: ${dividerColor};
     }
     @media (max-width: 870px) {
         h4 {

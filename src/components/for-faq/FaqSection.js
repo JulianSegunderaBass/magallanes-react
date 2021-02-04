@@ -53,7 +53,8 @@ const FaqSection = () => {
 // Styled component
 
 // Color Variables
-const lineColor = "#fde00d";
+const lineColor = "#E63946";
+const boxBorder = "#1D3557";
 
 const FaqSectionStyle = styled.div`
     min-height: 90vh;
@@ -85,7 +86,7 @@ const FaqSectionStyle = styled.div`
         margin: 0 auto 2rem auto;
         font-size: 1.5rem;
         padding: 0.5rem;
-        border: none;
+        border: 2px solid ${boxBorder};
         outline: none;
     }
     @media (max-width: 870px) {

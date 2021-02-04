@@ -29,6 +29,9 @@ const NewsList = ({newsItems}) => {
     )
 }
 
+// Color Variables
+const dividerColor = "#E63946"
+
 // Styled Components
 
 const MainContainer = styled.div`
@@ -53,7 +56,7 @@ const HeaderSection = styled(motion.div)`
     .divider {
         width: 100%;
         height: 0.3rem;
-        background: white;
+        background: ${dividerColor};
     }
     @media (max-width: 870px) {
         h2 {
