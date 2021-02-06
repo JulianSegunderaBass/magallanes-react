@@ -6,16 +6,15 @@ import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
 import { pageLoad, newsFormReveal } from '../assets/Animations';
+// Importing AutoScroll function
+import AutoScroll from '../assets/AutoScroll';
 // Redux Imports
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 // Redux action to dispatch data
 import { createAnnouncement } from '../redux-store/actions/NewsActions';
-// Importing Redirect Feature
-// import { Redirect } from 'react-router-dom';
 
 const NewsForm = () => {
-    const auth = useSelector((state) => state.firebase.auth);
     const newsAnnouncementError = useSelector((state) => state.NewsAnnouncements.newsAnnouncementError);
 
     // Allowing the form to dispatch action
@@ -30,12 +29,10 @@ const NewsForm = () => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
     }
-
-    // If user ID is NOT present (meaning user is not logged in),
-    // redirect user to home page to hide news form page
-    // if (!auth.uid) return <Redirect to='/' />
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
+            {/* For Auto Scrolling to top */}
+            <AutoScroll />
             <Hide>
                 <TextSection variants={newsFormReveal}>
                     <h2>News Announcement <span>Form</span></h2>

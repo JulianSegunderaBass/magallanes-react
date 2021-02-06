@@ -6,6 +6,8 @@ import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
 import { pageLoad, revealUp } from '../assets/Animations';
+// Importing AutoScroll function
+import AutoScroll from '../assets/AutoScroll';
 // Redux Imports
 import { useSelector } from 'react-redux';
 
@@ -19,6 +21,8 @@ const ProfilePage = () => {
             animate="show" 
             exit="exit"
         >
+            {/* For Auto Scrolling to top */}
+            <AutoScroll />
             <h2><span>Name:</span> {profileData.firstName} {profileData.lastName}</h2>
             <h4><span>Email:</span> <span id="email">{auth.email}</span></h4>
             <div className="divider"></div>
