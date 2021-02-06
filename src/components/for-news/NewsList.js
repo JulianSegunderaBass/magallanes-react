@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { strongRevealUp } from '../../assets/Animations';
 
+// News Items is an array of objects
 const NewsList = ({newsItems}) => {
     return (
         <MainContainer>
