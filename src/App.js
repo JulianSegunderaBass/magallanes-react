@@ -22,10 +22,14 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 // is removed from the tree - exit animations
 // Also requires "useLocation" from React Router Dom
 import { AnimatePresence } from 'framer-motion';
+// Redux Functions
+import { useSelector } from 'react-redux';
 
 function App() {
 
     const currentLocation = useLocation();
+
+    const auth = useSelector((state) => state.firebase.auth);
 
     return (
         // React Router is not very specific with paths. 
@@ -43,27 +47,14 @@ function App() {
                     location={currentLocation} 
                     key={currentLocation.pathname} 
                 >
-                    <Route path="/" exact>
-                        <Landing />
-                    </Route>
-                    <Route path="/faq" exact>
-                        <FAQ />
-                    </Route>
-                    <Route path="/news" exact>
-                        <NewsPage />
-                    </Route>
-                    <Route path="/create-news-announcement" exact>
-                        <NewsForm />
-                    </Route>
-                    <Route path="/sign-in" exact>
-                        <SignIn />
-                    </Route>
-                    <Route path="/sign-up" exact>
-                        <SignUp />
-                    </Route>
-                    <Route path="/my-profile" exact>
-                        <ProfilePage />
-                    </Route>
+                    <Route path="/" component={Landing} exact />
+                    <Route path="/faq" component={FAQ} exact />
+                    <Route path="/news" component={NewsPage} exact />
+                    {/* Route Guarding using unique authentication ID */}
+                    <Route path="/create-news-announcement" component={auth.uid ? NewsForm : Landing} exact />
+                    <Route path="/sign-in" component={auth.uid ? Landing : SignIn} exact />
+                    <Route path="/sign-up" component={auth.uid ? Landing : SignUp} exact />
+                    <Route path="/my-profile" component={auth.uid ? ProfilePage : Landing} exact />
                 </Switch>
             </AnimatePresence>
             <Footer />

@@ -6,12 +6,13 @@ import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
 import { pageLoad, newsFormReveal } from '../../assets/Animations';
+// Importing AutoScroll function
+import AutoScroll from '../../assets/AutoScroll';
 // Importing Redux hooks and actions
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { signInUser } from '../../redux-store/actions/AuthActions';
-// Importing Redirect Feature
-// import { Redirect } from 'react-router-dom';
+
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -29,11 +30,10 @@ const SignIn = () => {
         dispatch(signInUser(profile));
     }
 
-    // If user ID is already present (meaning user is already logged in),
-    // redirect user to home page
-    // if (auth.uid) return <Redirect to='/' />
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
+            {/* For Auto Scrolling to top */}
+            <AutoScroll />
             <Hide>
                 <TextSection variants={newsFormReveal}>
                     <h2>Sign <span>In</span></h2>
