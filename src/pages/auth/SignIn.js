@@ -12,7 +12,7 @@ import AutoScroll from '../../assets/AutoScroll';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { signInUser } from '../../redux-store/actions/AuthActions';
-
+import { Redirect } from 'react-router-dom';
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -24,10 +24,15 @@ const SignIn = () => {
         email: '',
         password: ''
     });
+
     const handleSubmit = (e) => {
         // Prevents page refreshing
         e.preventDefault();
         dispatch(signInUser(profile));
+    }
+
+    if (auth.uid) {
+        return <Redirect to='/' />;
     }
 
     return (

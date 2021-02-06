@@ -24,6 +24,8 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 // Redux Functions
 import { useSelector } from 'react-redux';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 function App() {
 
@@ -38,25 +40,24 @@ function App() {
         <div className="App">
             <GlobalStyle />
             <SideNav />
+            <ReactNotification />
             {/* Wrapping the Switch with Animate Presence */}
             {/* exitBeforeEnter says to wait until current component 
             is closed before animating the next component */}
-            <AnimatePresence exitBeforeEnter>
-                {/* location and pathname needed for Animate Presence */}
-                <Switch 
-                    location={currentLocation} 
-                    key={currentLocation.pathname} 
-                >
-                    <Route path="/" component={Landing} exact />
-                    <Route path="/faq" component={FAQ} exact />
-                    <Route path="/news" component={NewsPage} exact />
-                    {/* Route Guarding using unique authentication ID */}
-                    <Route path="/create-news-announcement" component={auth.uid ? NewsForm : Landing} exact />
-                    <Route path="/sign-in" component={auth.uid ? Landing : SignIn} exact />
-                    <Route path="/sign-up" component={auth.uid ? Landing : SignUp} exact />
-                    <Route path="/my-profile" component={auth.uid ? ProfilePage : Landing} exact />
-                </Switch>
-            </AnimatePresence>
+            {/* location and pathname needed for Animate Presence */}
+            <Switch 
+                location={currentLocation} 
+                key={currentLocation.pathname} 
+            >
+                <Route path="/" component={Landing} exact />
+                <Route path="/faq" component={FAQ} exact />
+                <Route path="/news" component={NewsPage} exact />
+                {/* Route Guarding using unique authentication ID */}
+                <Route path="/create-news-announcement" component={NewsForm} exact />
+                <Route path="/sign-in" component={SignIn} exact />
+                <Route path="/sign-up" component={SignUp} exact />
+                <Route path="/my-profile" component={ProfilePage} exact />
+            </Switch>
             <Footer />
         </div>
     );
