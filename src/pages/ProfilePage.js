@@ -10,10 +10,19 @@ import { pageLoad, revealUp } from '../assets/Animations';
 import AutoScroll from '../assets/AutoScroll';
 // Redux Imports
 import { useSelector } from 'react-redux';
+// Importing Redirect Component
+import { Redirect } from 'react-router-dom';
 
 const ProfilePage = () => {
     const auth = useSelector((state) => state.firebase.auth);
     const profileData = useSelector((state) => state.firebase.profile);
+
+    // If an authentication UID is NOT present (user is not signed in),
+    // redirect to home
+    if (!auth.uid) {
+        return <Redirect to='/' />;
+    }
+
     return (
         <ProfileContainer
             variants={pageLoad} 

@@ -12,10 +12,11 @@ import AutoScroll from '../../assets/AutoScroll';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { signUpUser } from '../../redux-store/actions/AuthActions';
+// Importing Redirect Component
+import { Redirect } from 'react-router-dom';
 
 const SignUp = () => {
     const dispatch = useDispatch();
-    const authError = useSelector((state) => state.auth.authError);
     const auth = useSelector((state) => state.firebase.auth);
 
     // Setting a local state for the form entry
@@ -31,6 +32,12 @@ const SignUp = () => {
         dispatch(signUpUser(profile));
     }
 
+    // If an authentication UID is present (user is already signed in),
+    // redirect to home
+    if (auth.uid) {
+        return <Redirect to='/' />;
+    }
+
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             {/* For Auto Scrolling to top */}
@@ -39,9 +46,6 @@ const SignUp = () => {
                 <TextSection variants={newsFormReveal}>
                     <h2>Sign <span>Up</span></h2>
                     <p>This Sign Up form is currently experimental.</p>
-                    <div>
-                        {authError ? <p className="red-text">{authError}</p> : auth.isEmpty ? null : <p className="green-text">Signup Success</p>}
-                    </div>
                 </TextSection>
             </Hide>
             <FormSection>

@@ -13,9 +13,11 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 // Redux action to dispatch data
 import { createAnnouncement } from '../redux-store/actions/NewsActions';
+// Importing Redirect Component
+import { Redirect } from 'react-router-dom';
 
 const NewsForm = () => {
-    const newsAnnouncementError = useSelector((state) => state.NewsAnnouncements.newsAnnouncementError);
+    const auth = useSelector((state) => state.firebase.auth);
 
     // Allowing the form to dispatch action
     const dispatch = useDispatch();
@@ -29,6 +31,13 @@ const NewsForm = () => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
     }
+
+    // If an authentication UID is NOT present (user is not signed in),
+    // redirect to home
+    if (!auth.uid) {
+        return <Redirect to='/' />;
+    }
+    
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             {/* For Auto Scrolling to top */}
@@ -37,9 +46,6 @@ const NewsForm = () => {
                 <TextSection variants={newsFormReveal}>
                     <h2>News Announcement <span>Form</span></h2>
                     <p>The News Information Page will update with your post</p>
-                    {/* <div>
-                        {newsAnnouncementError ? <p className="red-text">{newsAnnouncementError}</p> : <p className="green-text">Announcement Posted</p>}
-                    </div> */}
                 </TextSection>
             </Hide>
             <FormSection>
