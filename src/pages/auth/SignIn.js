@@ -12,11 +12,11 @@ import AutoScroll from '../../assets/AutoScroll';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { signInUser } from '../../redux-store/actions/AuthActions';
+// Importing Redirect Component
 import { Redirect } from 'react-router-dom';
 
 const SignIn = () => {
     const dispatch = useDispatch();
-    const authError = useSelector((state) => state.auth.authError);
     const auth = useSelector((state) => state.firebase.auth);
 
     // Setting a local state for the form entry
@@ -31,6 +31,8 @@ const SignIn = () => {
         dispatch(signInUser(profile));
     }
 
+    // If an authentication UID is present (user is already signed in),
+    // redirect to home
     if (auth.uid) {
         return <Redirect to='/' />;
     }
@@ -43,9 +45,6 @@ const SignIn = () => {
                 <TextSection variants={newsFormReveal}>
                     <h2>Sign <span>In</span></h2>
                     <p>This Sign In form is currently experimental.</p>
-                    <div>
-                        {authError ? <p className="red-text">{authError}</p> : auth.isEmpty ? null : <p className="green-text">Login Success</p>}
-                    </div>
                 </TextSection>
             </Hide>
             <FormSection>
