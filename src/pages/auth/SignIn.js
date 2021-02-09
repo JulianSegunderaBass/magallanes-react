@@ -14,6 +14,8 @@ import { useDispatch } from 'react-redux';
 import { signInUser } from '../../redux-store/actions/AuthActions';
 // Importing Redirect Component
 import { Redirect } from 'react-router-dom';
+// For notifications
+import { store } from 'react-notifications-component';
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -29,6 +31,20 @@ const SignIn = () => {
         // Prevents page refreshing
         e.preventDefault();
         dispatch(signInUser(profile));
+        // Displaying a notification
+        store.addNotification({
+            title: "Signing you in...",
+            message: "Give us some time.",
+            type: "warning",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 2000,
+                onScreen: true
+            }
+        });
     }
 
     // If an authentication UID is present (user is already signed in),

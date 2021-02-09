@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux';
 import { createAnnouncement } from '../redux-store/actions/NewsActions';
 // Importing Redirect Component
 import { Redirect } from 'react-router-dom';
+// For notifications
+import { store } from 'react-notifications-component';
 
 const NewsForm = () => {
     const auth = useSelector((state) => state.firebase.auth);
@@ -31,6 +33,20 @@ const NewsForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
+        // Displaying a notification
+        store.addNotification({
+            title: "Uploading Announcement...",
+            message: "Give us some time.",
+            type: "warning",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 2000,
+                onScreen: true
+            }
+        });
     }
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
