@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Inter', sans-serif;
         &:hover {
             background-color: ${accentColor};
-            color: #F1FAEE;
+            color: ${mainBackground};
         }
     }
 `

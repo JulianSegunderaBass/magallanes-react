@@ -7,7 +7,7 @@ import NewsSummary from './NewsSummary';
 import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
-import { strongRevealUp } from '../../assets/Animations';
+import { strongRevealUp, fade } from '../../assets/Animations';
 // For card link
 import { Link } from 'react-router-dom';
 
@@ -21,15 +21,17 @@ const NewsList = ({newsItems}) => {
                     <div className="divider"></div>
                 </HeaderSection>
             </Hide>
-            <NewsSection>
-                {newsItems && newsItems.map(newsItem => {
-                    return (
-                        <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id}>
-                            <NewsSummary newsItem={newsItem} key={newsItem.id} />
-                        </Link>
-                    )
-                })}
-            </NewsSection>
+            {newsItems && 
+                <NewsSection variants={fade}>
+                    {newsItems.map(newsItem => {
+                        return (
+                            <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id}>
+                                <NewsSummary newsItem={newsItem} key={newsItem.id} />
+                            </Link>
+                        )
+                    })}
+                </NewsSection>
+            }
         </MainContainer>
     )
 }
@@ -71,7 +73,7 @@ const HeaderSection = styled(motion.div)`
 `
 
 
-const NewsSection = styled.div`
+const NewsSection = styled(motion.div)`
     a {
         text-decoration: none;
     }
