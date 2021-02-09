@@ -8,6 +8,8 @@ import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
 import { strongRevealUp } from '../../assets/Animations';
+// For card link
+import { Link } from 'react-router-dom';
 
 // News Items is an array of objects
 const NewsList = ({newsItems}) => {
@@ -22,7 +24,9 @@ const NewsList = ({newsItems}) => {
             <NewsSection>
                 {newsItems && newsItems.map(newsItem => {
                     return (
-                        <NewsSummary newsItem={newsItem} key={newsItem.id} />
+                        <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id}>
+                            <NewsSummary newsItem={newsItem} key={newsItem.id} />
+                        </Link>
                     )
                 })}
             </NewsSection>
@@ -68,7 +72,9 @@ const HeaderSection = styled(motion.div)`
 
 
 const NewsSection = styled.div`
-
+    a {
+        text-decoration: none;
+    }
 `
 
 export default NewsList;

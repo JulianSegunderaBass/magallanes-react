@@ -10,7 +10,7 @@ export const createAnnouncement = (newsAnnouncement) => {
 
         // If poster has decided to include an attachment
         if (newsAnnouncement.attachment) {
-                // Saving attachment with URL
+            // Saving attachment with URL
             const uploadTask = projectStorage
             .ref(`news-images/${newsAnnouncement.attachment.name}`)
             .put(newsAnnouncement.attachment);
@@ -26,6 +26,7 @@ export const createAnnouncement = (newsAnnouncement) => {
                         .child(newsAnnouncement.attachment.name)
                         .getDownloadURL()
                         .then(url => {
+                            // Once image is saved to Firebase Storage and URL is available
                             firestore.collection('NewsAnnouncements').add({
                                 heading: newsAnnouncement.heading,
                                 body: newsAnnouncement.body,

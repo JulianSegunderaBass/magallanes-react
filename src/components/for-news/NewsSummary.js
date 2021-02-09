@@ -15,9 +15,9 @@ const NewsSummary = ({newsItem}) => {
             <h5>{moment(newsItem.createdAt.toDate()).calendar()}</h5>
             <div className="divider"></div>
             <p>{newsItem.body}</p>
-            {newsItem.attachmentURL && 
+            {/* {newsItem.attachmentURL && 
                 <img src={newsItem.attachmentURL} alt="image attachment"/>
-            }    
+            }     */}
         </NewsCard>
     )
 }
