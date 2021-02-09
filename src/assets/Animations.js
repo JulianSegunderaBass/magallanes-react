@@ -78,6 +78,20 @@ export const newsFormReveal = {
     }
 }
 
+// Simple fade animation
+export const fade = {
+    hidden: {
+        opacity: 0
+    },
+    show: {
+        opacity: 1,
+        transition: {
+            duration: 0.75,
+            ease: "easeOut"
+        }
+    }
+}
+
 // Animation to scale an image within a container
 // with overflow set to "hidden"
 export const imageAnim = {

@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux';
 import { createAnnouncement } from '../redux-store/actions/NewsActions';
 // Importing Redirect Component
 import { Redirect } from 'react-router-dom';
+// For notifications
+import { store } from 'react-notifications-component';
 
 const NewsForm = () => {
     const auth = useSelector((state) => state.firebase.auth);
@@ -24,12 +26,34 @@ const NewsForm = () => {
     // Setting a local state for the form entry
     const [newsAnnouncement, setNewsAnnouncement] = useState({
         heading: '',
-        body: ''
+        body: '',
+        attachment: null
     });
     // Submit function to dispatch action with data
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
+        // Displaying a notification
+        store.addNotification({
+            title: "Uploading Announcement...",
+            message: "Give us some time.",
+            type: "warning",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 2000,
+                onScreen: true
+            }
+        });
+    }
+    const handleAttachment = (e) => {
+        if (e.target.files[0]) {
+            setNewsAnnouncement({
+                ...newsAnnouncement, 
+                attachment: e.target.files[0]})
+        }
     }
 
     // If an authentication UID is NOT present (user is not signed in),
@@ -62,6 +86,11 @@ const NewsForm = () => {
                         placeholder="Enter your news content here" 
                         onChange={(e) => setNewsAnnouncement({...newsAnnouncement, body: e.target.value})}
                         required
+                    />
+                    <input 
+                        type="file" 
+                        accept="image/png, image/jpeg"
+                        onChange={handleAttachment}
                     />
                     <button>Create Announcement</button>
                 </form>
