@@ -24,12 +24,20 @@ const NewsForm = () => {
     // Setting a local state for the form entry
     const [newsAnnouncement, setNewsAnnouncement] = useState({
         heading: '',
-        body: ''
+        body: '',
+        attachment: null
     });
     // Submit function to dispatch action with data
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
+    }
+    const handleAttachment = (e) => {
+        if (e.target.files[0]) {
+            setNewsAnnouncement({
+                ...newsAnnouncement, 
+                attachment: e.target.files[0]})
+        }
     }
 
     // If an authentication UID is NOT present (user is not signed in),
@@ -62,6 +70,11 @@ const NewsForm = () => {
                         placeholder="Enter your news content here" 
                         onChange={(e) => setNewsAnnouncement({...newsAnnouncement, body: e.target.value})}
                         required
+                    />
+                    <input 
+                        type="file" 
+                        accept="image/png, image/jpeg"
+                        onChange={handleAttachment}
                     />
                     <button>Create Announcement</button>
                 </form>
