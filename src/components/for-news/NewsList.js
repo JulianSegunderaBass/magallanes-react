@@ -1,8 +1,9 @@
 // Component holding list of news announcements
 
-import React from 'react';
+import React, { useState } from 'react';
 // Importing Components
 import NewsSummary from './NewsSummary';
+import Pagination from './Pagination';
 // Importing Styled Components
 import styled from 'styled-components';
 // Importing Framer Motion and Animations
@@ -13,6 +14,17 @@ import { Link } from 'react-router-dom';
 
 // News Items is an array of objects
 const NewsList = ({newsItems}) => {
+    // Pagination Variables
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(5);
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    // Slicing initial state of News Items
+    const currentAnnouncements = newsItems && newsItems.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Function to change page number on click
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
         <MainContainer>
             <Hide>
@@ -21,15 +33,22 @@ const NewsList = ({newsItems}) => {
                     <div className="divider"></div>
                 </HeaderSection>
             </Hide>
-            {newsItems && 
+            {currentAnnouncements && 
                 <NewsSection variants={fade}>
-                    {newsItems.map(newsItem => {
+                    {currentAnnouncements.map(newsItem => {
                         return (
                             <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id}>
                                 <NewsSummary newsItem={newsItem} key={newsItem.id} />
                             </Link>
                         )
                     })}
+                    {/* Pagination Component */}
+                    <Pagination 
+                        postsPerPage={postsPerPage} 
+                        totalPosts={newsItems.length} 
+                        paginate={paginate} 
+                        currentPage={currentPage} 
+                    />
                 </NewsSection>
             }
         </MainContainer>
