@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 // Importing Components
 import NewsSummary from './NewsSummary';
 import Pagination from './Pagination';
+// Importing Loading Spinner
+import ReactSpinner from '../../assets/images/ReactSpinner.gif';
 // Importing Styled Components
 import styled from 'styled-components';
 // Importing Framer Motion and Animations
@@ -25,6 +27,18 @@ const NewsList = ({newsItems}) => {
     // Function to change page number on click
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+    // While the list of News Announcements is not available,
+    // Render out loading spinner gif
+    if (!currentAnnouncements) {
+        return (
+            <LoadingContainer>
+                <img src={ReactSpinner} alt="Loading Spinner" />
+                <h4>Loading Announcements</h4>
+            </LoadingContainer>
+        )
+    }
+
+    // Render main content when News Announcements are available
     return (
         <MainContainer>
             <Hide>
@@ -95,6 +109,20 @@ const HeaderSection = styled(motion.div)`
 const NewsSection = styled(motion.div)`
     a {
         text-decoration: none;
+    }
+`
+
+const LoadingContainer = styled.div`
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    img {
+        margin: 2rem auto;
+        width: 150px;
+        height: 150px;
+    }
+    h4 {
+        margin: 0 auto;
     }
 `
 
