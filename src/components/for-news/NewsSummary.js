@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { deleteAnnouncement } from '../../redux-store/actions/NewsActions';
 // Importing Modal
 import Modal from 'react-modal';
+// Importing all production Icons with code names
+import * as AiIcons from 'react-icons/ai';
 
 Modal.setAppElement('#root');
 // News Item is an object holding the news data
@@ -36,7 +38,7 @@ const NewsSummary = ({newsItem}) => {
                 <p>{newsItem.body}</p>
             </Link>
             {/* Absolutely-positioned delete button activates modal */}
-            <button id="pop-modal" onClick={() => setModalState(true)}>X</button>
+            <button id="pop-modal" onClick={() => setModalState(true)}><AiIcons.AiFillDelete /></button>
             {/* Modal Component */}
             <Modal 
                 isOpen={modalState} 
@@ -78,6 +80,7 @@ const accentColor = "#E63946"
 const NewsCard = styled.div`
     margin-bottom: 2.5rem;
     padding: 1.5rem;
+    border-radius: 2rem;
     background: ${cardBackground};
     transition: background 0.5s ease;
     /* Relative positioning for button */
@@ -92,7 +95,9 @@ const NewsCard = styled.div`
             background: ${contentHover};
         }
     }
-    border-radius: 2rem;
+    h4 {
+        margin-top: 1.2rem;
+    }
     h4, h5 {
         font-weight: bold;
         margin-bottom: 0.5rem;
@@ -124,12 +129,13 @@ const NewsCard = styled.div`
     /* Button for triggering delete modal */
     #pop-modal {
         position: absolute;
-        top: -2%;
-        right: -0.5%;
-        border-radius: 0;
-        padding: 0.5rem 1rem;
+        top: -5%;
+        right: -1%;
+        border-bottom-left-radius: 2rem;
+        padding: 1rem 2.5rem 0.1rem 2rem;
         background: ${accentColor};
         color: ${contentHover};
+        font-size: 2rem;
     }
     @media (max-width: 870px) {
         h4 {
@@ -137,6 +143,11 @@ const NewsCard = styled.div`
         }
         .divider {
             width: 20%;
+        }
+        #pop-modal {
+            font-size: 1.5rem;
+            padding: 1.1rem 1.7rem 0.1rem 1.5rem;
+            right: -3%;
         }
     }
 `
