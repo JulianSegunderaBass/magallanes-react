@@ -28,6 +28,11 @@ const AnnouncementDetails = (props) => {
                     <h4>{NewsItem.heading}</h4>
                     {/* Using Moment.js to parse createdAt property to readable date */}
                     <h5>{moment(NewsItem.createdAt.toDate()).calendar()}</h5>
+                    <div className="sender-info">
+                        <h5>Posted By:</h5>
+                        <h5>{NewsItem.authorFirstName} {NewsItem.authorLastName}</h5>
+                        <h5 id="sender-email">{NewsItem.authorEmail}</h5>
+                </div>
                 </motion.div>
                 <div className="divider"></div>
                 <p>{NewsItem.body}</p>
@@ -99,6 +104,15 @@ const Card = styled.div`
         &:hover {
             background-color: ${accentColor};
             color: ${mainBackground};
+        }
+    }
+    .sender-info {
+        margin: 1rem 0;
+        h5 {
+            font-weight: lighter;
+        }
+        #sender-email {
+            font-style: italic;
         }
     }
     @media (max-width: 870px) {
