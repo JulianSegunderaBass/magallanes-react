@@ -55,3 +55,15 @@ export const createAnnouncement = (newsAnnouncement) => {
 
     }
 }
+
+// announcementID is the ID of the post passed and used to reference the deletion
+export const deleteAnnouncement = (announcementID) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+        firestore.collection('NewsAnnouncements').doc(announcementID).delete().then(() => {
+            dispatch({type: 'DELETE_ANNOUNCEMENT'});
+        }).catch((error) => {
+            dispatch({type: 'DELETE_ANNOUNCEMENT_ERROR', error});
+        });
+    }
+}

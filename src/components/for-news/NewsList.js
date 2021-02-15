@@ -51,9 +51,7 @@ const NewsList = ({newsItems}) => {
                 <NewsSection variants={fade}>
                     {currentAnnouncements.map(newsItem => {
                         return (
-                            <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id}>
-                                <NewsSummary newsItem={newsItem} key={newsItem.id} />
-                            </Link>
+                            <NewsSummary newsItem={newsItem} key={newsItem.id} />
                         )
                     })}
                     {/* Pagination Component */}
