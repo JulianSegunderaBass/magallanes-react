@@ -14,10 +14,14 @@ import { deleteAnnouncement } from '../../redux-store/actions/NewsActions';
 import Modal from 'react-modal';
 // Importing all production Icons with code names
 import * as AiIcons from 'react-icons/ai';
+// For connecting to Redux state
+import { useSelector } from 'react-redux';
 
 Modal.setAppElement('#root');
 // News Item is an object holding the news data
 const NewsSummary = ({newsItem}) => {
+    // Connecting to Redux auth status
+    const currentUserEmail = useSelector((state) => state.firebase.auth.email);
     const [modalState, setModalState] = useState(false);
     const dispatch = useDispatch();
     const handleDelete = () => {
@@ -31,6 +35,11 @@ const NewsSummary = ({newsItem}) => {
                 <h4>{newsItem.heading}</h4>
                 {/* Using Moment.js to parse createdAt property to readable date */}
                 <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
+                <div className="sender-info">
+                    <h5>Posted By:</h5>
+                    <h5>{newsItem.authorFirstName} {newsItem.authorLastName}</h5>
+                    <h5 id="sender-email">{newsItem.authorEmail}</h5>
+                </div>
                 {newsItem.attachmentURL && 
                     <h5 id="attachment-indicator">Image Present</h5>
                 }
@@ -38,7 +47,7 @@ const NewsSummary = ({newsItem}) => {
                 <p>{newsItem.body}</p>
             </Link>
             {/* Absolutely-positioned delete button activates modal */}
-            <button id="pop-modal" onClick={() => setModalState(true)}><AiIcons.AiFillDelete /></button>
+            {currentUserEmail == newsItem.authorEmail ? <button id="pop-modal" onClick={() => setModalState(true)}><AiIcons.AiFillDelete /></button> : ''}
             {/* Modal Component */}
             <Modal 
                 isOpen={modalState} 
@@ -117,7 +126,7 @@ const NewsCard = styled.div`
         background: ${accentColor};
         transition: background 0.5s ease;
     }
-    #attachment-indicator, #time-stamp {
+    #attachment-indicator, #time-stamp, #sender-email {
         font-style: italic;
     }
     #attachment-indicator {
@@ -125,6 +134,12 @@ const NewsCard = styled.div`
     }
     h4, h5, p {
         transition: color 0.5s ease;
+    }
+    .sender-info {
+        margin: 1rem 0;
+        h5 {
+            font-weight: lighter;
+        }
     }
     /* Button for triggering delete modal */
     #pop-modal {

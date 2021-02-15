@@ -7,6 +7,9 @@ export const createAnnouncement = (newsAnnouncement) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const projectStorage = firebase.storage();
+        // Accessing current logged profile state
+        const loggedProfile = getState().firebase.profile;
+        const loggedEmail = getState().firebase.auth.email;
 
         // If poster has decided to include an attachment
         if (newsAnnouncement.attachment) {
@@ -31,7 +34,10 @@ export const createAnnouncement = (newsAnnouncement) => {
                                 heading: newsAnnouncement.heading,
                                 body: newsAnnouncement.body,
                                 attachmentURL: url,
-                                createdAt: new Date()
+                                createdAt: new Date(),
+                                authorFirstName: loggedProfile.firstName,
+                                authorLastName: loggedProfile.lastName,
+                                authorEmail: loggedEmail
                             }).then(() => {
                                 dispatch({type: 'CREATE_ANNOUNCEMENT', payload: newsAnnouncement});
                             }).catch((error) => {
@@ -45,7 +51,10 @@ export const createAnnouncement = (newsAnnouncement) => {
             firestore.collection('NewsAnnouncements').add({
                 heading: newsAnnouncement.heading,
                 body: newsAnnouncement.body,
-                createdAt: new Date()
+                createdAt: new Date(),
+                authorFirstName: loggedProfile.firstName,
+                authorLastName: loggedProfile.lastName,
+                authorEmail: loggedEmail
             }).then(() => {
                 dispatch({type: 'CREATE_ANNOUNCEMENT', payload: newsAnnouncement});
             }).catch((error) => {
