@@ -10,12 +10,19 @@ import { pageLoad, revealUp } from '../assets/Animations';
 import AutoScroll from '../assets/AutoScroll';
 // Redux Imports
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { resetPass } from '../redux-store/actions/AuthActions';
 // Importing Redirect Component
 import { Redirect } from 'react-router-dom';
 
 const ProfilePage = () => {
     const auth = useSelector((state) => state.firebase.auth);
     const profileData = useSelector((state) => state.firebase.profile);
+    const dispatch = useDispatch();
+
+    const handlePassReset = () => {
+        dispatch(resetPass());
+    }
 
     // If an authentication UID is NOT present (user is not signed in),
     // redirect to home
@@ -41,6 +48,9 @@ const ProfilePage = () => {
                 <li>{profileData.currentBenefits.benefit_2}</li>
                 <li>{profileData.currentBenefits.benefit_3}</li>
             </ul>
+            <div className="divider"></div>
+            <h5>You may reset your password here. A message will be sent to your inbox with further instructions.</h5>
+            <button onClick={handlePassReset}>Change Password</button>
         </ProfileContainer>
     )
 }
@@ -54,11 +64,12 @@ const dividerColor = "#1D3557";
 const ProfileContainer = styled(motion.div)`
     min-height: 90vh;
     padding: 5rem 10rem;
-    h2, h4 {
+    h2, h4, h5 {
         margin-bottom: 1rem;
     }
     ul {
         margin-top: 2rem;
+        margin-bottom: 1rem;
         padding: 0 3rem;
         li {
             font-size: 1.8rem;
@@ -87,6 +98,10 @@ const ProfileContainer = styled(motion.div)`
         #email {
             color: ${mainFontColor};
             font-size: 1.2rem;
+        }
+        button {
+            display: block;
+            margin: 0 auto;
         }
     }
 `

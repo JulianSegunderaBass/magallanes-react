@@ -36,7 +36,7 @@ const NewsReducer = (state = initState, action) => {
             console.log('Create announcement error', action.error);
             store.addNotification({
                 title: "Failed to Create Announcement",
-                message: `${action.error.message}`,
+                message: action.error.message,
                 type: "danger",
                 insert: "top",
                 container: "top-right",
@@ -74,7 +74,7 @@ const NewsReducer = (state = initState, action) => {
             console.log('Problem deleting announcement', action.error);
             store.addNotification({
                 title: "Failed to Delete Announcement",
-                message: `${action.error.message}`,
+                message: action.error.message,
                 type: "danger",
                 insert: "top",
                 container: "top-right",

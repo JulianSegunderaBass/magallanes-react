@@ -17,17 +17,17 @@ import * as AiIcons from 'react-icons/ai';
 // For connecting to Redux state
 import { useSelector } from 'react-redux';
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 // News Item is an object holding the news data
-const NewsSummary = ({newsItem}) => {
+const NewsSummary = ({ newsItem }) => {
     // Connecting to Redux auth status
     const currentUserEmail = useSelector((state) => state.firebase.auth.email);
     const [modalState, setModalState] = useState(false);
     const dispatch = useDispatch();
     const handleDelete = () => {
-        setModalState(false)
+        setModalState(false);
         dispatch(deleteAnnouncement(newsItem.id));
-    }
+    };
     return (
         <NewsCard>
             {/* Section inside link tag is clickable */}
@@ -40,32 +40,30 @@ const NewsSummary = ({newsItem}) => {
                     <h5>{newsItem.authorFirstName} {newsItem.authorLastName}</h5>
                     <h5 id="sender-email">{newsItem.authorEmail}</h5>
                 </div>
-                {newsItem.attachmentURL && 
-                    <h5 id="attachment-indicator">Image Present</h5>
-                }
+                {newsItem.attachmentURL && <h5 id="attachment-indicator">Image Present</h5>}
                 <div className="divider"></div>
                 <p>{newsItem.body}</p>
             </Link>
             {/* Absolutely-positioned delete button activates modal */}
-            {currentUserEmail == newsItem.authorEmail ? <button id="pop-modal" onClick={() => setModalState(true)}><AiIcons.AiFillDelete /></button> : ''}
+            {currentUserEmail == newsItem.authorEmail ? <button id="pop-modal" onClick={() => setModalState(true)}><AiIcons.AiFillDelete /></button> : ""}
             {/* Modal Component */}
-            <Modal 
-                isOpen={modalState} 
+            <Modal
+                isOpen={modalState}
                 onRequestClose={() => setModalState(false)}
                 style={{
                     overlay: {
-                        backgroundColor: 'rgba(3, 25, 38, 0.75)'
+                        backgroundColor: "rgba(3, 25, 38, 0.75)",
                     },
                     content: {
-                        width: '75%',
-                        height: '55%',
-                        top: '22.5%',
-                        left: '12.5%',
-                        right: '12.5%',
-                        bottom: '22.5%',
-                        borderRadius: '1rem',
-                        padding: '1rem'
-                    }
+                        width: "75%",
+                        height: "55%",
+                        top: "22.5%",
+                        left: "12.5%",
+                        right: "12.5%",
+                        bottom: "22.5%",
+                        borderRadius: "1rem",
+                        padding: "1rem",
+                    },
                 }}
             >
                 <div className="modal-item-container">
@@ -75,14 +73,14 @@ const NewsSummary = ({newsItem}) => {
                 </div>
             </Modal>
         </NewsCard>
-    )
-}
+    );
+};
 
 // Color Variables
 const cardBackground = "#C7D1C4";
 const hoverBackground = "#457B9D";
 const contentHover = "#FFF";
-const accentColor = "#E63946"
+const accentColor = "#E63946";
 
 // Styled Components
 
@@ -93,8 +91,8 @@ const NewsCard = styled.div`
     background: ${cardBackground};
     transition: background 0.5s ease;
     /* Relative positioning for button */
-    position: relative;
-    overflow: hidden;
+    /* position: relative;
+    overflow: hidden; */
     &:hover {
         background: ${hoverBackground};
         h4, h5, p {
@@ -129,6 +127,9 @@ const NewsCard = styled.div`
     #attachment-indicator, #time-stamp, #sender-email {
         font-style: italic;
     }
+    #sender-email {
+        word-break: break-all;
+    }
     #attachment-indicator {
         margin-top: 1rem;
     }
@@ -143,14 +144,19 @@ const NewsCard = styled.div`
     }
     /* Button for triggering delete modal */
     #pop-modal {
-        position: absolute;
+        /* position: absolute;
         top: -5%;
         right: -1%;
         border-bottom-left-radius: 2rem;
         padding: 1rem 2.5rem 0.1rem 2rem;
         background: ${accentColor};
         color: ${contentHover};
+        font-size: 2rem; */
+        background: ${accentColor};
+        color: ${contentHover};
         font-size: 2rem;
+        padding: 0.5rem 3rem;
+        
     }
     @media (max-width: 870px) {
         h4 {
@@ -161,10 +167,8 @@ const NewsCard = styled.div`
         }
         #pop-modal {
             font-size: 1.5rem;
-            padding: 1.1rem 1.7rem 0.1rem 1.5rem;
-            right: -3%;
         }
     }
-`
+`;
 
 export default NewsSummary;
