@@ -103,6 +103,41 @@ const AuthReducer = (state = initState, action) => {
                 ...state,
                 authError: action.error.message
             }
+        case 'RESET_PASSWORD':
+            console.log('Password Reset Email Sent');
+            store.addNotification({
+                title: "Password Reset Email Sent",
+                message: "Please check your inbox.",
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+            return state;
+        case 'RESET_PASSWORD_ERROR':
+            console.log('Failed to Send Reset Email');
+            store.addNotification({
+                title: "Failed to Send Reset Email",
+                message: action.error.message,
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+            return {
+                ...state,
+                authError: action.error.message
+            }
         default:
             return state;
     }

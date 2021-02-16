@@ -61,3 +61,19 @@ export const signUpUser = (newUser) => {
         });
     }
 }
+
+// For changing password from profile page
+export const resetPass = () => {
+    return (dispatch, getState, {getFirebase}) => {
+        const firebase = getFirebase();
+        // Reference to logged user's email
+        const loggedEmail = getState().firebase.auth.email;
+
+        // Sending an email to logged user to reset password
+        firebase.auth().sendPasswordResetEmail(loggedEmail).then(() => {
+            dispatch({type: 'RESET_PASSWORD'});
+        }).catch(error => {
+            dispatch({type: 'RESET_PASSWORD_ERROR', error});
+        });
+    }
+}
