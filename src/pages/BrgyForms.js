@@ -4,7 +4,7 @@ import "./BrgyForms.css";
 
 const BrgyForms = () => {
   return (
-    <>
+    <div className='form-container'>
       <iframe
         src="https://docs.google.com/forms/d/e/1FAIpQLScYarwDi-xSpRAadDFt047ZhpTu2YDJFzrclVG_ue8uPf4opA/viewform?embedded=true"
         // width="640"
@@ -16,7 +16,7 @@ const BrgyForms = () => {
       >
         Loading…
       </iframe>
-    </>
+    </div>
   );
 };
 
