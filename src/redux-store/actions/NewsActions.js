@@ -65,6 +65,67 @@ export const createAnnouncement = (newsAnnouncement) => {
     }
 }
 
+// Function for making edits to announcements
+// newsEdits are the edits being passed
+export const editAnnouncement = (newsEdits) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+        const projectStorage = firebase.storage();
+
+        // If poster has decided to include an attachment
+        if (newsEdits.attachment) {
+            // Saving attachment with URL
+            const uploadTask = projectStorage
+            .ref(`news-images/${newsEdits.attachment.name}`)
+            .put(newsEdits.attachment);
+            uploadTask.on(
+                "state_changed",
+                snapshot => {},
+                error => {
+                    console.log(error);
+                },
+                () => {
+                    projectStorage
+                        .ref("news-images")
+                        .child(newsEdits.attachment.name)
+                        .getDownloadURL()
+                        .then(url => {
+                            // Once image is saved to Firebase Storage and URL is available
+                            // Referencing announcement's ID for merging changes
+                            if (newsEdits.heading !== '') {
+                                firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                                    heading: newsEdits.heading
+                                }, { merge: true });
+                            } else if (newsEdits.body !== '') {
+                                firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                                    body: newsEdits.body
+                                }, { merge: true });
+                            }
+                            firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                                attachmentURL: url
+                            }, { merge: true });
+                            dispatch({type: 'UPDATE_ANNOUNCEMENT', payload: newsEdits});
+                        })
+                }
+            )
+        } else {
+            // Normal text entry with no attachment
+            // Referencing announcement's ID for merging changes
+            if (newsEdits.heading !== '') {
+                firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                    heading: newsEdits.heading
+                }, { merge: true });
+            } else if (newsEdits.body !== '') {
+                firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                    body: newsEdits.body
+                }, { merge: true });
+            }
+            dispatch({type: 'UPDATE_ANNOUNCEMENT', payload: newsEdits});
+        }
+
+    }
+}
+
 // announcementID is the ID of the post passed and used to reference the deletion
 export const deleteAnnouncement = (announcementID) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {

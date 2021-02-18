@@ -89,6 +89,25 @@ const NewsReducer = (state = initState, action) => {
                 ...state,
                 newsAnnouncementError: action.error.message
             }
+        case 'UPDATE_ANNOUNCEMENT':
+            console.log('Updated Announcement: ', action.payload);
+            store.addNotification({
+                title: "News Announcement Updated",
+                message: "These edits are now viewable on the News Reports Page",
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+            return {
+                ...state,
+                newsAnnouncementError: null
+            }
         default:
             return state;
     }

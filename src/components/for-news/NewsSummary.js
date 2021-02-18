@@ -14,8 +14,9 @@ import { deleteAnnouncement } from '../../redux-store/actions/NewsActions';
 import Modal from 'react-modal';
 // Importing all production Icons with code names
 import * as AiIcons from 'react-icons/ai';
-// For connecting to Redux state
+// For connecting to Redux state and action
 import { useSelector } from 'react-redux';
+import { editAnnouncement } from '../../redux-store/actions/NewsActions';
 // For notifications
 import { store } from 'react-notifications-component';
 
@@ -34,7 +35,9 @@ const NewsSummary = ({ newsItem }) => {
     const [editModalState, setEditModalState] = useState(false);
 
     // Setting a local state for the form entry
+    // Note: announcementID is the ID reference of the post being edited
     const [newsEdits, setNewsEdits] = useState({
+        announcementID: newsItem.id,
         heading: '',
         body: '',
         attachment: null
@@ -44,7 +47,7 @@ const NewsSummary = ({ newsItem }) => {
     const handleEdits = (e) => {
         e.preventDefault();
         // Preventing submission if all form fields are empty
-        if (newsEdits.heading == '' && newsEdits.body == '' && newsEdits.attachment == null) {
+        if (newsEdits.heading === '' && newsEdits.body === '' && newsEdits.attachment === null) {
             store.addNotification({
                 title: "Please provide an edit",
                 message: "No entries detected",
@@ -59,8 +62,8 @@ const NewsSummary = ({ newsItem }) => {
                 }
             });
         } else {
+            dispatch(editAnnouncement(newsEdits));
             setEditModalState(false);
-            console.log(newsEdits);
             // Displaying a notification
             store.addNotification({
                 title: "Updating Announcement...",
@@ -106,9 +109,9 @@ const NewsSummary = ({ newsItem }) => {
             </Link>
             <ButtonContainer>
                 {/* Update Button */}
-                {currentUserEmail == newsItem.authorEmail ? <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button> : ""}
+                {currentUserEmail === newsItem.authorEmail ? <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button> : ""}
                 {/* Delete Button */}
-                {currentUserEmail == newsItem.authorEmail ? <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button> : ""}
+                {currentUserEmail === newsItem.authorEmail ? <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button> : ""}
             </ButtonContainer>
             {/* Modal Components */}
 
