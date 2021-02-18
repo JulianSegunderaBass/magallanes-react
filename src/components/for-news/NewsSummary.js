@@ -16,10 +16,14 @@ import Modal from 'react-modal';
 import * as AiIcons from 'react-icons/ai';
 // For connecting to Redux state
 import { useSelector } from 'react-redux';
+// For notifications
+import { store } from 'react-notifications-component';
 
 Modal.setAppElement("#root");
 // News Item is an object holding the news data
 const NewsSummary = ({ newsItem }) => {
+    
+    // Allowing the form to dispatch action
     const dispatch = useDispatch();
 
     // Connecting to Redux auth status
@@ -29,13 +33,60 @@ const NewsSummary = ({ newsItem }) => {
     const [deleteModalState, setDeleteModalState] = useState(false);
     const [editModalState, setEditModalState] = useState(false);
 
+    // Setting a local state for the form entry
+    const [newsEdits, setNewsEdits] = useState({
+        heading: '',
+        body: '',
+        attachment: null
+    });
+
     // Modal Functions
-    const handleEdits = () => {
-        setEditModalState(false);
+    const handleEdits = (e) => {
+        e.preventDefault();
+        // Preventing submission if all form fields are empty
+        if (newsEdits.heading == '' && newsEdits.body == '' && newsEdits.attachment == null) {
+            store.addNotification({
+                title: "Please provide an edit",
+                message: "No entries detected",
+                type: "danger",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+        } else {
+            setEditModalState(false);
+            console.log(newsEdits);
+            // Displaying a notification
+            store.addNotification({
+                title: "Updating Announcement...",
+                message: "Give us some time.",
+                type: "warning",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+        }
     };
     const handleDelete = () => {
         setDeleteModalState(false);
         dispatch(deleteAnnouncement(newsItem.id));
+    };
+    const handleAttachment = (e) => {
+        if (e.target.files[0]) {
+            setNewsEdits({
+                ...newsEdits, 
+                attachment: e.target.files[0]})
+        }
     };
     return (
         <NewsCard>
@@ -87,14 +138,17 @@ const NewsSummary = ({ newsItem }) => {
                         <input 
                             type="text" 
                             placeholder="Enter your news headline here" 
+                            onChange={(e) => setNewsEdits({...newsEdits, heading: e.target.value})}
                         />
                         <textarea 
                             rows="10" 
                             placeholder="Enter your news content here" 
+                            onChange={(e) => setNewsEdits({...newsEdits, body: e.target.value})}
                         />
                         <input 
                             type="file" 
                             accept="image/png, image/jpeg"
+                            onChange={handleAttachment}
                         />
                         <button className="edit-modal-button">Save Edits</button>
                         <button className="edit-modal-button" onClick={() => setEditModalState(false)}>Cancel</button>
