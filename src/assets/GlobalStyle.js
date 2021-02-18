@@ -66,18 +66,7 @@ const GlobalStyle = createGlobalStyle`
         }
     }
     /* For Modals */
-    .modal-item-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    button.modal-button {
-        width: 50%;
-        margin: 0.5rem 0;
-        @media (max-width: 870px) {
-            width: 100%;
-        }
-    }
+    
     /* Modal Transition */
     .ReactModal__Overlay {
         opacity: 0;
