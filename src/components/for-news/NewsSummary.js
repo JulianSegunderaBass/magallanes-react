@@ -20,12 +20,21 @@ import { useSelector } from 'react-redux';
 Modal.setAppElement("#root");
 // News Item is an object holding the news data
 const NewsSummary = ({ newsItem }) => {
+    const dispatch = useDispatch();
+
     // Connecting to Redux auth status
     const currentUserEmail = useSelector((state) => state.firebase.auth.email);
-    const [modalState, setModalState] = useState(false);
-    const dispatch = useDispatch();
+
+    // Modal States
+    const [deleteModalState, setDeleteModalState] = useState(false);
+    const [editModalState, setEditModalState] = useState(false);
+
+    // Modal Functions
+    const handleEdits = () => {
+        setEditModalState(false);
+    };
     const handleDelete = () => {
-        setModalState(false);
+        setDeleteModalState(false);
         dispatch(deleteAnnouncement(newsItem.id));
     };
     return (
@@ -44,12 +53,59 @@ const NewsSummary = ({ newsItem }) => {
                 <div className="divider"></div>
                 <p>{newsItem.body}</p>
             </Link>
-            {/* Absolutely-positioned delete button activates modal */}
-            {currentUserEmail == newsItem.authorEmail ? <button id="pop-modal" onClick={() => setModalState(true)}><AiIcons.AiFillDelete /></button> : ""}
-            {/* Modal Component */}
+            <ButtonContainer>
+                {/* Update Button */}
+                {currentUserEmail == newsItem.authorEmail ? <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button> : ""}
+                {/* Delete Button */}
+                {currentUserEmail == newsItem.authorEmail ? <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button> : ""}
+            </ButtonContainer>
+            {/* Modal Components */}
+
+            {/* Edit Post Modal */}
             <Modal
-                isOpen={modalState}
-                onRequestClose={() => setModalState(false)}
+                isOpen={editModalState}
+                onRequestClose={() => setEditModalState(false)}
+                style={{
+                    overlay: {
+                        backgroundColor: "rgba(3, 25, 38, 0.75)",
+                    },
+                    content: {
+                        width: "75%",
+                        height: "85%",
+                        top: "7.5%",
+                        left: "12.5%",
+                        right: "12.5%",
+                        bottom: "7.5%",
+                        borderRadius: "1rem",
+                        padding: "1rem",
+                    },
+                }}
+            >
+                <ModalContent>
+                    <form onSubmit={handleEdits}>
+                        <h4 className="modal-text">Edit Your Announcement</h4>
+                        <input 
+                            type="text" 
+                            placeholder="Enter your news headline here" 
+                        />
+                        <textarea 
+                            rows="10" 
+                            placeholder="Enter your news content here" 
+                        />
+                        <input 
+                            type="file" 
+                            accept="image/png, image/jpeg"
+                        />
+                        <button className="edit-modal-button">Save Edits</button>
+                        <button className="edit-modal-button" onClick={() => setEditModalState(false)}>Cancel</button>
+                    </form>
+                </ModalContent>
+            </Modal>
+
+            {/* Delete Modal */}
+            <Modal
+                isOpen={deleteModalState}
+                onRequestClose={() => setDeleteModalState(false)}
                 style={{
                     overlay: {
                         backgroundColor: "rgba(3, 25, 38, 0.75)",
@@ -66,11 +122,11 @@ const NewsSummary = ({ newsItem }) => {
                     },
                 }}
             >
-                <div className="modal-item-container">
-                    <h4 id="modal-text">Are you sure you wish to delete this post?</h4>
-                    <button className="modal-button" onClick={handleDelete}>Delete Announcement</button>
-                    <button className="modal-button" onClick={() => setModalState(false)}>Cancel</button>
-                </div>
+                <ModalContent>
+                    <h4 className="modal-text">Are you sure you wish to delete this post?</h4>
+                    <button className="delete-modal-button" onClick={handleDelete}>Delete Announcement</button>
+                    <button className="delete-modal-button" onClick={() => setDeleteModalState(false)}>Cancel</button>
+                </ModalContent>
             </Modal>
         </NewsCard>
     );
@@ -81,6 +137,8 @@ const cardBackground = "#C7D1C4";
 const hoverBackground = "#457B9D";
 const contentHover = "#FFF";
 const accentColor = "#E63946";
+const deleteButtonColor = "#E63946";
+const editButtonColor = "#1D3557";
 
 // Styled Components
 
@@ -142,8 +200,20 @@ const NewsCard = styled.div`
             font-weight: lighter;
         }
     }
-    /* Button for triggering delete modal */
-    #pop-modal {
+    @media (max-width: 870px) {
+        h4 {
+            font-size: 1.5rem;
+        }
+        .divider {
+            width: 20%;
+        }
+    }
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    /* Buttons for triggering modals */
+    .pop-modal {
         /* position: absolute;
         top: -5%;
         right: -1%;
@@ -152,23 +222,76 @@ const NewsCard = styled.div`
         background: ${accentColor};
         color: ${contentHover};
         font-size: 2rem; */
-        background: ${accentColor};
         color: ${contentHover};
         font-size: 2rem;
         padding: 0.5rem 3rem;
-        
+        margin-right: 0.5rem;
+    }
+    #edit-button {
+        background: ${editButtonColor};
+        border-color: ${editButtonColor};
+    }
+    #delete-button {
+        background: ${deleteButtonColor};
+        border-color: ${deleteButtonColor};
     }
     @media (max-width: 870px) {
-        h4 {
-            font-size: 1.5rem;
-        }
-        .divider {
-            width: 20%;
-        }
-        #pop-modal {
+        .pop-modal {
             font-size: 1.5rem;
         }
     }
-`;
+`
+
+const ModalContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button.delete-modal-button {
+        width: 50%;
+        margin: 0.5rem 0;
+        @media (max-width: 870px) {
+            width: 100%;
+        }
+    }
+    button.edit-modal-button {
+        width: 40%;
+        margin: 0.5rem 5%;
+        @media (max-width: 870px) {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+    }
+    .modal-text {
+        margin-bottom: 1rem;
+    }
+    form {
+        width: 100%;
+        input, textarea {
+            display: block;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            border: 2px solid ${hoverBackground};
+            outline: none;
+        }
+        input {
+            width: 100%;
+        }
+        input[type=file] {
+            border: none;
+        }
+        textarea {
+            width: 100%;
+        }
+        @media (max-width: 870px) {
+            input, textarea {
+                font-size: 1rem;
+            }
+            textarea {
+                /* column-count: 10; */
+            }
+        }
+    }
+`
 
 export default NewsSummary;
