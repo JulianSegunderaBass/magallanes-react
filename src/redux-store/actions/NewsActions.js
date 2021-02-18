@@ -96,7 +96,8 @@ export const editAnnouncement = (newsEdits) => {
                                 firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
                                     heading: newsEdits.heading
                                 }, { merge: true });
-                            } else if (newsEdits.body !== '') {
+                            } 
+                            if (newsEdits.body !== '') {
                                 firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
                                     body: newsEdits.body
                                 }, { merge: true });
@@ -115,7 +116,8 @@ export const editAnnouncement = (newsEdits) => {
                 firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
                     heading: newsEdits.heading
                 }, { merge: true });
-            } else if (newsEdits.body !== '') {
+            } 
+            if (newsEdits.body !== '') {
                 firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
                     body: newsEdits.body
                 }, { merge: true });
