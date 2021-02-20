@@ -137,10 +137,14 @@ export const editAnnouncement = (newsEdits) => {
 export const deleteAnnouncement = (announcementID) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
-        firestore.collection('NewsAnnouncements').doc(announcementID).delete().then(() => {
-            dispatch({type: 'DELETE_ANNOUNCEMENT'});
-        }).catch((error) => {
-            dispatch({type: 'DELETE_ANNOUNCEMENT_ERROR', error});
-        });
+        firestore.collection('NewsAnnouncements')
+            .doc(announcementID)
+            .delete()
+            .then(() => {
+                dispatch({type: 'DELETE_ANNOUNCEMENT'});
+            })
+            .catch((error) => {
+                dispatch({type: 'DELETE_ANNOUNCEMENT_ERROR', error});
+            });
     }
 }

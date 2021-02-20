@@ -22,10 +22,22 @@ const NewsList = ({newsItems}) => {
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     // Slicing initial state of News Items
-    const currentAnnouncements = newsItems && newsItems.slice(indexOfFirstPost, indexOfLastPost);
+    let initialCurrentAnnouncements = newsItems && newsItems.slice(indexOfFirstPost, indexOfLastPost);
+    let currentAnnouncements = initialCurrentAnnouncements;
 
     // Function to change page number on click
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const [searchAnnouncement, setSearchAnnouncement] = useState("");
+
+    if (searchAnnouncement) {
+        let filteredNewsItems = newsItems.filter(item => {
+            return (item.heading.toLowerCase()).includes(searchAnnouncement.toLowerCase()) || (item.body.toLowerCase()).includes(searchAnnouncement.toLowerCase());
+        });
+        currentAnnouncements = filteredNewsItems;
+    } else {
+        currentAnnouncements = initialCurrentAnnouncements;
+    }
 
     // While the list of News Announcements is not available,
     // Render out loading spinner gif
@@ -47,6 +59,9 @@ const NewsList = ({newsItems}) => {
                     <div className="divider"></div>
                 </HeaderSection>
             </Hide>
+            <SearchSection>
+                <input class="" type="text" placeholder="Search..." onChange={e => setSearchAnnouncement(e.target.value)} />
+            </SearchSection>
             {currentAnnouncements && 
                 <NewsSection variants={fade}>
                     {currentAnnouncements.map(newsItem => {
@@ -55,12 +70,14 @@ const NewsList = ({newsItems}) => {
                         )
                     })}
                     {/* Pagination Component */}
-                    <Pagination 
-                        postsPerPage={postsPerPage} 
-                        totalPosts={newsItems.length} 
-                        paginate={paginate} 
-                        currentPage={currentPage} 
-                    />
+                    {!searchAnnouncement &&
+                        <Pagination
+                            postsPerPage={postsPerPage}
+                            totalPosts={newsItems.length}
+                            paginate={paginate}
+                            currentPage={currentPage}
+                        />
+                    }
                 </NewsSection>
             }
         </MainContainer>
@@ -69,6 +86,7 @@ const NewsList = ({newsItems}) => {
 
 // Color Variables
 const dividerColor = "#E63946"
+const boxBorder = "#1D3557";
 
 // Styled Components
 
@@ -121,6 +139,18 @@ const LoadingContainer = styled.div`
     }
     h4 {
         margin: 0 auto;
+    }
+`
+
+const SearchSection = styled.div`
+    input {
+        display: block;
+        width: 50%;
+        margin: 0 auto 2rem auto;
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        border: 2px solid ${boxBorder};
+        outline: none;
     }
 `
 
