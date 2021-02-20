@@ -1,6 +1,8 @@
 // The Actions for News Announcements (dispatch to NewsReducer)
 import firebase from 'firebase/app';
 import 'firebase/storage';
+import sha256 from 'crypto-js/sha256';
+const CryptoJS = require("crypto-js");
 
 // newsAnnouncement parameter is the new entry submitted via dispatch from component
 export const createAnnouncement = (newsAnnouncement) => {
@@ -10,12 +12,15 @@ export const createAnnouncement = (newsAnnouncement) => {
         // Accessing current logged profile state
         const loggedProfile = getState().firebase.profile;
         const loggedEmail = getState().firebase.auth.email;
+        const dt = new Date();
 
         // If poster has decided to include an attachment
         if (newsAnnouncement.attachment) {
             // Saving attachment with URL
+            let imgHashObj = sha256(`${newsAnnouncement.attachment.name}${dt.toLocaleDateString()}${dt.toLocaleTimeString()}`);
+            let imgHashStr = imgHashObj.toString(CryptoJS.enc.Base64);
             const uploadTask = projectStorage
-            .ref(`news-images/${newsAnnouncement.attachment.name}`)
+            .ref(`news-images/${imgHashStr}`)
             .put(newsAnnouncement.attachment);
             uploadTask.on(
                 "state_changed",
@@ -26,7 +31,7 @@ export const createAnnouncement = (newsAnnouncement) => {
                 () => {
                     projectStorage
                         .ref("news-images")
-                        .child(newsAnnouncement.attachment.name)
+                        .child(imgHashStr)
                         .getDownloadURL()
                         .then(url => {
                             // Once image is saved to Firebase Storage and URL is available
