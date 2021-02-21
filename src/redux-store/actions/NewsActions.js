@@ -76,12 +76,15 @@ export const editAnnouncement = (newsEdits) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const projectStorage = firebase.storage();
+        const dt = new Date();
 
         // If poster has decided to include an attachment
         if (newsEdits.attachment) {
             // Saving attachment with URL
+            let imgHashObj = sha256(`${newsEdits.attachment.name}${dt.toLocaleDateString()}${dt.toLocaleTimeString()}`);
+            let imgHashStr = imgHashObj.toString(CryptoJS.enc.Base64);
             const uploadTask = projectStorage
-            .ref(`news-images/${newsEdits.attachment.name}`)
+            .ref(`news-images/${imgHashStr}`)
             .put(newsEdits.attachment);
             uploadTask.on(
                 "state_changed",
@@ -92,7 +95,7 @@ export const editAnnouncement = (newsEdits) => {
                 () => {
                     projectStorage
                         .ref("news-images")
-                        .child(newsEdits.attachment.name)
+                        .child(imgHashStr)
                         .getDownloadURL()
                         .then(url => {
                             // Once image is saved to Firebase Storage and URL is available
