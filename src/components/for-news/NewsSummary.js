@@ -82,7 +82,7 @@ const NewsSummary = ({ newsItem }) => {
     };
     const handleDelete = () => {
         setDeleteModalState(false);
-        dispatch(deleteAnnouncement(newsItem.id));
+        dispatch(deleteAnnouncement(newsItem.id, newsItem.attachmentURL));
     };
     const handleAttachment = (e) => {
         if (e.target.files[0]) {

@@ -137,17 +137,17 @@ export const editAnnouncement = (newsEdits) => {
 }
 
 // announcementID is the ID of the post passed and used to reference the deletion
-export const deleteAnnouncement = (announcementID) => {
+export const deleteAnnouncement = (announcementID, attachmentURL) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
-        firestore.collection('NewsAnnouncements')
-            .doc(announcementID)
-            .delete()
-            .then(() => {
-                dispatch({type: 'DELETE_ANNOUNCEMENT'});
-            })
-            .catch((error) => {
-                dispatch({type: 'DELETE_ANNOUNCEMENT_ERROR', error});
-            });
+        const projectStorage = firebase.storage();
+
+        var attachmentReference = projectStorage.refFromURL(attachmentURL);
+        attachmentReference.delete().then(() => {
+            firestore.collection('NewsAnnouncements').doc(announcementID).delete();
+            dispatch({type: 'DELETE_ANNOUNCEMENT'});
+        }).catch((error) => {
+            dispatch({type: 'DELETE_ANNOUNCEMENT_ERROR', error});
+        }); 
     }
 }
