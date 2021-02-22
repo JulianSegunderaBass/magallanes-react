@@ -17,6 +17,9 @@ import { createAnnouncement } from '../redux-store/actions/NewsActions';
 import { Redirect } from 'react-router-dom';
 // For notifications
 import { store } from 'react-notifications-component';
+// Importing Rich Text Editor
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const NewsForm = () => {
     const auth = useSelector((state) => state.firebase.auth);
@@ -55,6 +58,10 @@ const NewsForm = () => {
                 attachment: e.target.files[0]})
         }
     }
+    const richEditorChange = (e, editor) => {
+        const richContent = editor.getData();
+        setNewsAnnouncement({...newsAnnouncement, body: richContent});
+    }
 
     // If an authentication UID is NOT present (user is not signed in),
     // redirect to home
@@ -80,13 +87,8 @@ const NewsForm = () => {
                         onChange={(e) => setNewsAnnouncement({...newsAnnouncement, heading: e.target.value})}
                         required
                     />
-                    <textarea 
-                        rows="10" 
-                        cols="50" 
-                        placeholder="Enter your news content here" 
-                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, body: e.target.value})}
-                        required
-                    />
+                    {/* <RichTextEditor id="rich-text-editor" onChange={richEditorChange} /> */}
+                    <CKEditor id="rich-text-editor" editor={ClassicEditor} onChange={richEditorChange} />
                     <input 
                         type="file" 
                         accept="image/png, image/jpeg"
@@ -141,7 +143,7 @@ const TextSection = styled(motion.div)`
 
 const FormSection = styled.div`
     form {
-        input, textarea {
+        input {
             display: block;
             margin-bottom: 2rem;
             font-size: 1.5rem;
@@ -152,10 +154,11 @@ const FormSection = styled.div`
         input {
             width: 100%;
         }
+        #rich-text-editor {
+            
+        }
         @media (max-width: 1500px) {
-            textarea {
-                width: 100%;
-            }
+            
         }
         @media (max-width: 870px) {
             input, textarea {
@@ -166,7 +169,6 @@ const FormSection = styled.div`
                 margin: 1.5rem auto 0 auto;
             }
         }
-        
     }
 `
 

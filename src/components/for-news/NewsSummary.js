@@ -19,6 +19,8 @@ import { useSelector } from 'react-redux';
 import { editAnnouncement } from '../../redux-store/actions/NewsActions';
 // For notifications
 import { store } from 'react-notifications-component';
+// For parsing HTML markup
+import ReactHtmlParser from 'react-html-parser';
 
 Modal.setAppElement("#root");
 // News Item is an object holding the news data
@@ -105,7 +107,7 @@ const NewsSummary = ({ newsItem }) => {
                 </div>
                 {newsItem.attachmentURL && <h5 id="attachment-indicator">Image Present</h5>}
                 <div className="divider"></div>
-                <p>{newsItem.body}</p>
+                {/* <p>{ReactHtmlParser(newsItem.body)}</p> */}
             </Link>
             <ButtonContainer>
                 {/* Update Button */}
@@ -238,6 +240,7 @@ const NewsCard = styled.div`
         height: 0.5rem;
         background: ${accentColor};
         transition: background 0.5s ease;
+        margin-bottom: 2rem;
     }
     #attachment-indicator, #time-stamp, #sender-email {
         font-style: italic;

@@ -13,6 +13,8 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 // Importing AutoScroll
 import AutoScroll from '../assets/AutoScroll';
+// For parsing HTML markup
+import ReactHtmlParser from 'react-html-parser';
 
 
 const AnnouncementDetails = (props) => {
@@ -35,7 +37,7 @@ const AnnouncementDetails = (props) => {
                 </div>
                 </motion.div>
                 <div className="divider"></div>
-                <p>{NewsItem.body}</p>
+                {ReactHtmlParser(NewsItem.body)}
                 {/* If attachment is detected, rendered here */}
                 {NewsItem.attachmentURL &&
                     <Image>
