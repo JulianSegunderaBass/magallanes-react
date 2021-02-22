@@ -19,8 +19,9 @@ import { useSelector } from 'react-redux';
 import { editAnnouncement } from '../../redux-store/actions/NewsActions';
 // For notifications
 import { store } from 'react-notifications-component';
-// For parsing HTML markup
-import ReactHtmlParser from 'react-html-parser';
+// Importing Rich Text Editor
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 Modal.setAppElement("#root");
 // News Item is an object holding the news data
@@ -44,6 +45,11 @@ const NewsSummary = ({ newsItem }) => {
         body: '',
         attachment: null
     });
+
+    const richEditorChange = (e, editor) => {
+        const richContent = editor.getData();
+        setNewsEdits({...newsEdits, body: richContent});
+    }
 
     // Modal Functions
     const handleEdits = (e) => {
@@ -145,11 +151,7 @@ const NewsSummary = ({ newsItem }) => {
                             placeholder="Enter your news headline here" 
                             onChange={(e) => setNewsEdits({...newsEdits, heading: e.target.value})}
                         />
-                        <textarea 
-                            rows="10" 
-                            placeholder="Enter your news content here" 
-                            onChange={(e) => setNewsEdits({...newsEdits, body: e.target.value})}
-                        />
+                        <CKEditor id="rich-text-editor" editor={ClassicEditor} onChange={richEditorChange} />
                         <input 
                             type="file" 
                             accept="image/png, image/jpeg"

@@ -154,14 +154,15 @@ const FormSection = styled.div`
         input {
             width: 100%;
         }
-        #rich-text-editor {
-            
-        }
-        @media (max-width: 1500px) {
-            
+        /* Clearing text styles inside Rich Editor */
+        h1, h2, h3, h4, h5, p {
+            color: black;
+            padding: 0;
+            margin: 0;
+            font-weight: light;
         }
         @media (max-width: 870px) {
-            input, textarea {
+            input {
                 font-size: 1rem;
             }
             button {
