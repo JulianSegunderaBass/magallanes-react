@@ -149,9 +149,16 @@ const NewsSummary = ({ newsItem }) => {
                         <input 
                             type="text" 
                             placeholder="Enter your news headline here" 
+                            contenteditable="true"
                             onChange={(e) => setNewsEdits({...newsEdits, heading: e.target.value})}
                         />
-                        <CKEditor id="rich-text-editor" editor={ClassicEditor} onChange={richEditorChange} />
+                        <RichContent>
+                            <CKEditor 
+                                id="rich-text-editor" 
+                                editor={ClassicEditor} 
+                                onChange={richEditorChange} 
+                            />
+                        </RichContent>
                         <input 
                             type="file" 
                             accept="image/png, image/jpeg"
@@ -352,6 +359,21 @@ const ModalContent = styled.div`
             textarea {
                 /* column-count: 10; */
             }
+        }
+    }
+`
+
+const RichContent = styled.div`
+    h1, h2, h3, h4, h5, p {
+        color: black;
+        padding: 0;
+        margin: 0;
+        font-weight: light;
+    }
+    ol, ul {
+        margin-left: 2rem;
+        li {
+            font-size: 1.4rem;
         }
     }
 `

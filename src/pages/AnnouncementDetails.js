@@ -37,14 +37,17 @@ const AnnouncementDetails = (props) => {
                 </div>
                 </motion.div>
                 <div className="divider"></div>
-                {ReactHtmlParser(NewsItem.body)}
+                {/* Section for rich text content */}
+                <RichContent>
+                    {ReactHtmlParser(NewsItem.body)}
+                </RichContent>
                 {/* If attachment is detected, rendered here */}
                 {NewsItem.attachmentURL &&
                     <Image>
                         <motion.img variants={imageAnim} src={NewsItem.attachmentURL} alt="image attachment"/>
                     </Image>
                 }
-                <Link to="/news">View other announcements</Link>
+                <Link to="/news" id="return-link">View other announcements</Link>
             </Card>
         </MainContainer>
     )
@@ -86,7 +89,7 @@ const Card = styled.div`
         height: 0.5rem;
         background: ${dividerColor};
     }
-    a {
+    a#return-link {
         display: block;
         width: 35%;
         text-decoration: none;
@@ -124,6 +127,23 @@ const Card = styled.div`
         }
         a {
             width: 100%;
+        }
+    }
+`
+
+const RichContent = styled.div`
+    margin: 2rem 0;
+    h1, h2, h3, h4, h5, p {
+        color: ${mainFontColor};
+        padding: 0;
+        margin: 0;
+        font-weight: light;
+    }
+    ol, ul {
+        color: ${mainFontColor};
+        margin-left: 2rem;
+        li {
+            font-size: 1.4rem;
         }
     }
 `

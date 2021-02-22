@@ -161,6 +161,12 @@ const FormSection = styled.div`
             margin: 0;
             font-weight: light;
         }
+        ol, ul {
+            margin-left: 2rem;
+            li {
+                font-size: 1.4rem;
+            }
+        }
         @media (max-width: 870px) {
             input {
                 font-size: 1rem;
