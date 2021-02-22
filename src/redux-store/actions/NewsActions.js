@@ -142,12 +142,20 @@ export const deleteAnnouncement = (announcementID, attachmentURL) => {
         const firestore = getFirestore();
         const projectStorage = firebase.storage();
 
-        var attachmentReference = projectStorage.refFromURL(attachmentURL);
-        attachmentReference.delete().then(() => {
-            firestore.collection('NewsAnnouncements').doc(announcementID).delete();
-            dispatch({type: 'DELETE_ANNOUNCEMENT'});
-        }).catch((error) => {
-            dispatch({type: 'DELETE_ANNOUNCEMENT_ERROR', error});
-        }); 
+        if (attachmentURL === '') {
+            firestore.collection('NewsAnnouncements').doc(announcementID).delete().then(() => {
+                dispatch({type: 'DELETE_ANNOUNCEMENT'});
+            }).catch((error) => {
+                dispatch({type: 'DELETE_ANNOUNCEMENT_ERROR', error});
+            });
+        } else if (attachmentURL !== '') {
+            var attachmentReference = projectStorage.refFromURL(attachmentURL);
+            attachmentReference.delete().then(() => {
+                firestore.collection('NewsAnnouncements').doc(announcementID).delete();
+                dispatch({type: 'DELETE_ANNOUNCEMENT'});
+            }).catch((error) => {
+                dispatch({type: 'DELETE_ANNOUNCEMENT_ERROR', error});
+            });
+        }    
     }
 }
