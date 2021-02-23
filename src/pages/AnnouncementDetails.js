@@ -144,7 +144,7 @@ const RichContent = styled.div`
         color: ${mainFontColor};
         margin-left: 2rem;
         li {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
     }
 `

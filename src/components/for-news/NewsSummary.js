@@ -14,6 +14,7 @@ import { deleteAnnouncement } from '../../redux-store/actions/NewsActions';
 import Modal from 'react-modal';
 // Importing all production Icons with code names
 import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from "react-icons/bs";
 // For connecting to Redux state and action
 import { useSelector } from 'react-redux';
 import { editAnnouncement } from '../../redux-store/actions/NewsActions';
@@ -109,9 +110,11 @@ const NewsSummary = ({ newsItem }) => {
             <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id} id="card-text">
                 <div className="post-info">
                     <h4>{newsItem.heading}</h4>
+                    <div className="date-image">
                     {/* Using Moment.js to parse createdAt property to readable date */}
-                    <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
-                    {newsItem.attachmentURL && <h5 id="attachment-indicator">Image Present</h5>}
+                        <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
+                        <>{newsItem.attachmentURL && <BsIcons.BsCardImage color="#1D3557" size="2rem"/>}</>
+                    </div>
                     <div className="divider"></div>
                 </div>
                 <div className="sender-info">
@@ -256,10 +259,23 @@ const NewsCard = styled.div`
         display: flex;
         .post-info {
             width: 75%;
+            .date-image {
+                display: flex;
+                align-items: center;
+                #time-stamp {
+                    margin-right: 1rem;
+                }
+                @media (max-width: 870px) {
+                    /* flex-direction: column;
+                    align-items: flex-start; */
+                }
+            }
         }
         .sender-info {
             width: 25%;
             margin: 1rem 0;
+            border-left: 0.2rem solid ${accentColor};
+            padding-left: 1rem;
             h5 {
                 font-weight: lighter;
             }
@@ -284,6 +300,10 @@ const NewsCard = styled.div`
             flex-direction: column;
             .post-info, .sender-info {
                 width: 100%;
+            }
+            .sender-info {
+                border-left: none;
+                padding-left: 0;
             }
             .divider {
                 width: 100%;
