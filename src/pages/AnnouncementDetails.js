@@ -85,8 +85,8 @@ const Card = styled.div`
         font-weight: lighter;
     }
     .divider {
-        width: 85%;
-        height: 0.5rem;
+        width: 100%;
+        height: 0.2rem;
         background: ${dividerColor};
     }
     a#return-link {
@@ -118,6 +118,7 @@ const Card = styled.div`
         }
         #sender-email {
             font-style: italic;
+            word-break: break-all;
         }
     }
     @media (max-width: 870px) {
@@ -125,7 +126,7 @@ const Card = styled.div`
         h4 {
             font-size: 1.5rem;
         }
-        a {
+        a#return-link {
             width: 100%;
         }
     }

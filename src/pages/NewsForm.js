@@ -77,6 +77,7 @@ const NewsForm = () => {
                 <TextSection variants={newsFormReveal}>
                     <h2>News Announcement <span>Form</span></h2>
                     <p>The News Information Page will update with your post</p>
+                    <div className="divider"></div>
                 </TextSection>
             </Hide>
             <FormSection>
@@ -88,7 +89,11 @@ const NewsForm = () => {
                         required
                     />
                     {/* <RichTextEditor id="rich-text-editor" onChange={richEditorChange} /> */}
-                    <CKEditor id="rich-text-editor" editor={ClassicEditor} onChange={richEditorChange} />
+                    <CKEditor 
+                        id="rich-text-editor" 
+                        editor={ClassicEditor} 
+                        onChange={richEditorChange} 
+                    />
                     <input 
                         type="file" 
                         accept="image/png, image/jpeg"
@@ -105,6 +110,7 @@ const NewsForm = () => {
 const boxBorder = "#1D3557";
 const warningText = "#AB0A0A";
 const successText = "#137D2D";
+const accentColor = "#E63946";
 
 // Styled Components
 
@@ -112,9 +118,7 @@ const MainContainer = styled(motion.div)`
     min-height: 90vh;
     padding: 5rem 10rem;
     display: flex;
-    @media (max-width: 1500px) {
-        flex-direction: column;
-    }
+    flex-direction: column;
     @media (max-width: 870px) {
         padding: 2rem 2rem;
         min-height: 45vh;
@@ -132,6 +136,12 @@ const TextSection = styled(motion.div)`
     }
     .green-text {
         color: ${successText};
+    }
+    .divider {
+        width: 100%;
+        height: 0.2rem;
+        background: ${accentColor};
+        margin-bottom: 2rem;
     }
     @media (max-width: 870px) {
         padding: 0;

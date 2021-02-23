@@ -60,7 +60,7 @@ const NewsList = ({newsItems}) => {
                 </HeaderSection>
             </Hide>
             <SearchSection>
-                <input class="" type="text" placeholder="Search..." onChange={e => setSearchAnnouncement(e.target.value)} />
+                <input type="text" placeholder="Search an Announcement" onChange={e => setSearchAnnouncement(e.target.value)} />
             </SearchSection>
             {currentAnnouncements && 
                 <NewsSection variants={fade}>
@@ -151,6 +151,11 @@ const SearchSection = styled.div`
         padding: 0.5rem;
         border: 2px solid ${boxBorder};
         outline: none;
+    }
+    @media (max-width: 870px) {
+        input {
+            width: 100%;
+        }
     }
 `
 

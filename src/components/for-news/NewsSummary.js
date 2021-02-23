@@ -106,17 +106,19 @@ const NewsSummary = ({ newsItem }) => {
     return (
         <NewsCard>
             {/* Section inside link tag is clickable */}
-            <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id}>
-                <h4>{newsItem.heading}</h4>
-                {/* Using Moment.js to parse createdAt property to readable date */}
-                <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
+            <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id} id="card-text">
+                <div className="post-info">
+                    <h4>{newsItem.heading}</h4>
+                    {/* Using Moment.js to parse createdAt property to readable date */}
+                    <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
+                    {newsItem.attachmentURL && <h5 id="attachment-indicator">Image Present</h5>}
+                    <div className="divider"></div>
+                </div>
                 <div className="sender-info">
                     <h5>Posted By:</h5>
                     <h5>{newsItem.authorFirstName} {newsItem.authorLastName}</h5>
                     <h5 id="sender-email">{newsItem.authorEmail}</h5>
                 </div>
-                {newsItem.attachmentURL && <h5 id="attachment-indicator">Image Present</h5>}
-                <div className="divider"></div>
                 {/* <p>{ReactHtmlParser(newsItem.body)}</p> */}
             </Link>
             <ButtonContainer>
@@ -153,7 +155,6 @@ const NewsSummary = ({ newsItem }) => {
                         <input 
                             type="text" 
                             placeholder="Enter your news headline here" 
-                            contenteditable="true"
                             onChange={(e) => setNewsEdits({...newsEdits, heading: e.target.value})}
                         />
                         <RichContent>
@@ -248,37 +249,51 @@ const NewsCard = styled.div`
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-    .divider {
-        width: 7%;
-        height: 0.5rem;
-        background: ${accentColor};
-        transition: background 0.5s ease;
-        margin-bottom: 2rem;
-    }
-    #attachment-indicator, #time-stamp, #sender-email {
-        font-style: italic;
-    }
-    #sender-email {
-        word-break: break-all;
-    }
-    #attachment-indicator {
-        margin-top: 1rem;
-    }
     h4, h5, p {
         transition: color 0.5s ease;
     }
-    .sender-info {
-        margin: 1rem 0;
-        h5 {
-            font-weight: lighter;
+    #card-text {
+        display: flex;
+        .post-info {
+            width: 75%;
+        }
+        .sender-info {
+            width: 25%;
+            margin: 1rem 0;
+            h5 {
+                font-weight: lighter;
+            }
+            #sender-email {
+                word-break: break-all;
+            }
+        }
+        .divider {
+            width: 13%;
+            height: 0.2rem;
+            background: ${accentColor};
+            transition: background 0.5s ease;
+            margin-bottom: 2rem;
+        }
+        #attachment-indicator, #time-stamp, #sender-email {
+            font-style: italic;
+        }
+        #attachment-indicator {
+            margin-top: 1rem;
+        }
+        @media (max-width: 870px) {
+            flex-direction: column;
+            .post-info, .sender-info {
+                width: 100%;
+            }
+            .divider {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
         }
     }
     @media (max-width: 870px) {
         h4 {
             font-size: 1.5rem;
-        }
-        .divider {
-            width: 20%;
         }
     }
 `;
