@@ -17,6 +17,9 @@ import { createAnnouncement } from '../redux-store/actions/NewsActions';
 import { Redirect } from 'react-router-dom';
 // For notifications
 import { store } from 'react-notifications-component';
+// Importing Rich Text Editor
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const NewsForm = () => {
     const auth = useSelector((state) => state.firebase.auth);
@@ -55,6 +58,10 @@ const NewsForm = () => {
                 attachment: e.target.files[0]})
         }
     }
+    const richEditorChange = (e, editor) => {
+        const richContent = editor.getData();
+        setNewsAnnouncement({...newsAnnouncement, body: richContent});
+    }
 
     // If an authentication UID is NOT present (user is not signed in),
     // redirect to home
@@ -70,6 +77,7 @@ const NewsForm = () => {
                 <TextSection variants={newsFormReveal}>
                     <h2>News Announcement <span>Form</span></h2>
                     <p>The News Information Page will update with your post</p>
+                    <div className="divider"></div>
                 </TextSection>
             </Hide>
             <FormSection>
@@ -80,12 +88,11 @@ const NewsForm = () => {
                         onChange={(e) => setNewsAnnouncement({...newsAnnouncement, heading: e.target.value})}
                         required
                     />
-                    <textarea 
-                        rows="10" 
-                        cols="50" 
-                        placeholder="Enter your news content here" 
-                        onChange={(e) => setNewsAnnouncement({...newsAnnouncement, body: e.target.value})}
-                        required
+                    {/* <RichTextEditor id="rich-text-editor" onChange={richEditorChange} /> */}
+                    <CKEditor 
+                        id="rich-text-editor" 
+                        editor={ClassicEditor} 
+                        onChange={richEditorChange} 
                     />
                     <input 
                         type="file" 
@@ -103,6 +110,7 @@ const NewsForm = () => {
 const boxBorder = "#1D3557";
 const warningText = "#AB0A0A";
 const successText = "#137D2D";
+const accentColor = "#E63946";
 
 // Styled Components
 
@@ -110,9 +118,7 @@ const MainContainer = styled(motion.div)`
     min-height: 90vh;
     padding: 5rem 10rem;
     display: flex;
-    @media (max-width: 1500px) {
-        flex-direction: column;
-    }
+    flex-direction: column;
     @media (max-width: 870px) {
         padding: 2rem 2rem;
         min-height: 45vh;
@@ -131,6 +137,12 @@ const TextSection = styled(motion.div)`
     .green-text {
         color: ${successText};
     }
+    .divider {
+        width: 100%;
+        height: 0.2rem;
+        background: ${accentColor};
+        margin-bottom: 2rem;
+    }
     @media (max-width: 870px) {
         padding: 0;
         h2 {
@@ -141,7 +153,7 @@ const TextSection = styled(motion.div)`
 
 const FormSection = styled.div`
     form {
-        input, textarea {
+        input {
             display: block;
             margin-bottom: 2rem;
             font-size: 1.5rem;
@@ -152,13 +164,21 @@ const FormSection = styled.div`
         input {
             width: 100%;
         }
-        @media (max-width: 1500px) {
-            textarea {
-                width: 100%;
+        /* Clearing text styles inside Rich Editor */
+        h1, h2, h3, h4, h5, p {
+            color: black;
+            padding: 0;
+            margin: 0;
+            font-weight: light;
+        }
+        ol, ul {
+            margin-left: 2rem;
+            li {
+                font-size: 1.4rem;
             }
         }
         @media (max-width: 870px) {
-            input, textarea {
+            input {
                 font-size: 1rem;
             }
             button {
@@ -166,7 +186,6 @@ const FormSection = styled.div`
                 margin: 1.5rem auto 0 auto;
             }
         }
-        
     }
 `
 

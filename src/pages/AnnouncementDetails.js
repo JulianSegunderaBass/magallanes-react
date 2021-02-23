@@ -13,6 +13,8 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 // Importing AutoScroll
 import AutoScroll from '../assets/AutoScroll';
+// For parsing HTML markup
+import ReactHtmlParser from 'react-html-parser';
 
 
 const AnnouncementDetails = (props) => {
@@ -35,14 +37,17 @@ const AnnouncementDetails = (props) => {
                 </div>
                 </motion.div>
                 <div className="divider"></div>
-                <p>{NewsItem.body}</p>
+                {/* Section for rich text content */}
+                <RichContent>
+                    {ReactHtmlParser(NewsItem.body)}
+                </RichContent>
                 {/* If attachment is detected, rendered here */}
                 {NewsItem.attachmentURL &&
                     <Image>
                         <motion.img variants={imageAnim} src={NewsItem.attachmentURL} alt="image attachment"/>
                     </Image>
                 }
-                <Link to="/news">View other announcements</Link>
+                <Link to="/news" id="return-link">View other announcements</Link>
             </Card>
         </MainContainer>
     )
@@ -80,11 +85,11 @@ const Card = styled.div`
         font-weight: lighter;
     }
     .divider {
-        width: 85%;
-        height: 0.5rem;
+        width: 100%;
+        height: 0.2rem;
         background: ${dividerColor};
     }
-    a {
+    a#return-link {
         display: block;
         width: 35%;
         text-decoration: none;
@@ -113,6 +118,7 @@ const Card = styled.div`
         }
         #sender-email {
             font-style: italic;
+            word-break: break-all;
         }
     }
     @media (max-width: 870px) {
@@ -120,8 +126,25 @@ const Card = styled.div`
         h4 {
             font-size: 1.5rem;
         }
-        a {
+        a#return-link {
             width: 100%;
+        }
+    }
+`
+
+const RichContent = styled.div`
+    margin: 2rem 0;
+    h1, h2, h3, h4, h5, p {
+        color: ${mainFontColor};
+        padding: 0;
+        margin: 0;
+        font-weight: light;
+    }
+    ol, ul {
+        color: ${mainFontColor};
+        margin-left: 2rem;
+        li {
+            font-size: 1.2rem;
         }
     }
 `

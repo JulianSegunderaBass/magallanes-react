@@ -25,8 +25,16 @@ const GlobalStyle = createGlobalStyle`
         position: relative;
         margin-top: 10vh;
     }
+    h1 {
+        font-size: 5rem;
+        color: ${mainFontColor};
+    }
     h2 {
         font-size: 4rem;
+        color: ${mainFontColor};
+    }
+    h3 {
+        font-size: 3rem;
         color: ${mainFontColor};
     }
     h4 {
@@ -39,14 +47,33 @@ const GlobalStyle = createGlobalStyle`
         color: ${mainFontColor};
         font-weight: lighter;
     }
-    span {
-        color: ${accentColor};
-    }
     p {
         padding: 1.5rem 0rem;
         color: ${mainFontColor};
         font-size: 1.4rem;
-        font-weight: bold;
+    }
+    @media (max-width: 870px) {
+        h1 {
+            font-size: 3rem;
+        }
+        h2 {
+            font-size: 2.5rem;
+        }
+        h3 {
+            font-size: 2rem;
+        }
+        h4 {
+            font-size: 1.5rem;
+        }
+        h5 {
+            font-size: 1.2rem;
+        }
+        p {
+            font-size: 1.2rem;
+        }
+    }
+    span {
+        color: ${accentColor};
     }
     button {
         font-weight: bold;

@@ -14,11 +14,15 @@ import { deleteAnnouncement } from '../../redux-store/actions/NewsActions';
 import Modal from 'react-modal';
 // Importing all production Icons with code names
 import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from "react-icons/bs";
 // For connecting to Redux state and action
 import { useSelector } from 'react-redux';
 import { editAnnouncement } from '../../redux-store/actions/NewsActions';
 // For notifications
 import { store } from 'react-notifications-component';
+// Importing Rich Text Editor
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 Modal.setAppElement("#root");
 // News Item is an object holding the news data
@@ -42,6 +46,11 @@ const NewsSummary = ({ newsItem }) => {
         body: '',
         attachment: null
     });
+
+    const richEditorChange = (e, editor) => {
+        const richContent = editor.getData();
+        setNewsEdits({...newsEdits, body: richContent});
+    }
 
     // Modal Functions
     const handleEdits = (e) => {
@@ -82,7 +91,11 @@ const NewsSummary = ({ newsItem }) => {
     };
     const handleDelete = () => {
         setDeleteModalState(false);
-        dispatch(deleteAnnouncement(newsItem.id));
+        if (newsItem.attachmentURL) {
+            dispatch(deleteAnnouncement(newsItem.id, newsItem.attachmentURL));
+        } else {
+            dispatch(deleteAnnouncement(newsItem.id, ''));
+        }
     };
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
@@ -94,18 +107,22 @@ const NewsSummary = ({ newsItem }) => {
     return (
         <NewsCard>
             {/* Section inside link tag is clickable */}
-            <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id}>
-                <h4>{newsItem.heading}</h4>
-                {/* Using Moment.js to parse createdAt property to readable date */}
-                <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
+            <Link to={`/news-announcement/${newsItem.id}`} key={newsItem.id} id="card-text">
+                <div className="post-info">
+                    <h4>{newsItem.heading}</h4>
+                    <div className="date-image">
+                    {/* Using Moment.js to parse createdAt property to readable date */}
+                        <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
+                        <>{newsItem.attachmentURL && <BsIcons.BsCardImage color="#1D3557" size="2rem"/>}</>
+                    </div>
+                    <div className="divider"></div>
+                </div>
                 <div className="sender-info">
                     <h5>Posted By:</h5>
                     <h5>{newsItem.authorFirstName} {newsItem.authorLastName}</h5>
                     <h5 id="sender-email">{newsItem.authorEmail}</h5>
                 </div>
-                {newsItem.attachmentURL && <h5 id="attachment-indicator">Image Present</h5>}
-                <div className="divider"></div>
-                <p>{newsItem.body}</p>
+                {/* <p>{ReactHtmlParser(newsItem.body)}</p> */}
             </Link>
             <ButtonContainer>
                 {/* Update Button */}
@@ -143,11 +160,13 @@ const NewsSummary = ({ newsItem }) => {
                             placeholder="Enter your news headline here" 
                             onChange={(e) => setNewsEdits({...newsEdits, heading: e.target.value})}
                         />
-                        <textarea 
-                            rows="10" 
-                            placeholder="Enter your news content here" 
-                            onChange={(e) => setNewsEdits({...newsEdits, body: e.target.value})}
-                        />
+                        <RichContent>
+                            <CKEditor 
+                                id="rich-text-editor" 
+                                editor={ClassicEditor} 
+                                onChange={richEditorChange} 
+                            />
+                        </RichContent>
                         <input 
                             type="file" 
                             accept="image/png, image/jpeg"
@@ -233,36 +252,68 @@ const NewsCard = styled.div`
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-    .divider {
-        width: 7%;
-        height: 0.5rem;
-        background: ${accentColor};
-        transition: background 0.5s ease;
-    }
-    #attachment-indicator, #time-stamp, #sender-email {
-        font-style: italic;
-    }
-    #sender-email {
-        word-break: break-all;
-    }
-    #attachment-indicator {
-        margin-top: 1rem;
-    }
     h4, h5, p {
         transition: color 0.5s ease;
     }
-    .sender-info {
-        margin: 1rem 0;
-        h5 {
-            font-weight: lighter;
+    #card-text {
+        display: flex;
+        .post-info {
+            width: 75%;
+            .date-image {
+                display: flex;
+                align-items: center;
+                #time-stamp {
+                    margin-right: 1rem;
+                }
+                @media (max-width: 870px) {
+                    /* flex-direction: column;
+                    align-items: flex-start; */
+                }
+            }
+        }
+        .sender-info {
+            width: 25%;
+            margin: 1rem 0;
+            border-left: 0.2rem solid ${accentColor};
+            padding-left: 1rem;
+            h5 {
+                font-weight: lighter;
+            }
+            #sender-email {
+                word-break: break-all;
+            }
+        }
+        .divider {
+            width: 13%;
+            height: 0.2rem;
+            background: ${accentColor};
+            transition: background 0.5s ease;
+            margin-bottom: 2rem;
+        }
+        #attachment-indicator, #time-stamp, #sender-email {
+            font-style: italic;
+        }
+        #attachment-indicator {
+            margin-top: 1rem;
+        }
+        @media (max-width: 870px) {
+            flex-direction: column;
+            .post-info, .sender-info {
+                width: 100%;
+            }
+            .sender-info {
+                border-left: none;
+                padding-left: 0;
+            }
+            .divider {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
         }
     }
     @media (max-width: 870px) {
         h4 {
             font-size: 1.5rem;
-        }
-        .divider {
-            width: 20%;
         }
     }
 `;
@@ -347,6 +398,21 @@ const ModalContent = styled.div`
             textarea {
                 /* column-count: 10; */
             }
+        }
+    }
+`
+
+const RichContent = styled.div`
+    h1, h2, h3, h4, h5, p {
+        color: black;
+        padding: 0;
+        margin: 0;
+        font-weight: light;
+    }
+    ol, ul {
+        margin-left: 2rem;
+        li {
+            font-size: 1.4rem;
         }
     }
 `
