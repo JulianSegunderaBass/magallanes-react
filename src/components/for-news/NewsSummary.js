@@ -125,10 +125,14 @@ const NewsSummary = ({ newsItem }) => {
                 {/* <p>{ReactHtmlParser(newsItem.body)}</p> */}
             </Link>
             <ButtonContainer>
-                {/* Update Button */}
-                {currentUserEmail === newsItem.authorEmail ? <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button> : ""}
-                {/* Delete Button */}
-                {currentUserEmail === newsItem.authorEmail ? <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button> : ""}
+                {/* Update and Delete Button */}
+                {currentUserEmail === newsItem.authorEmail || currentUserEmail === "adminuser@gmail.com" ? 
+                <>
+                    <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button>
+                    <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button>
+                </>
+                 : ""
+                }
             </ButtonContainer>
             {/* Modal Components */}
 
