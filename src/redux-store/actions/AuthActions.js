@@ -3,6 +3,9 @@
 export const signInUser = (credentials) => {
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
+
+        dispatch({type: 'LOGGING_IN'});
+
         // Part of authentication service
         firebase.auth().signInWithEmailAndPassword(
             credentials.email,
@@ -35,6 +38,9 @@ export const signUpUser = (newUser) => {
         // and Firestore users collection
         const firebase = getFirebase();
         const firestore = getFirestore();
+
+        dispatch({type: 'CREATING_ACCOUNT'});
+
         firebase.auth().createUserWithEmailAndPassword(
             // Step 1: create new user in auth service
             newUser.email,

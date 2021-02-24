@@ -14,8 +14,6 @@ import { useSelector } from 'react-redux';
 import { signUpUser } from '../../redux-store/actions/AuthActions';
 // Importing Redirect Component
 import { Redirect } from 'react-router-dom';
-// For notifications
-import { store } from 'react-notifications-component';
 
 const SignUp = () => {
     const dispatch = useDispatch();
@@ -32,19 +30,6 @@ const SignUp = () => {
         // Prevents page refreshing
         e.preventDefault();
         dispatch(signUpUser(profile));
-        store.addNotification({
-            title: "Creating your account...",
-            message: "Give us some time.",
-            type: "warning",
-            insert: "top",
-            container: "top-right",
-            animationIn: ["animate__animated", "animate__fadeIn"],
-            animationOut: ["animate__animated", "animate__fadeOut"],
-            dismiss: {
-                duration: 2000,
-                onScreen: true
-            }
-        });
     }
 
     // If an authentication UID is present (user is already signed in),
@@ -60,7 +45,7 @@ const SignUp = () => {
             <Hide>
                 <TextSection variants={newsFormReveal}>
                     <h2>Sign <span>Up</span></h2>
-                    <p>This Sign Up form is currently experimental.</p>
+                    <p>Sign up to create your own news announcements.</p>
                 </TextSection>
             </Hide>
             <FormSection>
