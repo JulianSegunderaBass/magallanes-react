@@ -27,6 +27,8 @@ const backgroundColor = "#E63946";
 
 // Styled Components
 const MainContainer = styled.div`
+    display: flex;
+    overflow-x: scroll;
     button {
         padding: 0.5rem 1rem;
         margin: 0.2rem;
@@ -36,7 +38,6 @@ const MainContainer = styled.div`
     .active {
         background: ${backgroundColor};
         color: ${numberColor};
-        padding: 0.7rem 1.2rem;
     }
 `
 
