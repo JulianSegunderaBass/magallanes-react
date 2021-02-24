@@ -80,6 +80,8 @@ export const editAnnouncement = (newsEdits) => {
         const projectStorage = firebase.storage();
         const dt = new Date();
 
+        dispatch({type: 'PUBLISHING_ANNOUNCEMENT'});
+
         // If poster has decided to include an attachment
         if (newsEdits.attachment) {
             // Saving attachment with URL

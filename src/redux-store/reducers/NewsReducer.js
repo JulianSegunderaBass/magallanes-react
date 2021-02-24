@@ -122,7 +122,8 @@ const NewsReducer = (state = initState, action) => {
             });
             return {
                 ...state,
-                newsAnnouncementError: null
+                newsAnnouncementError: null,
+                publishingAnnouncement: false
             }
         default:
             return state;
