@@ -3,12 +3,8 @@
 import { store } from 'react-notifications-component';
 
 const initState = {
-    newsAnnouncements: [
-        {id: '1', heading: 'A new website is up', body: 'A website designed and developed by APC students for Barangay Magallanes is now up and running.'},
-        {id: '2', heading: 'New website uses React and Firebase', body: 'The APC Team has implemented a Firebase database for the website.'},
-        {id: '3', heading: 'Other features planned to be released for website.', body: 'Newer features are currently under development for the Barangay Information Site.'}
-    ],
-    newsAnnouncementError: null
+    newsAnnouncementError: null,
+    publishingAnnouncement: false
 }
 
 const NewsReducer = (state = initState, action) => {
@@ -30,7 +26,8 @@ const NewsReducer = (state = initState, action) => {
             });
             return {
                 ...state,
-                newsAnnouncementError: null
+                newsAnnouncementError: null,
+                publishingAnnouncement: false
             }
         case 'CREATE_ANNOUNCEMENT_ERROR':
             console.log('Create announcement error', action.error);
@@ -50,6 +47,25 @@ const NewsReducer = (state = initState, action) => {
             return {
                 ...state,
                 newsAnnouncementError: action.error.message
+            }
+        case 'PUBLISHING_ANNOUNCEMENT':
+            console.log("Publishing Announcement");
+            store.addNotification({
+                title: "Uploading Announcement...",
+                message: "Give us some time.",
+                type: "warning",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+            return {
+                ...state,
+                publishingAnnouncement: true
             }
         case 'DELETE_ANNOUNCEMENT':
             console.log('Announcement Deleted');
@@ -106,7 +122,8 @@ const NewsReducer = (state = initState, action) => {
             });
             return {
                 ...state,
-                newsAnnouncementError: null
+                newsAnnouncementError: null,
+                publishingAnnouncement: false
             }
         default:
             return state;

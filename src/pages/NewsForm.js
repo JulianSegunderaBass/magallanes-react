@@ -15,14 +15,15 @@ import { useSelector } from 'react-redux';
 import { createAnnouncement } from '../redux-store/actions/NewsActions';
 // Importing Redirect Component
 import { Redirect } from 'react-router-dom';
-// For notifications
-import { store } from 'react-notifications-component';
 // Importing Rich Text Editor
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// Spinner
+import ReactSpinner from '../assets/images/ReactSpinner.gif';
 
 const NewsForm = () => {
     const auth = useSelector((state) => state.firebase.auth);
+    const publishingState = useSelector((state) => state.NewsAnnouncements.publishingAnnouncement);
 
     // Allowing the form to dispatch action
     const dispatch = useDispatch();
@@ -36,20 +37,6 @@ const NewsForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
-        // Displaying a notification
-        store.addNotification({
-            title: "Uploading Announcement...",
-            message: "Give us some time.",
-            type: "warning",
-            insert: "top",
-            container: "top-right",
-            animationIn: ["animate__animated", "animate__fadeIn"],
-            animationOut: ["animate__animated", "animate__fadeOut"],
-            dismiss: {
-                duration: 2000,
-                onScreen: true
-            }
-        });
     }
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
@@ -99,7 +86,15 @@ const NewsForm = () => {
                         accept="image/png, image/jpeg"
                         onChange={handleAttachment}
                     />
-                    <button>Create Announcement</button>
+                    {/* publishingState determines what button to render */}
+                    {publishingState === false ? 
+                        <button id="create-announcement">Create Announcement</button> 
+                        : 
+                        <div id="loading-button">
+                            <button id="posting-announcement" disabled>Posting...</button>
+                            <img src={ReactSpinner} alt="Loading Spinner" />
+                        </div>
+                    }
                 </form>
             </FormSection>
         </MainContainer>
@@ -111,6 +106,7 @@ const boxBorder = "#1D3557";
 const warningText = "#AB0A0A";
 const successText = "#137D2D";
 const accentColor = "#E63946";
+const loadingButton = "#C7D1C4";
 
 // Styled Components
 
@@ -175,6 +171,34 @@ const FormSection = styled.div`
             margin-left: 2rem;
             li {
                 font-size: 1.4rem;
+            }
+        }
+        button#create-announcement {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        #loading-button {
+            display: flex;
+            align-items: center;
+            button#posting-announcement {
+                font-weight: bold;
+                font-size: 1.1rem;
+                cursor: progress;
+                padding: 1rem 2rem;
+                border: 3px solid ${loadingButton};
+                border-radius: 1rem;
+                background: ${loadingButton};
+                color: black;
+            }
+            img {
+                width: 50px;
+                height: 50px;
+            }
+            @media (max-width: 870px) {
+                flex-direction: column;
+                button#posting-announcement {
+                    margin-bottom: 1rem;
+                }
             }
         }
         @media (max-width: 870px) {

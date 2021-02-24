@@ -4,7 +4,9 @@ import { store } from 'react-notifications-component';
 
 const initState = {
     // Using this to display errors if they come up
-    authError: null
+    authError: null,
+    signingIn: false,
+    creatingAccount: false
 }
 
 const AuthReducer = (state = initState, action) => {
@@ -29,6 +31,26 @@ const AuthReducer = (state = initState, action) => {
                 ...state,
                 authError: action.error.message
             }
+        case 'LOGGING_IN':
+            console.log('Logging in...');
+            // Setting authError to null because there is no error
+            store.addNotification({
+                title: "Signing you in...",
+                message: "Give us some time.",
+                type: "warning",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+            return {
+                ...state,
+                signingIn: true
+            }
         case 'LOGIN_SUCCESS':
             console.log('Login success');
             // Setting authError to null because there is no error
@@ -47,7 +69,8 @@ const AuthReducer = (state = initState, action) => {
             });
             return {
                 ...state,
-                authError: null
+                authError: null,
+                signingIn: false
             }
         case 'SIGNOUT_SUCCESS':
             console.log("Signout success");
@@ -65,6 +88,25 @@ const AuthReducer = (state = initState, action) => {
                 }
             });
             return state;
+        case 'CREATING_ACCOUNT':
+            console.log('Creating your account...');
+            store.addNotification({
+                title: "Creating your account...",
+                message: "Give us some time.",
+                type: "warning",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+            return {
+                ...state,
+                creatingAccount: true
+            }
         case 'SIGNUP_SUCCESS':
             console.log('Signup success');
             store.addNotification({
@@ -82,7 +124,8 @@ const AuthReducer = (state = initState, action) => {
             });
             return {
                 ...state,
-                authError: null
+                authError: null,
+                creatingAccount: false
             }
         case 'SIGNUP_ERROR':
             console.log('Signup error');

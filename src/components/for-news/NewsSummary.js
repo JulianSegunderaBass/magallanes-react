@@ -73,20 +73,6 @@ const NewsSummary = ({ newsItem }) => {
         } else {
             dispatch(editAnnouncement(newsEdits));
             setEditModalState(false);
-            // Displaying a notification
-            store.addNotification({
-                title: "Updating Announcement...",
-                message: "Give us some time.",
-                type: "warning",
-                insert: "top",
-                container: "top-right",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                    duration: 2000,
-                    onScreen: true
-                }
-            });
         }
     };
     const handleDelete = () => {
@@ -118,17 +104,20 @@ const NewsSummary = ({ newsItem }) => {
                     <div className="divider"></div>
                 </div>
                 <div className="sender-info">
-                    <h5>Posted By:</h5>
                     <h5>{newsItem.authorFirstName} {newsItem.authorLastName}</h5>
                     <h5 id="sender-email">{newsItem.authorEmail}</h5>
                 </div>
                 {/* <p>{ReactHtmlParser(newsItem.body)}</p> */}
             </Link>
             <ButtonContainer>
-                {/* Update Button */}
-                {currentUserEmail === newsItem.authorEmail ? <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button> : ""}
-                {/* Delete Button */}
-                {currentUserEmail === newsItem.authorEmail ? <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button> : ""}
+                {/* Update and Delete Button */}
+                {currentUserEmail === newsItem.authorEmail || currentUserEmail === "adminuser@gmail.com" ? 
+                <>
+                    <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button>
+                    <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button>
+                </>
+                 : ""
+                }
             </ButtonContainer>
             {/* Modal Components */}
 
