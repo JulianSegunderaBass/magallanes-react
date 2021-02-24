@@ -14,6 +14,8 @@ export const createAnnouncement = (newsAnnouncement) => {
         const loggedEmail = getState().firebase.auth.email;
         const dt = new Date();
 
+        dispatch({type: 'PUBLISHING_ANNOUNCEMENT'});
+
         // If poster has decided to include an attachment
         if (newsAnnouncement.attachment) {
             // Saving attachment with URL
