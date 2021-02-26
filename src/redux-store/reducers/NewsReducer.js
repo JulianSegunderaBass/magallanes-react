@@ -71,7 +71,7 @@ const NewsReducer = (state = initState, action) => {
             console.log('Announcement Deleted');
             store.addNotification({
                 title: "News Announcement Deleted",
-                message: "",
+                message: "It will no longer be viewable on the reports page",
                 type: "success",
                 insert: "top",
                 container: "top-right",
