@@ -168,7 +168,7 @@ const NewsSummary = ({ newsItem }) => {
                         </RichContent>
                         <input 
                             type="file" 
-                            accept="image/png, image/jpeg"
+                            accept="image/png, image/jpeg, .pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                             onChange={handleAttachment}
                         />
                         <button className="edit-modal-button">Save Edits</button>
