@@ -83,7 +83,7 @@ const NewsForm = () => {
                     />
                     <input 
                         type="file" 
-                        accept="image/png, image/jpeg"
+                        accept="image/png, image/jpeg, .pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         onChange={handleAttachment}
                     />
                     {/* publishingState determines what button to render */}

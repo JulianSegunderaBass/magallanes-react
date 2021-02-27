@@ -25,30 +25,38 @@ const AnnouncementDetails = (props) => {
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <AutoScroll />
-            <Card>
-                <motion.div variants={fade}>
-                    <h4>{NewsItem.heading}</h4>
-                    {/* Using Moment.js to parse createdAt property to readable date */}
-                    <h5>{moment(NewsItem.createdAt.toDate()).calendar()}</h5>
-                    <div className="sender-info">
-                        <h5>Posted By:</h5>
-                        <h5>{NewsItem.authorFirstName} {NewsItem.authorLastName}</h5>
-                        <h5 id="sender-email">{NewsItem.authorEmail}</h5>
-                </div>
-                </motion.div>
-                <div className="divider"></div>
-                {/* Section for rich text content */}
-                <RichContent>
-                    {ReactHtmlParser(NewsItem.body)}
-                </RichContent>
-                {/* If attachment is detected, rendered here */}
-                {NewsItem.attachmentURL &&
-                    <Image>
-                        <motion.img variants={imageAnim} src={NewsItem.attachmentURL} alt="image attachment"/>
-                    </Image>
-                }
-                <Link to="/news" id="return-link">View other announcements</Link>
-            </Card>
+            {NewsItem &&
+                <Card>
+                    <motion.div variants={fade}>
+                        <h4>{NewsItem.heading}</h4>
+                        {/* Using Moment.js to parse createdAt property to readable date */}
+                        <h5>{moment(NewsItem.createdAt.toDate()).calendar()}</h5>
+                        <div className="sender-info">
+                            <h5>Posted By:</h5>
+                            <h5>{NewsItem.authorFirstName} {NewsItem.authorLastName}</h5>
+                            <h5 id="sender-email">{NewsItem.authorEmail}</h5>
+                    </div>
+                    </motion.div>
+                    <div className="divider"></div>
+                    {/* Section for rich text content */}
+                    <RichContent>
+                        {ReactHtmlParser(NewsItem.body)}
+                    </RichContent>
+                    {/* If attachment is detected, rendered here */}
+                    {NewsItem.attachmentURL &&
+                        NewsItem.attachmentType === 'image/jpeg' || NewsItem.attachmentType === 'image/png' ?
+                            <Image>
+                                <motion.img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName}/>
+                            </Image>
+                        :   
+                            NewsItem.attachmentType === 'application/pdf' || NewsItem.attachmentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
+                                    <a id="media-link" href={NewsItem.attachmentURL} download>{NewsItem.attachmentName}</a>
+                                :
+                                    ''
+                    }
+                    <Link to="/news" id="return-link">View other announcements</Link>
+                </Card>
+            }
         </MainContainer>
     )
 }
@@ -111,6 +119,27 @@ const Card = styled.div`
             color: ${mainBackground};
         }
     }
+    a#media-link {
+        display: block;
+        width: 20%;
+        text-decoration: none;
+        text-align: center;
+        font-weight: bold;
+        font-size: 0.7rem;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border: 1.5px solid ${accentColor};
+        border-radius: 0.5rem;
+        background: transparent;
+        color: ${mainFontColor};
+        /* Adding a transition for hover */
+        transition: all 0.5s ease;
+        font-family: 'Inter', sans-serif;
+        &:hover {
+            background-color: ${accentColor};
+            color: ${mainBackground};
+        }
+    }
     .sender-info {
         margin: 1rem 0;
         h5 {
@@ -126,7 +155,7 @@ const Card = styled.div`
         h4 {
             font-size: 1.5rem;
         }
-        a#return-link {
+        a#return-link, a#media-link {
             width: 100%;
         }
     }

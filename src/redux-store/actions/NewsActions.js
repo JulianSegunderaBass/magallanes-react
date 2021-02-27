@@ -41,6 +41,8 @@ export const createAnnouncement = (newsAnnouncement) => {
                                 heading: newsAnnouncement.heading,
                                 body: newsAnnouncement.body,
                                 attachmentURL: url,
+                                attachmentName: newsAnnouncement.attachment.name,
+                                attachmentType: newsAnnouncement.attachment.type,
                                 createdAt: new Date(),
                                 authorFirstName: loggedProfile.firstName,
                                 authorLastName: loggedProfile.lastName,
@@ -115,7 +117,9 @@ export const editAnnouncement = (newsEdits) => {
                                 }, { merge: true });
                             }
                             firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
-                                attachmentURL: url
+                                attachmentURL: url,
+                                attachmentName: newsEdits.attachment.name,
+                                attachmentType: newsEdits.attachment.type
                             }, { merge: true });
                             dispatch({type: 'UPDATE_ANNOUNCEMENT', payload: newsEdits});
                         })

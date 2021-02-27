@@ -99,7 +99,17 @@ const NewsSummary = ({ newsItem }) => {
                     <div className="date-image">
                     {/* Using Moment.js to parse createdAt property to readable date */}
                         <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
-                        <>{newsItem.attachmentURL && <BsIcons.BsCardImage color="#1D3557" size="2rem"/>}</>
+                        <>
+                            {newsItem.attachmentURL && 
+                                newsItem.attachmentType === 'image/jpeg' || newsItem.attachmentType === 'image/png' ?
+                                    <BsIcons.BsCardImage color="#1D3557" size="2rem"/>
+                                :
+                                    newsItem.attachmentType === 'application/pdf' || newsItem.attachmentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
+                                        <AiIcons.AiOutlineFileText color="#1D3557" size="2rem"/>
+                                    :
+                                        ''
+                            }
+                        </>
                     </div>
                     <div className="divider"></div>
                 </div>
