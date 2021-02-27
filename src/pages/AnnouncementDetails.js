@@ -1,6 +1,6 @@
 // Details page for an announcement
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
 // Animations
 import { motion } from 'framer-motion';
@@ -15,10 +15,13 @@ import { Link } from 'react-router-dom';
 import AutoScroll from '../assets/AutoScroll';
 // For parsing HTML markup
 import ReactHtmlParser from 'react-html-parser';
+// Importing Modal
+import Modal from 'react-modal';
 
 
 const AnnouncementDetails = (props) => {
     const NewsAnnouncements = useSelector((state) => state.firestore.data.NewsAnnouncements);
+    const [imageModalState, setImageModalState] = useState(false);
     // Matching route ID with data from state
     const id = props.match.params.id; 
     const NewsItem = NewsAnnouncements ? NewsAnnouncements[id] : null;
@@ -46,7 +49,7 @@ const AnnouncementDetails = (props) => {
                     {NewsItem.attachmentURL &&
                         NewsItem.attachmentType === 'image/jpeg' || NewsItem.attachmentType === 'image/png' ?
                             <Image>
-                                <motion.img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName}/>
+                                <motion.img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName} onClick={() => setImageModalState(true)}/>
                             </Image>
                         :   
                             NewsItem.attachmentType === 'application/pdf' || NewsItem.attachmentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
@@ -55,6 +58,31 @@ const AnnouncementDetails = (props) => {
                                     ''
                     }
                     <Link to="/news" id="return-link">View other announcements</Link>
+
+                    {/* Image Modal */}
+                    <Modal
+                        isOpen={imageModalState}
+                        onRequestClose={() => setImageModalState(false)}
+                        style={{
+                            overlay: {
+                                backgroundColor: "rgba(3, 25, 38, 0.75)",
+                            },
+                            content: {
+                                width: "80%",
+                                height: "90%",
+                                top: "5%",
+                                left: "10%",
+                                right: "10%",
+                                bottom: "5%",
+                                borderRadius: "1rem",
+                                padding: "1rem",
+                            },
+                        }}
+                    >
+                        <ModalContent>
+                            <img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName}/>
+                        </ModalContent>
+                    </Modal>
                 </Card>
             }
         </MainContainer>
@@ -182,6 +210,17 @@ const Image = styled.div`
     overflow: hidden;
     img {
         width: 100%;
+        /* Keeping aspect ratio even */
+        object-fit: cover;
+    }
+`
+
+const ModalContent = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 75%;
         /* Keeping aspect ratio even */
         object-fit: cover;
     }
