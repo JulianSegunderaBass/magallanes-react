@@ -18,7 +18,18 @@
     bottom: 0;
     background-color: rgba(3, 25, 38, 0.75);
 }
-
+.attachment-modal .attachment-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.attachment-modal .attachment-container img {
+    width: 75%;
+    height: 100%;
+    object-fit: contain;
+}
 .form-modal {
     position: absolute;
     width: 75%;
@@ -30,8 +41,8 @@
     border-radius: 1rem;
     padding: 1rem;
     background-color: white;
+    overflow: scroll;
 }
-
 .form-modal-overlay {
     position: fixed;
     top: 0;
@@ -39,6 +50,38 @@
     right: 0;
     bottom: 0;
     background-color: rgba(3, 25, 38, 0.75);
+}
+.delete-modal {
+    position: absolute;
+    width: 45%;
+    height: 45%;
+    top: 27.5%;
+    left: 27.5%;
+    right: 27.5%;
+    bottom: 27.5%;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: white;
+}
+.delete-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(3, 25, 38, 0.75);
+}
+
+/* Modal Transition */
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
+.ReactModal__Overlay--before-close{
+    opacity: 0;
 }
 
 @media only screen and (max-width: 870px) {
@@ -50,9 +93,10 @@
         right: 10%;
         bottom: 10%;
     }
-    .attachment-modal img {
+    .attachment-modal .attachment-container img {
         width: 100%;
-        object-fit: cover;
+        height: 100%;
+        object-fit: contain;
     }
     .form-modal {
         width: 100%;
@@ -61,5 +105,13 @@
         left: 0;
         right: 0;
         bottom: 12.5%;
+    }
+    .delete-modal {
+        width: 75%;
+        height: 45%;
+        top: 27.5%;
+        left: 12.5%;
+        right: 12.5%;
+        bottom: 27.5%;
     }
 }

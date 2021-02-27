@@ -68,9 +68,9 @@ const AnnouncementDetails = (props) => {
                         className="attachment-modal"
                         overlayClassName="attachment-modal-overlay"
                     >
-                        <ModalContent>
+                        <div className="attachment-container">
                             <img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName}/>
-                        </ModalContent>
+                        </div>
                     </Modal>
                 </Card>
             }
@@ -196,18 +196,19 @@ const RichContent = styled.div`
 `
 
 const Image = styled.div`
-    overflow: hidden;
-    img {
-        width: 100%;
-        /* Keeping aspect ratio even */
-        object-fit: cover;
-    }
-`
-
-const ModalContent = styled.div`
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    img {
+        width: 50%;
+        object-fit: contain;
+        @media (max-width: 870px) {
+            width: 100%;
+        }
+    }
 `
 
 export default AnnouncementDetails;

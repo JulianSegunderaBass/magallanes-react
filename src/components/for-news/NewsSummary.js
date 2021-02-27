@@ -170,21 +170,8 @@ const NewsSummary = ({ newsItem }) => {
             <Modal
                 isOpen={deleteModalState}
                 onRequestClose={() => setDeleteModalState(false)}
-                style={{
-                    overlay: {
-                        backgroundColor: "rgba(3, 25, 38, 0.75)",
-                    },
-                    content: {
-                        width: "75%",
-                        height: "55%",
-                        top: "22.5%",
-                        left: "12.5%",
-                        right: "12.5%",
-                        bottom: "22.5%",
-                        borderRadius: "1rem",
-                        padding: "1rem",
-                    },
-                }}
+                className="delete-modal"
+                overlayClassName="delete-modal-overlay"
             >
                 <ModalContent>
                     <h4 className="modal-text">Are you sure you wish to delete this post?</h4>
