@@ -17,6 +17,8 @@ import AutoScroll from '../assets/AutoScroll';
 import ReactHtmlParser from 'react-html-parser';
 // Importing Modal
 import Modal from 'react-modal';
+// Testing CSS import
+import '../assets/ModalStyle.css';
 
 
 const AnnouncementDetails = (props) => {
@@ -63,21 +65,8 @@ const AnnouncementDetails = (props) => {
                     <Modal
                         isOpen={imageModalState}
                         onRequestClose={() => setImageModalState(false)}
-                        style={{
-                            overlay: {
-                                backgroundColor: "rgba(3, 25, 38, 0.75)",
-                            },
-                            content: {
-                                width: "80%",
-                                height: "90%",
-                                top: "5%",
-                                left: "10%",
-                                right: "10%",
-                                bottom: "5%",
-                                borderRadius: "1rem",
-                                padding: "1rem",
-                            },
-                        }}
+                        className="attachment-modal"
+                        overlayClassName="attachment-modal-overlay"
                     >
                         <ModalContent>
                             <img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName}/>
@@ -219,11 +208,6 @@ const ModalContent = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    img {
-        width: 75%;
-        /* Keeping aspect ratio even */
-        object-fit: cover;
-    }
 `
 
 export default AnnouncementDetails;

@@ -23,6 +23,8 @@ import { store } from 'react-notifications-component';
 // Importing Rich Text Editor
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// Testing CSS Import
+import '../../assets/ModalStyle.css'
 
 Modal.setAppElement("#root");
 // News Item is an object holding the news data
@@ -135,21 +137,8 @@ const NewsSummary = ({ newsItem }) => {
             <Modal
                 isOpen={editModalState}
                 onRequestClose={() => setEditModalState(false)}
-                style={{
-                    overlay: {
-                        backgroundColor: "rgba(3, 25, 38, 0.75)",
-                    },
-                    content: {
-                        width: "75%",
-                        height: "85%",
-                        top: "7.5%",
-                        left: "12.5%",
-                        right: "12.5%",
-                        bottom: "7.5%",
-                        borderRadius: "1rem",
-                        padding: "1rem",
-                    },
-                }}
+                className="form-modal"
+                overlayClassName="form-modal-overlay"
             >
                 <ModalContent>
                     <form onSubmit={handleEdits}>
