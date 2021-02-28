@@ -23,6 +23,8 @@ import { store } from 'react-notifications-component';
 // Importing Rich Text Editor
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// Testing CSS Import
+import '../../assets/ModalStyle.css'
 
 Modal.setAppElement("#root");
 // News Item is an object holding the news data
@@ -99,7 +101,17 @@ const NewsSummary = ({ newsItem }) => {
                     <div className="date-image">
                     {/* Using Moment.js to parse createdAt property to readable date */}
                         <h5 id="time-stamp">{moment(newsItem.createdAt.toDate()).calendar()}</h5>
-                        <>{newsItem.attachmentURL && <BsIcons.BsCardImage color="#1D3557" size="2rem"/>}</>
+                        <>
+                            {newsItem.attachmentURL && 
+                                newsItem.attachmentType === 'image/jpeg' || newsItem.attachmentType === 'image/png' ?
+                                    <BsIcons.BsCardImage color="#1D3557" size="2rem"/>
+                                :
+                                    newsItem.attachmentType === 'application/pdf' || newsItem.attachmentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
+                                        <AiIcons.AiOutlineFileText color="#1D3557" size="2rem"/>
+                                    :
+                                        ''
+                            }
+                        </>
                     </div>
                     <div className="divider"></div>
                 </div>
@@ -125,21 +137,8 @@ const NewsSummary = ({ newsItem }) => {
             <Modal
                 isOpen={editModalState}
                 onRequestClose={() => setEditModalState(false)}
-                style={{
-                    overlay: {
-                        backgroundColor: "rgba(3, 25, 38, 0.75)",
-                    },
-                    content: {
-                        width: "75%",
-                        height: "85%",
-                        top: "7.5%",
-                        left: "12.5%",
-                        right: "12.5%",
-                        bottom: "7.5%",
-                        borderRadius: "1rem",
-                        padding: "1rem",
-                    },
-                }}
+                className="form-modal"
+                overlayClassName="form-modal-overlay"
             >
                 <ModalContent>
                     <form onSubmit={handleEdits}>
@@ -158,7 +157,7 @@ const NewsSummary = ({ newsItem }) => {
                         </RichContent>
                         <input 
                             type="file" 
-                            accept="image/png, image/jpeg"
+                            accept="image/png, image/jpeg, .pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                             onChange={handleAttachment}
                         />
                         <button className="edit-modal-button">Save Edits</button>
@@ -171,21 +170,8 @@ const NewsSummary = ({ newsItem }) => {
             <Modal
                 isOpen={deleteModalState}
                 onRequestClose={() => setDeleteModalState(false)}
-                style={{
-                    overlay: {
-                        backgroundColor: "rgba(3, 25, 38, 0.75)",
-                    },
-                    content: {
-                        width: "75%",
-                        height: "55%",
-                        top: "22.5%",
-                        left: "12.5%",
-                        right: "12.5%",
-                        bottom: "22.5%",
-                        borderRadius: "1rem",
-                        padding: "1rem",
-                    },
-                }}
+                className="delete-modal"
+                overlayClassName="delete-modal-overlay"
             >
                 <ModalContent>
                     <h4 className="modal-text">Are you sure you wish to delete this post?</h4>
