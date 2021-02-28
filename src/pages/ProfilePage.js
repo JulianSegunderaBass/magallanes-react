@@ -56,14 +56,10 @@ const ProfilePage = () => {
         >
             {/* For Auto Scrolling to top */}
             <AutoScroll />
-            <ProfilePhoto>
+            <ProfileDisplay>
                 <Image>
                     {/* Conditionally rendering profile image */}
-                    {profileData.profileImageURL ? 
-                        <motion.img variants={imageAnim} src={profileData.profileImageURL} alt="profile-image" />
-                        :
-                        <motion.img variants={imageAnim} src={ProfilePlaceholder} alt="profile-image" />
-                    }
+                    <motion.img variants={imageAnim} src={profileData.profileImageURL ? profileData.profileImageURL : 'https://firebasestorage.googleapis.com/v0/b/magallanes-react.appspot.com/o/profile-images%2FprofilePlaceholder.png?alt=media&token=1bef4059-7389-4228-85ac-1991a24f3a67'} alt="profile-image" />
                 </Image>
                 <p>Change your Picture</p>
                 <form onSubmit={handleSubmit}>
@@ -74,7 +70,7 @@ const ProfilePage = () => {
                     />
                     <button id="photo-submit">Submit</button>
                 </form>
-            </ProfilePhoto>
+            </ProfileDisplay>
             <div>
                 <div className="divider"></div>
                 <h2><span>Name:</span> {profileData.firstName} {profileData.lastName}</h2>
@@ -147,7 +143,7 @@ const ProfileContainer = styled(motion.div)`
     }
 `
 
-const ProfilePhoto = styled.div`
+const ProfileDisplay = styled.div`
     margin-right: 2rem;
     width: 30%;
     form {
@@ -170,7 +166,7 @@ const Image = styled.div`
     border-radius: 2rem;
     overflow: hidden;
     width: 100%;
-    max-height: 60%;
+    height: 50%;
     img {
         width: 100%;
         object-fit: cover;
