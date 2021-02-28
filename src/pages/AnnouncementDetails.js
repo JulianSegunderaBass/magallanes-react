@@ -61,7 +61,7 @@ const AnnouncementDetails = (props) => {
                 <div className="divider"></div>
                 {/* Section for rich text content */}
                 <RichContent>
-                    {ReactHtmlParser(localStorage.getItem("new_items_authorEmail"))}
+                    {ReactHtmlParser(localStorage.getItem("new_items_body"))}
                 </RichContent>
                 {/* If attachment is detected, rendered here */}
                 {localStorage.getItem("new_items_attachmentURL") &&
@@ -69,7 +69,7 @@ const AnnouncementDetails = (props) => {
                         <Image>
                             <motion.img variants={imageAnim} src={localStorage.getItem("new_items_attachmentURL")} alt={localStorage.getItem("new_items_attachmentName")} onClick={() => setImageModalState(true)}/>
                         </Image>
-                    :   
+                    :
                         localStorage.getItem("new_items_attachmentType") === 'application/pdf' || localStorage.getItem("new_items_attachmentType") === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
                                 <a id="media-link" href={localStorage.getItem("new_items_attachmentURL")} download>{localStorage.getItem("new_items_attachmentName")}</a>
                             :

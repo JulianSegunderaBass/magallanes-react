@@ -92,6 +92,9 @@ const GlobalStyle = createGlobalStyle`
             color: ${mainBackground};
         }
     }
+    .nav-menu.active {
+        z-index: 9999 !important;
+    }
 `
 
 export default GlobalStyle;

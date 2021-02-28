@@ -18,9 +18,11 @@ export const createAnnouncement = (newsAnnouncement) => {
 
         // If poster has decided to include an attachment
         if (newsAnnouncement.attachment) {
+            let filenameArr = newsAnnouncement.attachment.name.split(".");
+            let fileExt = filenameArr[filenameArr.length - 1];
             // Saving attachment with URL
             let imgHashObj = sha256(`${newsAnnouncement.attachment.name}${dt.toLocaleDateString()}${dt.toLocaleTimeString()}`);
-            let imgHashStr = imgHashObj.toString(CryptoJS.enc.Base64);
+            let imgHashStr = `${imgHashObj.toString(CryptoJS.enc.Base64)}.${fileExt}`;
             const uploadTask = projectStorage
             .ref(`news-images/${imgHashStr}`)
             .put(newsAnnouncement.attachment);
@@ -70,7 +72,6 @@ export const createAnnouncement = (newsAnnouncement) => {
                 dispatch({type: 'CREATE_ANNOUNCEMENT_ERROR', error});
             });
         }
-
     }
 }
 
