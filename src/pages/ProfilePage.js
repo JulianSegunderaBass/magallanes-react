@@ -1,10 +1,11 @@
 // Page for displaying profile information + benefits
 
-import React from 'react';
+import React, { useState } from 'react';
 // Importing Styled Components
 import styled from 'styled-components';
 // Importing Framer Motion and Animations
 import { motion } from 'framer-motion';
+import { imageAnim } from '../assets/Animations';
 import { pageLoad, revealUp } from '../assets/Animations';
 // Importing AutoScroll function
 import AutoScroll from '../assets/AutoScroll';
@@ -12,13 +13,29 @@ import AutoScroll from '../assets/AutoScroll';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { resetPass } from '../redux-store/actions/AuthActions';
+import { setProfileImage } from '../redux-store/actions/AuthActions';
 // Importing Redirect Component
 import { Redirect } from 'react-router-dom';
+// Importing Default Profile
+import ProfilePlaceholder from '../assets/images/ProfilePlaceholder.png'
 
 const ProfilePage = () => {
     const auth = useSelector((state) => state.firebase.auth);
     const profileData = useSelector((state) => state.firebase.profile);
     const dispatch = useDispatch();
+
+    const [profilePhoto, setProfilePhoto] = useState(null);
+
+    const handleAttachment = (e) => {
+        if (e.target.files[0]) {
+            setProfilePhoto(e.target.files[0]);
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(setProfileImage(profilePhoto, auth.uid));
+    }
 
     const handlePassReset = () => {
         dispatch(resetPass());
@@ -39,18 +56,40 @@ const ProfilePage = () => {
         >
             {/* For Auto Scrolling to top */}
             <AutoScroll />
-            <h2><span>Name:</span> {profileData.firstName} {profileData.lastName}</h2>
-            <h4><span>Email:</span> <span id="email">{auth.email}</span></h4>
-            <div className="divider"></div>
-            <h4><span>My Benefits:</span> </h4>
-            <ul>
-                <li>{profileData.currentBenefits.benefit_1}</li>
-                <li>{profileData.currentBenefits.benefit_2}</li>
-                <li>{profileData.currentBenefits.benefit_3}</li>
-            </ul>
-            <div className="divider"></div>
-            <h5>You may reset your password here. A message will be sent to your inbox with further instructions.</h5>
-            <button onClick={handlePassReset}>Change Password</button>
+            <ProfilePhoto>
+                <Image>
+                    {/* Conditionally rendering profile image */}
+                    {profileData.profileImageURL ? 
+                        <motion.img variants={imageAnim} src={profileData.profileImageURL} alt="profile-image" />
+                        :
+                        <motion.img variants={imageAnim} src={ProfilePlaceholder} alt="profile-image" />
+                    }
+                </Image>
+                <p>Change your Picture</p>
+                <form onSubmit={handleSubmit}>
+                    <input 
+                        type="file" 
+                        accept="image/png, image/jpeg"
+                        onChange={handleAttachment}
+                    />
+                    <button id="photo-submit">Submit</button>
+                </form>
+            </ProfilePhoto>
+            <div>
+                <div className="divider"></div>
+                <h2><span>Name:</span> {profileData.firstName} {profileData.lastName}</h2>
+                <h4><span>Email:</span> <span id="email">{auth.email}</span></h4>
+                <div className="divider"></div>
+                <h4><span>My Benefits:</span> </h4>
+                <ul>
+                    <li>{profileData.currentBenefits.benefit_1}</li>
+                    <li>{profileData.currentBenefits.benefit_2}</li>
+                    <li>{profileData.currentBenefits.benefit_3}</li>
+                </ul>
+                <div className="divider"></div>
+                <h5>You may reset your password here. A message will be sent to your inbox with further instructions.</h5>
+                <button onClick={handlePassReset}>Change Password</button>
+            </div>
         </ProfileContainer>
     )
 }
@@ -64,6 +103,7 @@ const dividerColor = "#1D3557";
 const ProfileContainer = styled(motion.div)`
     min-height: 90vh;
     padding: 5rem 10rem;
+    display: flex;
     h2, h4, h5 {
         margin-bottom: 1rem;
     }
@@ -88,7 +128,8 @@ const ProfileContainer = styled(motion.div)`
     @media (max-width: 1090px) {
         padding: 2rem 2rem;
     }
-    @media (max-width: 700px) {
+    @media (max-width: 870px) {
+        flex-direction: column;
         h2 {
             font-size: 2rem;
         }
@@ -103,6 +144,32 @@ const ProfileContainer = styled(motion.div)`
             display: block;
             margin: 0 auto;
         }
+    }
+`
+
+const ProfilePhoto = styled.div`
+    margin-right: 2rem;
+    form {
+        display: flex;
+        #photo-submit {
+            padding: 0.2rem 0.4rem;
+            margin: 0;
+            width: 30%;
+            border-radius: 0.6rem;
+        }
+    }
+    @media (max-width: 870px) {
+        margin-bottom: 2rem;
+    }
+`
+
+const Image = styled.div`
+    margin: 0 auto;
+    border-radius: 2rem;
+    overflow: hidden;
+    img {
+        width: 100%;
+        object-fit: cover;
     }
 `
 

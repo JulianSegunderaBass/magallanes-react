@@ -167,7 +167,7 @@ const AuthReducer = (state = initState, action) => {
             store.addNotification({
                 title: "Failed to Send Reset Email",
                 message: action.error.message,
-                type: "success",
+                type: "danger",
                 insert: "top",
                 container: "top-right",
                 animationIn: ["animate__animated", "animate__fadeIn"],
@@ -181,6 +181,38 @@ const AuthReducer = (state = initState, action) => {
                 ...state,
                 authError: action.error.message
             }
+        case 'PROFILE_IMAGE_SET':
+            console.log('Profile Image has been set');
+            store.addNotification({
+                title: "Success",
+                message: "Profile Image has been set.",
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+            return state;
+        case 'PROFILE_IMAGE_ERROR':
+            console.log('Profile Image has not been set');
+            store.addNotification({
+                title: "Error",
+                message: action.error.message,
+                type: "danger",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                }
+            });
+            return state;
         default:
             return state;
     }

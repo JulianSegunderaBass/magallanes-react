@@ -1,5 +1,8 @@
 // Actions for users authenticating (signing in / out)
 
+import sha256 from 'crypto-js/sha256';
+const CryptoJS = require("crypto-js");
+
 export const signInUser = (credentials) => {
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
@@ -81,5 +84,43 @@ export const resetPass = () => {
         }).catch(error => {
             dispatch({type: 'RESET_PASSWORD_ERROR', error});
         });
+    }
+}
+
+// For changing profile photo from profile page
+export const setProfileImage = (profilePhoto, userID) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase();
+        const firestore = getFirestore();
+        const projectStorage = firebase.storage();
+        const dt = new Date();
+
+        let imgHashObj = sha256(`${profilePhoto.name}${dt.toLocaleDateString()}${dt.toLocaleTimeString()}`);
+        let imgHashStr = imgHashObj.toString(CryptoJS.enc.Base64);
+        const uploadTask = projectStorage
+        .ref(`profile-images/${imgHashStr}`)
+        .put(profilePhoto);
+        uploadTask.on(
+            "state_changed",
+            snapshot => {},
+            error => {
+                console.log(error);
+            },
+            () => {
+                projectStorage
+                    .ref("profile-images")
+                    .child(imgHashStr)
+                    .getDownloadURL()
+                    .then(url => {
+                        return firestore.collection('users').doc(userID).set({
+                            profileImageURL: url
+                        }, { merge: true });
+                    }).then(() => {
+                        dispatch({type: 'PROFILE_IMAGE_SET'});
+                    }).catch(error => {
+                        dispatch({type: 'PROFILE_IMAGE_ERROR', error});
+                    })
+            }
+        )
     }
 }
