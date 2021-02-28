@@ -27,53 +27,68 @@ const AnnouncementDetails = (props) => {
     // Matching route ID with data from state
     const id = props.match.params.id; 
     const NewsItem = NewsAnnouncements ? NewsAnnouncements[id] : null;
+
+    if (
+        NewsItem
+        && localStorage.getItem("id") != id
+    ) {
+        localStorage.setItem("new_items_id", id);
+        localStorage.setItem("new_items_heading", NewsItem.heading);
+        localStorage.setItem("new_items_createdAt", moment(NewsItem.createdAt.toDate()).calendar());
+        localStorage.setItem("new_items_authorFirstName", NewsItem.authorFirstName);
+        localStorage.setItem("new_items_authorLastName", NewsItem.authorLastName);
+        localStorage.setItem("new_items_authorEmail", NewsItem.authorEmail);
+        localStorage.setItem("new_items_body", NewsItem.body);
+        localStorage.setItem("new_items_attachmentURL", NewsItem.attachmentURL);
+        localStorage.setItem("new_items_attachmentType", NewsItem.attachmentType);
+        localStorage.setItem("new_items_attachmentName", NewsItem.attachmentName);
+    }
+
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <AutoScroll />
-            {NewsItem &&
-                <Card>
-                    <motion.div variants={fade}>
-                        <h4>{NewsItem.heading}</h4>
-                        {/* Using Moment.js to parse createdAt property to readable date */}
-                        <h5>{moment(NewsItem.createdAt.toDate()).calendar()}</h5>
-                        <div className="sender-info">
-                            <h5>Posted By:</h5>
-                            <h5>{NewsItem.authorFirstName} {NewsItem.authorLastName}</h5>
-                            <h5 id="sender-email">{NewsItem.authorEmail}</h5>
-                    </div>
-                    </motion.div>
-                    <div className="divider"></div>
-                    {/* Section for rich text content */}
-                    <RichContent>
-                        {ReactHtmlParser(NewsItem.body)}
-                    </RichContent>
-                    {/* If attachment is detected, rendered here */}
-                    {NewsItem.attachmentURL &&
-                        NewsItem.attachmentType === 'image/jpeg' || NewsItem.attachmentType === 'image/png' ?
-                            <Image>
-                                <motion.img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName} onClick={() => setImageModalState(true)}/>
-                            </Image>
-                        :   
-                            NewsItem.attachmentType === 'application/pdf' || NewsItem.attachmentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
-                                    <a id="media-link" href={NewsItem.attachmentURL} download>{NewsItem.attachmentName}</a>
-                                :
-                                    ''
-                    }
-                    <Link to="/news" id="return-link">View other announcements</Link>
+            <Card>
+                <motion.div variants={fade}>
+                    <h4>{localStorage.getItem("new_items_heading")}</h4>
+                    {/* Using Moment.js to parse createdAt property to readable date */}
+                    <h5>{localStorage.getItem("new_items_createdAt")}</h5>
+                    <div className="sender-info">
+                        <h5>Posted By:</h5>
+                        <h5>{localStorage.getItem("new_items_authorFirstName")} {localStorage.getItem("new_items_authorLastName")}</h5>
+                        <h5 id="sender-email">{localStorage.getItem("new_items_authorEmail")}</h5>
+                </div>
+                </motion.div>
+                <div className="divider"></div>
+                {/* Section for rich text content */}
+                <RichContent>
+                    {ReactHtmlParser(localStorage.getItem("new_items_authorEmail"))}
+                </RichContent>
+                {/* If attachment is detected, rendered here */}
+                {localStorage.getItem("new_items_attachmentURL") &&
+                    localStorage.getItem("new_items_attachmentType") === 'image/jpeg' || localStorage.getItem("new_items_attachmentType") === 'image/png' ?
+                        <Image>
+                            <motion.img variants={imageAnim} src={localStorage.getItem("new_items_attachmentURL")} alt={localStorage.getItem("new_items_attachmentName")} onClick={() => setImageModalState(true)}/>
+                        </Image>
+                    :   
+                        localStorage.getItem("new_items_attachmentType") === 'application/pdf' || localStorage.getItem("new_items_attachmentType") === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
+                                <a id="media-link" href={localStorage.getItem("new_items_attachmentURL")} download>{localStorage.getItem("new_items_attachmentName")}</a>
+                            :
+                                ''
+                }
+                <Link to="/news" id="return-link">View other announcements</Link>
 
-                    {/* Image Modal */}
-                    <Modal
-                        isOpen={imageModalState}
-                        onRequestClose={() => setImageModalState(false)}
-                        className="attachment-modal"
-                        overlayClassName="attachment-modal-overlay"
-                    >
-                        <div className="attachment-container">
-                            <img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName}/>
-                        </div>
-                    </Modal>
-                </Card>
-            }
+                {/* Image Modal */}
+                <Modal
+                    isOpen={imageModalState}
+                    onRequestClose={() => setImageModalState(false)}
+                    className="attachment-modal"
+                    overlayClassName="attachment-modal-overlay"
+                >
+                    <div className="attachment-container">
+                        <img variants={imageAnim} src={localStorage.getItem("new_items_attachmentURL")} alt={localStorage.getItem("new_items_attachmentName")}/>
+                    </div>
+                </Modal>
+            </Card>
         </MainContainer>
     )
 }
