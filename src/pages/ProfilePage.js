@@ -149,6 +149,7 @@ const ProfileContainer = styled(motion.div)`
 
 const ProfilePhoto = styled.div`
     margin-right: 2rem;
+    width: 30%;
     form {
         display: flex;
         #photo-submit {
@@ -159,6 +160,7 @@ const ProfilePhoto = styled.div`
         }
     }
     @media (max-width: 870px) {
+        width: 100%;
         margin-bottom: 2rem;
     }
 `
@@ -167,6 +169,8 @@ const Image = styled.div`
     margin: 0 auto;
     border-radius: 2rem;
     overflow: hidden;
+    width: 100%;
+    max-height: 60%;
     img {
         width: 100%;
         object-fit: cover;

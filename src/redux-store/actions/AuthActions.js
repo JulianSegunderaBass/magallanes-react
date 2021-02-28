@@ -95,6 +95,8 @@ export const setProfileImage = (profilePhoto, userID) => {
         const projectStorage = firebase.storage();
         const dt = new Date();
 
+        dispatch({type: 'SETTING_PROFILE_IMAGE'});
+
         let imgHashObj = sha256(`${profilePhoto.name}${dt.toLocaleDateString()}${dt.toLocaleTimeString()}`);
         let imgHashStr = imgHashObj.toString(CryptoJS.enc.Base64);
         const uploadTask = projectStorage
