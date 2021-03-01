@@ -1,52 +1,49 @@
 // Page for displaying profile information + benefits
 
+// Functional Imports
 import React, { useState } from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing Framer Motion and Animations
-import { motion } from 'framer-motion';
-import { imageAnim } from '../assets/Animations';
-import { pageLoad, revealUp } from '../assets/Animations';
-// Importing AutoScroll function
-import AutoScroll from '../assets/AutoScroll';
-// Redux Imports
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { resetPass } from '../redux-store/actions/AuthActions';
 import { setProfileImage } from '../redux-store/actions/AuthActions';
-// Importing Redirect Component
+// Component Imports
+import AutoScroll from '../assets/AutoScroll';
 import { Redirect } from 'react-router-dom';
-// Importing Default Profile
-import ProfilePlaceholder from '../assets/images/ProfilePlaceholder.png'
+// Styling + Animation Imports
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import { imageAnim, pageLoad } from '../assets/Animations';
 
 const ProfilePage = () => {
-    const auth = useSelector((state) => state.firebase.auth);
-    const profileData = useSelector((state) => state.firebase.profile);
+
     const dispatch = useDispatch();
 
+    // Selecting Redux State
+    const auth = useSelector((state) => state.firebase.auth);
+    const profileData = useSelector((state) => state.firebase.profile);
+
+    // Local State
     const [profilePhoto, setProfilePhoto] = useState(null);
 
+    // Functions
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
             setProfilePhoto(e.target.files[0]);
         }
     }
-
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(setProfileImage(profilePhoto, auth.uid));
     }
-
     const handlePassReset = () => {
         dispatch(resetPass());
     }
 
-    // If an authentication UID is NOT present (user is not signed in),
-    // redirect to home
-    if (!auth.uid) {
+    // Conditions
+    if (!auth.uid) { // If an authentication UID is NOT present (user is not signed in), redirect to home
         return <Redirect to='/' />;
     }
-
+    
     return (
         <ProfileContainer
             variants={pageLoad} 
@@ -90,11 +87,9 @@ const ProfilePage = () => {
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const mainFontColor = "#1D3557";
 const dividerColor = "#1D3557";
-
-// Styled Components
 
 const ProfileContainer = styled(motion.div)`
     min-height: 90vh;
@@ -142,7 +137,6 @@ const ProfileContainer = styled(motion.div)`
         }
     }
 `
-
 const ProfileDisplay = styled.div`
     margin-right: 2rem;
     width: 30%;
@@ -160,7 +154,6 @@ const ProfileDisplay = styled.div`
         margin-bottom: 2rem;
     }
 `
-
 const Image = styled.div`
     margin: 0 auto;
     border-radius: 2rem;

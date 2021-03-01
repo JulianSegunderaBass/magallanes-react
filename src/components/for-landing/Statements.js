@@ -1,12 +1,12 @@
 // The "Statements" section for the Landing Page
 // Vision, Mission and Pledge
 
+// Functional Imports
 import React from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing "DropToggle" Component for toggling functionality
+// Component Imports
 import DropToggle from '../global/DropToggle';
-// Importing "AnimateSharedLayout" - detects a change with the toggling
+// Styling + Animation Imports
+import styled from 'styled-components';
 import { AnimateSharedLayout } from 'framer-motion';
 
 const Statements = () => {
@@ -35,20 +35,13 @@ const Statements = () => {
     )
 }
 
-// Styled Components
-// We use the name "StatementStyle" because using Statement
-// would conflict between the Statement component and Statement
-// Styled component
-
-// Color Variables
+// Styled Components + Color Variables
 const lineColor = "#E63946";
 
 const StatementSection = styled.div`
     min-height: 90vh;
     display: block;
-    /* Padding to adjust space around whole component */
     padding: 5rem 10rem;
-    /* The "line" element under each statement */
     /* These styling lines carry over to DropTogge.js to 
     style the elements over there as well */
     .line {

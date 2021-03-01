@@ -1,10 +1,11 @@
 // The Footer Section to be included at the bottom of each page
 
+// Functional Imports
 import React from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing React Icons
+// Icon Imports
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+// Styling + Animation Imports
+import styled from 'styled-components';
 
 const Footer = () => {
     return (
@@ -37,9 +38,7 @@ const Footer = () => {
     )
 }
 
-// Styled Components
-
-// Color variables
+// Styled Components + Color Variables
 const footerBackground = "#C7D1C4";
 
 const FooterStyle = styled.div`
@@ -67,7 +66,6 @@ const SocialLinks = styled.div`
         margin-right: 1rem;
     }
 `
-
 const Contact = styled.div`
     text-align: center;
     h5 {

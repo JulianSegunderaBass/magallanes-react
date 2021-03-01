@@ -1,52 +1,49 @@
 // Component holding list of news announcements
 
+// Functional Imports
 import React, { useState } from 'react';
-// Importing Components
-import NewsSummary from './NewsSummary';
-import Pagination from './Pagination';
-// Importing Loading Spinner
-import ReactSpinner from '../../assets/images/ReactSpinner.gif';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing Framer Motion and Animations
-import { motion } from 'framer-motion';
-import { strongRevealUp, fade } from '../../assets/Animations';
-// For Redux Actions and State
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { createAnnouncement } from '../../redux-store/actions/NewsActions';
-// Testing CSS Import
-import '../../assets/ModalStyle.css';
-// Importing Rich Text Editor
+// Component Imports
+import NewsSummary from './NewsSummary';
+import Pagination from './Pagination';
+import Modal from 'react-modal';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// Importing Modal
-import Modal from 'react-modal';
+// Data + Image Imports
+import ReactSpinner from '../../assets/images/ReactSpinner.gif';
+// Styling + Animation Imports
+import styled from 'styled-components';
+import '../../assets/ModalStyle.css';
+import { motion } from 'framer-motion';
+import { strongRevealUp, fade } from '../../assets/Animations';
 
 // News Items is an array of objects
 const NewsList = ({newsItems}) => {
-    // Pagination Variables
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5);
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    // Slicing initial state of News Items
-    let initialCurrentAnnouncements = newsItems && newsItems.slice(indexOfFirstPost, indexOfLastPost);
-    let currentAnnouncements = initialCurrentAnnouncements;
 
-    // For creating a News Announcement
+    const dispatch = useDispatch();
+
+    // Selecting Redux State
     const auth = useSelector((state) => state.firebase.auth);
     const publishingState = useSelector((state) => state.NewsAnnouncements.publishingAnnouncement);
+
+    // Local State
+    const [currentPage, setCurrentPage] = useState(1); // For Pagination: Pagination Variables
+    const [postsPerPage] = useState(5);
+    const [searchAnnouncement, setSearchAnnouncement] = useState("");
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    let initialCurrentAnnouncements = newsItems && newsItems.slice(indexOfFirstPost, indexOfLastPost); // Slicing initial state of News Items
+    let currentAnnouncements = initialCurrentAnnouncements;
     const [createModalState, setCreateModalState] = useState(false);
-    // Allowing the form to dispatch action
-    const dispatch = useDispatch();
-    // Setting a local state for the form entry
-    const [newsAnnouncement, setNewsAnnouncement] = useState({
+    const [newsAnnouncement, setNewsAnnouncement] = useState({ // For creating a News Announcement
         heading: '',
         body: '',
         attachment: null
     });
-    // Submit function to dispatch action with data
+
+    // Functions
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
@@ -63,12 +60,9 @@ const NewsList = ({newsItems}) => {
         const richContent = editor.getData();
         setNewsAnnouncement({...newsAnnouncement, body: richContent});
     }
+    const paginate = (pageNumber) => setCurrentPage(pageNumber); // Function to change page number on click
 
-    // Function to change page number on click
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const [searchAnnouncement, setSearchAnnouncement] = useState("");
-
+    // Conditions
     if (searchAnnouncement) {
         let filteredNewsItems = newsItems.filter(item => {
             return (item.heading.toLowerCase()).includes(searchAnnouncement.toLowerCase()) || (item.body.toLowerCase()).includes(searchAnnouncement.toLowerCase());
@@ -78,9 +72,7 @@ const NewsList = ({newsItems}) => {
         currentAnnouncements = initialCurrentAnnouncements;
     }
 
-    // While the list of News Announcements is not available,
-    // Render out loading spinner gif
-    if (!currentAnnouncements) {
+    if (!currentAnnouncements) { // Render out loading spinner gif
         return (
             <LoadingContainer>
                 <img src={ReactSpinner} alt="Loading Spinner" />
@@ -89,7 +81,6 @@ const NewsList = ({newsItems}) => {
         )
     }
 
-    // Render main content when News Announcements are available
     return (
         <MainContainer>
             <Hide>
@@ -168,12 +159,10 @@ const NewsList = ({newsItems}) => {
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const dividerColor = "#E63946"
 const boxBorder = "#1D3557";
 const loadingButton = "#C7D1C4";
-
-// Styled Components
 
 const MainContainer = styled.div`
     min-height: 90vh;
@@ -189,7 +178,6 @@ const Hide = styled.div`
         margin-bottom: 2rem;
     }
 `
-
 const HeaderSection = styled(motion.div)`
     h2 {
         margin-bottom: 1rem;
@@ -205,14 +193,11 @@ const HeaderSection = styled(motion.div)`
         }
     }
 `
-
-
 const NewsSection = styled(motion.div)`
     a {
         text-decoration: none;
     }
 `
-
 const LoadingContainer = styled.div`
     height: 90vh;
     display: flex;
@@ -226,7 +211,6 @@ const LoadingContainer = styled.div`
         margin: 0 auto;
     }
 `
-
 const SearchSection = styled.div`
     display: flex;
     justify-content: space-between;
@@ -281,7 +265,6 @@ const SearchSection = styled.div`
         }
     }
 `
-
 const ModalContent = styled.div`
     display: flex;
     flex-direction: column;
@@ -306,7 +289,7 @@ const ModalContent = styled.div`
     }
     form {
         width: 100%;
-        input, textarea {
+        input {
             display: block;
             margin-bottom: 1rem;
             font-size: 1.5rem;
@@ -320,20 +303,13 @@ const ModalContent = styled.div`
         input[type=file] {
             border: none;
         }
-        textarea {
-            width: 100%;
-        }
         @media (max-width: 870px) {
-            input, textarea {
+            input {
                 font-size: 1rem;
-            }
-            textarea {
-                /* column-count: 10; */
             }
         }
     }
 `
-
 const RichContent = styled.div`
     h1, h2, h3, h4, h5, p {
         color: black;

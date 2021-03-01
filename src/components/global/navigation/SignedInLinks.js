@@ -1,30 +1,34 @@
 // The list of navigation links for when a user is signed in
 
+// Functional Imports
 import React from "react";
-// Importing Styled Components
-import styled from "styled-components";
-// Importing all production Icons with code names
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { signOutUser } from "../../../redux-store/actions/AuthActions";
+// Component Imports
+import { Link } from "react-router-dom";
+// Icon Imports
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import * as ImIcons from "react-icons/im";
 import * as MdIcons from "react-icons/md";
 import * as Ionicons from "react-icons/io";
-// Link Component
-import { Link } from "react-router-dom";
-// Importing Redux hooks and actions
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { signOutUser } from "../../../redux-store/actions/AuthActions";
+// Styling + Animation Imports
+import styled from "styled-components";
 
 const SignedInLinks = () => {
+
   const dispatch = useDispatch();
+
+  // Selecting Redux State
+  const profileData = useSelector((state) => state.firebase.profile);
+  const emailCredential = useSelector((state) => state.firebase.auth.email);
+  
+  // Functions
   const handleSignOut = () => {
     dispatch(signOutUser());
   };
-
-  const profileData = useSelector((state) => state.firebase.profile);
-  const emailCredential = useSelector((state) => state.firebase.auth.email);
-
+  
   return (
     <ListContainer>
       <li>
@@ -90,13 +94,12 @@ const SignedInLinks = () => {
   );
 };
 
-// Color Variables
+// Styled Components + Color Variables
 const itemColor = "#F1FAEE";
 const credentialColor = "#F1FAEE";
 const hoverBackgroundColor = "#A8DADC";
 const hoverItemColor = "#031926";
 
-// Styled Components
 const ListContainer = styled.div`
   li {
     display: flex;
@@ -141,5 +144,6 @@ const ListContainer = styled.div`
       }
     }
   }
-`;
+`
+
 export default SignedInLinks;

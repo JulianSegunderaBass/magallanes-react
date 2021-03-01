@@ -1,36 +1,35 @@
 // Details page for an announcement
 
+// Functional Imports
 import React, { useState } from 'react';
+import moment from 'moment';
+import ReactHtmlParser from 'react-html-parser';
+import { useSelector } from 'react-redux';
+// Component Imports
+import Modal from 'react-modal';
+import { Link } from 'react-router-dom';
+import AutoScroll from '../assets/AutoScroll';
+// Data + Image Imports
+// Styling + Animation Imports
 import styled from 'styled-components'
-// Animations
 import { motion } from 'framer-motion';
 import { pageLoad, fade, imageAnim } from '../assets/Animations';
-// Redux
-import { useSelector } from 'react-redux';
-// Importing Moment.js for created date
-import moment from 'moment';
-// For card link
-import { Link } from 'react-router-dom';
-// Importing AutoScroll
-import AutoScroll from '../assets/AutoScroll';
-// For parsing HTML markup
-import ReactHtmlParser from 'react-html-parser';
-// Importing Modal
-import Modal from 'react-modal';
-// Testing CSS import
 import '../assets/ModalStyle.css';
 
-
 const AnnouncementDetails = (props) => {
-    const NewsAnnouncements = useSelector((state) => state.firestore.data.NewsAnnouncements);
-    const [imageModalState, setImageModalState] = useState(false);
-    // Matching route ID with data from state
-    const id = props.match.params.id; 
-    const NewsItem = NewsAnnouncements ? NewsAnnouncements[id] : null;
 
+    // Selecting Redux State
+    const NewsAnnouncements = useSelector((state) => state.firestore.data.NewsAnnouncements);
+
+    // Local State
+    const [imageModalState, setImageModalState] = useState(false);
+    const id = props.match.params.id;
+    const NewsItem = NewsAnnouncements ? NewsAnnouncements[id] : null; // Matching route ID with data from state
+
+    // Conditions
     if (
         NewsItem
-        && localStorage.getItem("id") != id
+        && localStorage.getItem("id") !== id
     ) {
         localStorage.setItem("new_items_id", id);
         localStorage.setItem("new_items_heading", NewsItem.heading);
@@ -43,7 +42,7 @@ const AnnouncementDetails = (props) => {
         localStorage.setItem("new_items_attachmentType", NewsItem.attachmentType);
         localStorage.setItem("new_items_attachmentName", NewsItem.attachmentName);
     }
-
+    
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <AutoScroll />
@@ -76,7 +75,6 @@ const AnnouncementDetails = (props) => {
                                 ''
                 }
                 <Link to="/news" id="return-link">View other announcements</Link>
-
                 {/* Image Modal */}
                 <Modal
                     isOpen={imageModalState}
@@ -93,14 +91,12 @@ const AnnouncementDetails = (props) => {
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const cardBackground = "#C7D1C4";
 const dividerColor = "#E63946"
 const mainBackground = "#F1FAEE";
 const mainFontColor = "#1D3557";
 const accentColor = "#E63946";
-
-// Styled Components
 
 const MainContainer = styled(motion.div)`
     padding: 5rem 7rem;
@@ -109,7 +105,6 @@ const MainContainer = styled(motion.div)`
         padding: 2rem 2rem;
     }
 `
-
 const Card = styled.div`
     padding: 2.5rem 5rem;
     background: ${cardBackground};
@@ -209,7 +204,6 @@ const RichContent = styled.div`
         }
     }
 `
-
 const Image = styled.div`
     width: 100%;
     height: 100%;

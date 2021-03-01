@@ -3,7 +3,6 @@
 import { store } from 'react-notifications-component';
 
 const initState = {
-    // Using this to display errors if they come up
     authError: null,
     signingIn: false,
     creatingAccount: false,
@@ -27,14 +26,12 @@ const AuthReducer = (state = initState, action) => {
                     onScreen: true
                 }
             });
-            // Attaching error message to auth state
             return {
                 ...state,
                 authError: action.error.message
             }
         case 'LOGGING_IN':
             console.log('Logging in...');
-            // Setting authError to null because there is no error
             store.addNotification({
                 title: "Signing you in...",
                 message: "Give us some time.",
@@ -54,7 +51,6 @@ const AuthReducer = (state = initState, action) => {
             }
         case 'LOGIN_SUCCESS':
             console.log('Login success');
-            // Setting authError to null because there is no error
             store.addNotification({
                 title: "Authentication Success",
                 message: "You are now logged in.",

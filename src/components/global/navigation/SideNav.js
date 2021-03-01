@@ -1,56 +1,51 @@
 // The Side Navigation Bar present on all pages
 
+// Functional Imports
 import React, { useState } from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing all production Icons with code names
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-// Importing IconContext to help systematically change colors
-import { IconContext } from 'react-icons';
-// Link Import to replace a tags
 import { Link } from 'react-router-dom';
-// Importing conditional links
+import { useSelector } from 'react-redux';
+// Component Imports
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
-// For connecting to Redux state
-import { useSelector } from 'react-redux';
+// Data + Image Imports
+import * as FaIcons from 'react-icons/fa';
+import * as AiIcons from 'react-icons/ai';
+import { IconContext } from 'react-icons';
+// Styling + Animation Imports
+import styled from 'styled-components';
 
 const SideNav = () => {
-    // State and Function to display side navigation menu
-    const [sideNav, setSideNav] = useState(false);
+
+    // Selecting Redux State
+    const auth = useSelector((state) => state.firebase.auth);
+    
+    // Local State
+    const [sideNav, setSideNav] = useState(false); // State to display side navigation menu
+    
+    // Functions
     const showSideNav = () => {
         setSideNav(!sideNav);
     }
 
-    // Connecting to Redux auth status
-    const auth = useSelector((state) => state.firebase.auth);
-    // Variable that determines what set of links to show
-    // depending on whether a logged uid is present or not
-    const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />;
+    // Conditions
+    const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />; // Determining links to display based on auth status
 
     return (
         <RootContainer>
             {/* Context provider helps set colors for all icons */}
             <IconContext.Provider value={{color: '#F1FAEE'}}>
                 <NavBar>
-                    {/* onClick event to toggle state and side bar */}
                     <Link to="#" className="menu-bars">
                         <FaIcons.FaBars onClick={showSideNav} />
                     </Link>
                 </NavBar>
-                {/* Nav classes are applied depending on the state */}
                 <nav className={sideNav ? 'nav-menu active' : 'nav-menu'}>
-                    {/* Whenever you click a nav menu item,
-                    nav closes */}
                     <NavMenuItems onClick={showSideNav}>
                         <NavToggle>
                             <Link to="#" className="menu-bars">
                                 <AiIcons.AiOutlineClose />
                             </Link>
                         </NavToggle>
-                        {/* Conditionally rendering the right set of navigation options
-                        depending on user auth status */}
                         {/* auth.isLoaded makes sure the data is loaded
                         before making the decision */}
                         {auth.isLoaded && links}
@@ -61,12 +56,9 @@ const SideNav = () => {
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const backgroundColor = "#031926"
 
-// Styled Components
-
-// The Root Container of the whole component
 const RootContainer = styled.div`
     .nav-menu {
         background-color: ${backgroundColor};
@@ -92,7 +84,6 @@ const RootContainer = styled.div`
         background: none;
     }
 `
-
 const NavBar = styled.div`
     background-color: ${backgroundColor};
     min-height: 10vh;
@@ -104,12 +95,10 @@ const NavBar = styled.div`
     width: 100%;
     top: 0;
 `
-
 // The ul holding the nav items
 const NavMenuItems = styled.ul`
     width: 100%;
 `
-
 const NavToggle = styled.li`
     background-color: ${backgroundColor};
     width: 100%;

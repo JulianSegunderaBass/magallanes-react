@@ -84,7 +84,6 @@ const GlobalStyle = createGlobalStyle`
         border-radius: 1rem;
         background: transparent;
         color: ${mainFontColor};
-        /* Adding a transition for hover */
         transition: all 0.5s ease;
         font-family: 'Inter', sans-serif;
         &:hover {

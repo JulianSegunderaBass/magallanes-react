@@ -1,39 +1,38 @@
 // Page for creating a news announcement and sending data to Firebase Firestore
 
+// Functional Imports
 import React, { useState } from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing Framer Motion and Animations
-import { motion } from 'framer-motion';
-import { pageLoad, newsFormReveal } from '../assets/Animations';
-// Importing AutoScroll function
-import AutoScroll from '../assets/AutoScroll';
-// Redux Imports
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-// Redux action to dispatch data
 import { createAnnouncement } from '../redux-store/actions/NewsActions';
-// Importing Redirect Component
+// Component Imports
+import AutoScroll from '../assets/AutoScroll';
 import { Redirect } from 'react-router-dom';
-// Importing Rich Text Editor
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// Spinner
+// Data + Image Imports
 import ReactSpinner from '../assets/images/ReactSpinner.gif';
+// Styling + Animation Imports
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import { pageLoad, newsFormReveal } from '../assets/Animations';
 
 const NewsForm = () => {
+
+    const dispatch = useDispatch();
+
+    // Selecting Redux State
     const auth = useSelector((state) => state.firebase.auth);
     const publishingState = useSelector((state) => state.NewsAnnouncements.publishingAnnouncement);
 
-    // Allowing the form to dispatch action
-    const dispatch = useDispatch();
-    // Setting a local state for the form entry
-    const [newsAnnouncement, setNewsAnnouncement] = useState({
+    // Local State
+    const [newsAnnouncement, setNewsAnnouncement] = useState({ // Setting a local state for the form entry
         heading: '',
         body: '',
         attachment: null
     });
-    // Submit function to dispatch action with data
+
+    // Functions
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
@@ -50,9 +49,8 @@ const NewsForm = () => {
         setNewsAnnouncement({...newsAnnouncement, body: richContent});
     }
 
-    // If an authentication UID is NOT present (user is not signed in),
-    // redirect to home
-    if (!auth.uid) {
+    // Conditions
+    if (!auth.uid) { // If an authentication UID is NOT present (user is not signed in), redirect to home
         return <Redirect to='/' />;
     }
     
@@ -75,7 +73,6 @@ const NewsForm = () => {
                         onChange={(e) => setNewsAnnouncement({...newsAnnouncement, heading: e.target.value})}
                         required
                     />
-                    {/* <RichTextEditor id="rich-text-editor" onChange={richEditorChange} /> */}
                     <CKEditor 
                         id="rich-text-editor" 
                         editor={ClassicEditor} 
@@ -101,14 +98,12 @@ const NewsForm = () => {
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const boxBorder = "#1D3557";
 const warningText = "#AB0A0A";
 const successText = "#137D2D";
 const accentColor = "#E63946";
 const loadingButton = "#C7D1C4";
-
-// Styled Components
 
 const MainContainer = styled(motion.div)`
     min-height: 90vh;
@@ -120,11 +115,9 @@ const MainContainer = styled(motion.div)`
         min-height: 45vh;
     }
 `
-
 const Hide = styled.div`
     overflow: hidden;
 `
-
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
     .red-text {
@@ -146,7 +139,6 @@ const TextSection = styled(motion.div)`
         }
     }
 `
-
 const FormSection = styled.div`
     form {
         input {

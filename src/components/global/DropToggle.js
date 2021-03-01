@@ -2,19 +2,19 @@
 // Can be used for the Faq or Statements
 // Wrap toggling elements with the "DropToggle" component in other files
 
+// Functional Imports
 import React, { useState } from 'react';
-// Importing Styled Components
+// Styling + Animation Imports
 import styled from 'styled-components';
-// Importing Framer Motion
 import { motion } from 'framer-motion';
+
 
 // Props passed are the wrapped children of the DropToggle component
 // Title is passed as a prop
 const DropToggle = ({children, title}) => {
 
-    // State for toggling a component
-    // By default, content is hidden (false)
-    const [toggle, setToggle] = useState(false);
+    // Local State
+    const [toggle, setToggle] = useState(false); // State for toggling a component. By default, content is hidden (false)
 
     return (
         // motion.div so "Animate Shared Layout" works where
@@ -33,15 +33,12 @@ const DropToggle = ({children, title}) => {
     )
 }
 
-// Styled Components
-
-// Color variable for hover effect
+// Styled Components + Color Variables
 const hoverColor = "#E63946";
 
 const ToggleElement = styled(motion.div)`
 
 `
-
 const Title = styled(motion.h4)`
     transition: color ease 0.3s;
     &:hover {

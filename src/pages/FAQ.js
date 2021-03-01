@@ -1,14 +1,14 @@
 // The FAQ Page
 // Compiles Components from folder "for-faq"
 
+// Functional Imports
 import React from "react";
-// Page Components
+// Component Imports
 import FaqSection from "../components/for-faq/FaqSection";
-// Importing Framer Motion and Animations
+import AutoScroll from "../assets/AutoScroll";
+// Animation Imports
 import { motion } from "framer-motion";
 import { pageLoad } from "../assets/Animations";
-// Importing Auto Scroll component
-import AutoScroll from "../assets/AutoScroll";
 
 const FAQ = () => {
   return (

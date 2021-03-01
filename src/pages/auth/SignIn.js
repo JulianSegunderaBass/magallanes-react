@@ -1,39 +1,39 @@
 // Page for Signing In as admin
 
+// Functional Imports
 import React, { useState } from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing Framer Motion and Animations
-import { motion } from 'framer-motion';
-import { pageLoad, newsFormReveal } from '../../assets/Animations';
-// Importing AutoScroll function
-import AutoScroll from '../../assets/AutoScroll';
-// Importing Redux hooks and actions
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { signInUser } from '../../redux-store/actions/AuthActions';
-// Importing Redirect Component
+// Component Imports
+import AutoScroll from '../../assets/AutoScroll';
 import { Redirect } from 'react-router-dom';
+// Styling + Animation Imports
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import { pageLoad, newsFormReveal } from '../../assets/Animations';
 
 const SignIn = () => {
+
     const dispatch = useDispatch();
+
+    // Selecting Redux State
     const auth = useSelector((state) => state.firebase.auth);
 
-    // Setting a local state for the form entry
-    const [profile, setProfile] = useState({
+    // Local State
+    const [profile, setProfile] = useState({ // Setting a local state for the form entry
         email: '',
         password: ''
     });
 
+    // Functions
     const handleSubmit = (e) => {
-        // Prevents page refreshing
         e.preventDefault();
         dispatch(signInUser(profile));
     }
 
-    // If an authentication UID is present (user is already signed in),
-    // redirect to home
-    if (auth.uid) {
+    // Conditions
+    if (auth.uid) { // If an authentication UID is present (user is already signed in), redirect to home
         return <Redirect to='/' />;
     }
 
@@ -68,12 +68,10 @@ const SignIn = () => {
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const boxBorder = "#1D3557";
 const warningText = "#AB0A0A";
 const successText = "#137D2D";
-
-// Styled Components
 
 const MainContainer = styled(motion.div)`
     min-height: 90vh;
@@ -87,11 +85,9 @@ const MainContainer = styled(motion.div)`
         min-height: 45vh;
     }
 `
-
 const Hide = styled.div`
     overflow: hidden;
 `
-
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
     .red-text {
@@ -107,7 +103,6 @@ const TextSection = styled(motion.div)`
         }
     }
 `
-
 const FormSection = styled.div`
     form {
         input {
