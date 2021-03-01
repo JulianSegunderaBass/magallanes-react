@@ -99,14 +99,18 @@ const NewsList = ({newsItems}) => {
                 </HeaderSection>
             </Hide>
             <SearchSection>
+                {/* Only render out create announcement function if authentication ID is detected */}
                 {/* publishingState determines what button to render */}
-                {publishingState === false ? 
-                    <button onClick={() => setCreateModalState(true)}>Create an Announcement</button> 
-                    : 
-                    <div id="loading-button">
-                        <button id="posting-announcement" disabled>Posting...</button>
-                        <img src={ReactSpinner} alt="Loading Spinner" />
-                    </div>
+                {auth.uid ?
+                        publishingState === false ? 
+                        <button onClick={() => setCreateModalState(true)}>Create an Announcement</button> 
+                        : 
+                        <div id="loading-button">
+                            <button id="posting-announcement" disabled>Posting...</button>
+                            <img src={ReactSpinner} alt="Loading Spinner" />
+                        </div>
+                    :
+                        ''
                 }
                 <input type="text" placeholder="Search an Announcement" onChange={e => setSearchAnnouncement(e.target.value)} />
                 {/* Edit Post Modal */}
