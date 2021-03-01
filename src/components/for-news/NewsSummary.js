@@ -113,11 +113,12 @@ const NewsSummary = ({ newsItem }) => {
             <ButtonContainer>
                 {/* Update and Delete Button */}
                 {currentUserEmail === newsItem.authorEmail || currentUserEmail === "adminuser@gmail.com" ? 
-                <>
-                    <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button>
-                    <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button>
-                </>
-                 : ""
+                    <div id="inner-button-container">
+                        <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button>
+                        <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button>
+                    </div>
+                 : 
+                    ""
                 }
             </ButtonContainer>
             {/* Modal Components */}
@@ -272,25 +273,29 @@ const NewsCard = styled.div`
     }
 `
 const ButtonContainer = styled.div`
-    display: flex;
-    /* Buttons for triggering modals */
-    .pop-modal {
-        color: ${contentHover};
-        font-size: 2rem;
-        padding: 0.5rem 3rem;
-        margin-right: 0.5rem;
-    }
-    #edit-button {
-        background: ${editButtonColor};
-        border-color: ${editButtonColor};
-    }
-    #delete-button {
-        background: ${deleteButtonColor};
-        border-color: ${deleteButtonColor};
-    }
-    @media (max-width: 870px) {
+    #inner-button-container {
+        display: flex;
+        /* Buttons for triggering modals */
         .pop-modal {
-            font-size: 1.5rem;
+            color: ${contentHover};
+            font-size: 2rem;
+            padding: 0.5rem 3rem;
+            margin-right: 0.5rem;
+        }
+        #edit-button {
+            background: ${editButtonColor};
+            border-color: ${editButtonColor};
+        }
+        #delete-button {
+            background: ${deleteButtonColor};
+            border-color: ${deleteButtonColor};
+        }
+        @media (max-width: 870px) {
+            justify-content: space-around;
+            .pop-modal {
+                font-size: 1.5rem;
+                padding: 0.5rem 1.5rem;
+            }
         }
     }
 `

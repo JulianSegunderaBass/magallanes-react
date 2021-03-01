@@ -7,7 +7,7 @@ const CryptoJS = require("crypto-js");
 
 // Signing In User
 export const signInUser = (credentials) => {
-    return (dispatch, {getFirebase}) => {
+    return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
         dispatch({type: 'LOGGING_IN'});
         firebase.auth().signInWithEmailAndPassword( // Part of authentication service
@@ -23,7 +23,7 @@ export const signInUser = (credentials) => {
 
 // Signing Out User
 export const signOutUser = () => {
-    return (dispatch, {getFirebase}) => {
+    return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
         firebase.auth().signOut().then(() => { // Part of authentication service
             dispatch({type: 'SIGNOUT_SUCCESS'});
@@ -33,7 +33,7 @@ export const signOutUser = () => {
 
 // Signing Up User
 export const signUpUser = (newUser) => {
-    return (dispatch, {getFirebase, getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         // Communicating between Firebase Auth service and Firestore users collection
         const firebase = getFirebase();
         const firestore = getFirestore();
@@ -79,7 +79,7 @@ export const resetPass = () => {
 
 // For changing profile photo from profile page
 export const setProfileImage = (profilePhoto, userID) => {
-    return (dispatch, {getFirebase, getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
         const projectStorage = firebase.storage();

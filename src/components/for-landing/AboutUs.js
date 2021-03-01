@@ -39,7 +39,6 @@ const AboutSection = styled.div`
         padding: 2rem 2rem;
     }
 `
-
 const TextSection = styled.div`
     flex: 1;
     padding-right: 5rem;
@@ -59,11 +58,13 @@ const TextSection = styled.div`
             text-align: left;
         }
         button {
-            margin: 2rem 0rem 5rem 0rem;
+            margin: 1rem auto 3rem auto;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.8rem;
+            font-size: 1rem;
         }
     }
 `
-
 const Image = styled.div`
     flex: 1;
     overflow: hidden;
@@ -72,7 +73,6 @@ const Image = styled.div`
         object-fit: cover;
     }
 `
-
 const Hide = styled.div`
     overflow: hidden;
 `

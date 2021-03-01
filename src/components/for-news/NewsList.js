@@ -258,6 +258,9 @@ const SearchSection = styled.div`
         flex-direction: column;
         button {
             margin-bottom: 1.5rem;
+            font-size: 1rem;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.8rem;
         }
         input {
             width: 100%;

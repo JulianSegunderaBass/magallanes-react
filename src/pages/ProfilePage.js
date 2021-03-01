@@ -107,6 +107,10 @@ const ProfileContainer = styled(motion.div)`
             color: ${mainFontColor};
         }
     }
+    button {
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.6rem;
+    }
     #email {
         color: ${mainFontColor};
     }
@@ -134,6 +138,8 @@ const ProfileContainer = styled(motion.div)`
         button {
             display: block;
             margin: 0 auto;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.8rem;
         }
     }
 `
@@ -141,12 +147,15 @@ const ProfileDisplay = styled.div`
     margin-right: 2rem;
     width: 30%;
     form {
-        display: flex;
         #photo-submit {
             padding: 0.2rem 0.4rem;
-            margin: 0;
-            width: 30%;
+            margin: 1.5rem 0;
             border-radius: 0.6rem;
+            @media (max-width: 870px) {
+                margin: 1rem auto 0 auto;
+                padding: 0.5rem 0.7rem;
+                border-radius: 0.8rem;
+            }
         }
     }
     @media (max-width: 870px) {

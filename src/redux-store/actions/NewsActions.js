@@ -6,7 +6,7 @@ const CryptoJS = require("crypto-js");
 
 // newsAnnouncement parameter is the new entry submitted via dispatch from component
 export const createAnnouncement = (newsAnnouncement) => {
-    return (dispatch, getState, {getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const projectStorage = firebase.storage();
         // Accessing current logged profile state
@@ -73,7 +73,7 @@ export const createAnnouncement = (newsAnnouncement) => {
 // Function for making edits to announcements
 // newsEdits are the edits being passed
 export const editAnnouncement = (newsEdits) => {
-    return (dispatch, {getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const projectStorage = firebase.storage();
         const dt = new Date();
@@ -136,7 +136,7 @@ export const editAnnouncement = (newsEdits) => {
 
 // announcementID is the ID of the post passed and used to reference the deletion
 export const deleteAnnouncement = (announcementID, attachmentURL) => {
-    return (dispatch, {getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const projectStorage = firebase.storage();
 

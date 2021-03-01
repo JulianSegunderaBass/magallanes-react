@@ -62,14 +62,6 @@ const SignedInLinks = () => {
         </Link>
       </li>
       <li>
-        {/* Link: News Form Page */}
-        {/* NOTE: News Form only visible when user is logged in */}
-        <Link to="/create-news-announcement">
-          <FaIcons.FaNewspaper />
-          <span>News Form</span>
-        </Link>
-      </li>
-      <li>
         <Link to="/brgyforms">
           <Ionicons.IoIosPaper />
           <span>Registration Forms</span>

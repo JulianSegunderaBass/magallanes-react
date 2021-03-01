@@ -147,8 +147,6 @@ const Card = styled.div`
         }
     }
     a#media-link {
-        display: block;
-        width: 20%;
         text-decoration: none;
         text-align: center;
         font-weight: bold;
@@ -159,7 +157,6 @@ const Card = styled.div`
         border-radius: 0.5rem;
         background: transparent;
         color: ${mainFontColor};
-        /* Adding a transition for hover */
         transition: all 0.5s ease;
         font-family: 'Inter', sans-serif;
         &:hover {
@@ -183,11 +180,14 @@ const Card = styled.div`
             font-size: 1.5rem;
         }
         a#return-link, a#media-link {
+            display: block;
             width: 100%;
+        }
+        a#return-link {
+            font-size: 0.8rem;
         }
     }
 `
-
 const RichContent = styled.div`
     margin: 2rem 0;
     h1, h2, h3, h4, h5, p {

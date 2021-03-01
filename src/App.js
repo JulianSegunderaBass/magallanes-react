@@ -6,7 +6,6 @@ import React from "react";
 import Landing from "./pages/Landing";
 import FAQ from "./pages/FAQ";
 import NewsPage from "./pages/NewsPage";
-import NewsForm from "./pages/NewsForm";
 import AnnouncementDetails from "./pages/AnnouncementDetails";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
@@ -40,12 +39,7 @@ function App() {
         <Route path="/" component={Landing} exact />
         <Route path="/faq" component={FAQ} exact />
         <Route path="/news" component={NewsPage} exact />
-        <Route path="/create-news-announcement" component={NewsForm} exact />
-        <Route
-          path="/news-announcement/:id"
-          component={AnnouncementDetails}
-          exact
-        />
+        <Route path="/news-announcement/:id" component={AnnouncementDetails} exact />
         <Route path="/sign-in" component={SignIn} exact />
         <Route path="/sign-up" component={SignUp} exact />
         <Route path="/my-profile" component={ProfilePage} exact />
