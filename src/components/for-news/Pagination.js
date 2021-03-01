@@ -1,10 +1,12 @@
 // Pagination component for News Reports Page
 
+// Functional Imports
 import React from 'react';
-// Importing Styled Components
+// Styling Imports
 import styled from 'styled-components';
 
 const Pagination = ({postsPerPage, totalPosts, paginate, currentPage}) => {
+
     const pageNumbers = [];
 
     // Pushing page numbers into array depending on total number of Firestore News Posts and Posts Per Page
@@ -12,20 +14,20 @@ const Pagination = ({postsPerPage, totalPosts, paginate, currentPage}) => {
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
         pageNumbers.push(i);
     }
+
     return (
         <MainContainer>
             {pageNumbers.map(number => (
-                <button className={currentPage == number ? 'active' : ''} key={number} onClick={() => paginate(number)}>{number}</button>
+                <button className={currentPage === number ? 'active' : ''} key={number} onClick={() => paginate(number)}>{number}</button>
             ))}
         </MainContainer>
     )
 }
 
-// Active Color Variables
+// Styled Components + Color Variables
 const numberColor = "#F1FAEE";
 const backgroundColor = "#E63946";
 
-// Styled Components
 const MainContainer = styled.div`
     display: flex;
     overflow-x: scroll;

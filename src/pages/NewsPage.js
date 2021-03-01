@@ -1,15 +1,15 @@
 // Page for News Updates
 
+// Functional Imports
 import React from 'react';
-// Page Components
+import { useSelector } from 'react-redux';
+// Component Imports
 import NewsList from '../components/for-news/NewsList';
-// Animations
+import AutoScroll from '../assets/AutoScroll';
+// Data + Image Imports
+// Animation Imports
 import { motion } from 'framer-motion';
 import { pageLoad } from '../assets/Animations';
-// Importing Auto Scroll component
-import AutoScroll from '../assets/AutoScroll';
-// Redux Connection
-import { useSelector } from 'react-redux';
 // Firestore Imports
 import { firestoreConnect } from 'react-redux-firebase';
 

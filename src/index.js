@@ -1,21 +1,20 @@
+
+// Functional Imports
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-// Importing React Router Dom
-import { BrowserRouter } from 'react-router-dom';
-// Redux Library Imports
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-// Redux Reducers
+// Component Imports
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 import RootReducer from './redux-store/reducers/RootReducer';
-// Firebase Library Imports
+// Firebase Imports
 import firebase from 'firebase/app';
+import FirebaseConfig from './config/FirebaseConfig';
 import { reduxFirestore, getFirestore, createFirestoreInstance } from 'redux-firestore';
 import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase';
-// Firebase Config Import
-import FirebaseConfig from './config/FirebaseConfig';
 
 // compose lets us add both devtools and thunk to the store
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -29,7 +28,6 @@ const store = createStore(
         reduxFirestore(firebase, FirebaseConfig)
     )
 );
-
 const config = {
     userProfile: 'users',
     useFirestoreForProfile: true

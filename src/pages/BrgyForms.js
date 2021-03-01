@@ -1,7 +1,8 @@
 // Embedded Google Form
 
+// Functional Imports
 import React from "react";
-// Importing Styled Components
+// Styling + Animation Imports
 import styled from 'styled-components';
 
 const BrgyForms = () => {
@@ -22,7 +23,6 @@ const BrgyForms = () => {
 };
 
 // Styled Components
-
 const FormContainer = styled.div`
   width: 100%;
   height: 1500px;
@@ -30,7 +30,6 @@ const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
 `
-
 const FormIframe = styled.iframe`
   flex: 1;
   height: 100%;

@@ -1,39 +1,27 @@
 // The Root App component which renders the pages and global components
 
+// Functional Imports
 import React from "react";
-// Importing Pages
+// Page Imports
 import Landing from "./pages/Landing";
 import FAQ from "./pages/FAQ";
 import NewsPage from "./pages/NewsPage";
-import NewsForm from "./pages/NewsForm";
 import AnnouncementDetails from "./pages/AnnouncementDetails";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import ProfilePage from "./pages/ProfilePage";
 import BrgyForms from "./pages/BrgyForms";
-// Importing Footer
 import Footer from "./components/global/Footer";
-// Importing Side Navigation
 import SideNav from "./components/global/navigation/SideNav";
-// Importing Global Styling
-import GlobalStyle from "./assets/GlobalStyle";
-// Router Imports
+// Component Imports
 import { Switch, Route, useLocation } from "react-router-dom";
-// Importing Animations
-// Animate Presence helps React detect when a component
-// is removed from the tree - exit animations
-// Also requires "useLocation" from React Router Dom
-import { AnimatePresence } from "framer-motion";
-// Redux Functions
-import { useSelector } from "react-redux";
-// React Notification Import with Styling
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
+// Styling + Animation Imports
+import GlobalStyle from "./assets/GlobalStyle";
 
 function App() {
   const currentLocation = useLocation();
-
-  const auth = useSelector((state) => state.firebase.auth);
 
   return (
     // React Router is not very specific with paths.
@@ -51,12 +39,7 @@ function App() {
         <Route path="/" component={Landing} exact />
         <Route path="/faq" component={FAQ} exact />
         <Route path="/news" component={NewsPage} exact />
-        <Route path="/create-news-announcement" component={NewsForm} exact />
-        <Route
-          path="/news-announcement/:id"
-          component={AnnouncementDetails}
-          exact
-        />
+        <Route path="/news-announcement/:id" component={AnnouncementDetails} exact />
         <Route path="/sign-in" component={SignIn} exact />
         <Route path="/sign-up" component={SignUp} exact />
         <Route path="/my-profile" component={ProfilePage} exact />

@@ -1,91 +1,102 @@
 // Details page for an announcement
 
+// Functional Imports
 import React, { useState } from 'react';
+import moment from 'moment';
+import ReactHtmlParser from 'react-html-parser';
+import { useSelector } from 'react-redux';
+// Component Imports
+import Modal from 'react-modal';
+import { Link } from 'react-router-dom';
+import AutoScroll from '../assets/AutoScroll';
+// Data + Image Imports
+// Styling + Animation Imports
 import styled from 'styled-components'
-// Animations
 import { motion } from 'framer-motion';
 import { pageLoad, fade, imageAnim } from '../assets/Animations';
-// Redux
-import { useSelector } from 'react-redux';
-// Importing Moment.js for created date
-import moment from 'moment';
-// For card link
-import { Link } from 'react-router-dom';
-// Importing AutoScroll
-import AutoScroll from '../assets/AutoScroll';
-// For parsing HTML markup
-import ReactHtmlParser from 'react-html-parser';
-// Importing Modal
-import Modal from 'react-modal';
-// Testing CSS import
 import '../assets/ModalStyle.css';
 
-
 const AnnouncementDetails = (props) => {
+
+    // Selecting Redux State
     const NewsAnnouncements = useSelector((state) => state.firestore.data.NewsAnnouncements);
+
+    // Local State
     const [imageModalState, setImageModalState] = useState(false);
-    // Matching route ID with data from state
-    const id = props.match.params.id; 
-    const NewsItem = NewsAnnouncements ? NewsAnnouncements[id] : null;
+    const id = props.match.params.id;
+    const NewsItem = NewsAnnouncements ? NewsAnnouncements[id] : null; // Matching route ID with data from state
+
+    // Conditions
+    if (
+        NewsItem
+        && localStorage.getItem("id") !== id
+    ) {
+        localStorage.setItem("new_items_id", id);
+        localStorage.setItem("new_items_heading", NewsItem.heading);
+        localStorage.setItem("new_items_createdAt", moment(NewsItem.createdAt.toDate()).calendar());
+        localStorage.setItem("new_items_authorFirstName", NewsItem.authorFirstName);
+        localStorage.setItem("new_items_authorLastName", NewsItem.authorLastName);
+        localStorage.setItem("new_items_authorEmail", NewsItem.authorEmail);
+        localStorage.setItem("new_items_body", NewsItem.body);
+        localStorage.setItem("new_items_attachmentURL", NewsItem.attachmentURL);
+        localStorage.setItem("new_items_attachmentType", NewsItem.attachmentType);
+        localStorage.setItem("new_items_attachmentName", NewsItem.attachmentName);
+    }
+    
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
             <AutoScroll />
-            {NewsItem &&
-                <Card>
-                    <motion.div variants={fade}>
-                        <h4>{NewsItem.heading}</h4>
-                        {/* Using Moment.js to parse createdAt property to readable date */}
-                        <h5>{moment(NewsItem.createdAt.toDate()).calendar()}</h5>
-                        <div className="sender-info">
-                            <h5>Posted By:</h5>
-                            <h5>{NewsItem.authorFirstName} {NewsItem.authorLastName}</h5>
-                            <h5 id="sender-email">{NewsItem.authorEmail}</h5>
+            <Card>
+                <motion.div variants={fade}>
+                    <h4>{localStorage.getItem("new_items_heading")}</h4>
+                    {/* Using Moment.js to parse createdAt property to readable date */}
+                    <h5>{localStorage.getItem("new_items_createdAt")}</h5>
+                    <div className="sender-info">
+                        <h5>Posted By:</h5>
+                        <h5>{localStorage.getItem("new_items_authorFirstName")} {localStorage.getItem("new_items_authorLastName")}</h5>
+                        <h5 id="sender-email">{localStorage.getItem("new_items_authorEmail")}</h5>
+                </div>
+                </motion.div>
+                <div className="divider"></div>
+                {/* Section for rich text content */}
+                <RichContent>
+                    {ReactHtmlParser(localStorage.getItem("new_items_body"))}
+                </RichContent>
+                {/* If attachment is detected, rendered here */}
+                {localStorage.getItem("new_items_attachmentURL") &&
+                    localStorage.getItem("new_items_attachmentType") === 'image/jpeg' || localStorage.getItem("new_items_attachmentType") === 'image/png' ?
+                        <Image>
+                            <motion.img variants={imageAnim} src={localStorage.getItem("new_items_attachmentURL")} alt={localStorage.getItem("new_items_attachmentName")} onClick={() => setImageModalState(true)}/>
+                        </Image>
+                    :
+                        localStorage.getItem("new_items_attachmentType") === 'application/pdf' || localStorage.getItem("new_items_attachmentType") === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
+                                <a id="media-link" href={localStorage.getItem("new_items_attachmentURL")} download>{localStorage.getItem("new_items_attachmentName")}</a>
+                            :
+                                ''
+                }
+                <Link to="/news" id="return-link">View other announcements</Link>
+                {/* Image Modal */}
+                <Modal
+                    isOpen={imageModalState}
+                    onRequestClose={() => setImageModalState(false)}
+                    className="attachment-modal"
+                    overlayClassName="attachment-modal-overlay"
+                >
+                    <div className="attachment-container">
+                        <img variants={imageAnim} src={localStorage.getItem("new_items_attachmentURL")} alt={localStorage.getItem("new_items_attachmentName")}/>
                     </div>
-                    </motion.div>
-                    <div className="divider"></div>
-                    {/* Section for rich text content */}
-                    <RichContent>
-                        {ReactHtmlParser(NewsItem.body)}
-                    </RichContent>
-                    {/* If attachment is detected, rendered here */}
-                    {NewsItem.attachmentURL &&
-                        NewsItem.attachmentType === 'image/jpeg' || NewsItem.attachmentType === 'image/png' ?
-                            <Image>
-                                <motion.img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName} onClick={() => setImageModalState(true)}/>
-                            </Image>
-                        :   
-                            NewsItem.attachmentType === 'application/pdf' || NewsItem.attachmentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ?
-                                    <a id="media-link" href={NewsItem.attachmentURL} download>{NewsItem.attachmentName}</a>
-                                :
-                                    ''
-                    }
-                    <Link to="/news" id="return-link">View other announcements</Link>
-
-                    {/* Image Modal */}
-                    <Modal
-                        isOpen={imageModalState}
-                        onRequestClose={() => setImageModalState(false)}
-                        className="attachment-modal"
-                        overlayClassName="attachment-modal-overlay"
-                    >
-                        <div className="attachment-container">
-                            <img variants={imageAnim} src={NewsItem.attachmentURL} alt={NewsItem.attachmentName}/>
-                        </div>
-                    </Modal>
-                </Card>
-            }
+                </Modal>
+            </Card>
         </MainContainer>
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const cardBackground = "#C7D1C4";
 const dividerColor = "#E63946"
 const mainBackground = "#F1FAEE";
 const mainFontColor = "#1D3557";
 const accentColor = "#E63946";
-
-// Styled Components
 
 const MainContainer = styled(motion.div)`
     padding: 5rem 7rem;
@@ -94,7 +105,6 @@ const MainContainer = styled(motion.div)`
         padding: 2rem 2rem;
     }
 `
-
 const Card = styled.div`
     padding: 2.5rem 5rem;
     background: ${cardBackground};
@@ -137,8 +147,6 @@ const Card = styled.div`
         }
     }
     a#media-link {
-        display: block;
-        width: 20%;
         text-decoration: none;
         text-align: center;
         font-weight: bold;
@@ -149,7 +157,6 @@ const Card = styled.div`
         border-radius: 0.5rem;
         background: transparent;
         color: ${mainFontColor};
-        /* Adding a transition for hover */
         transition: all 0.5s ease;
         font-family: 'Inter', sans-serif;
         &:hover {
@@ -173,11 +180,14 @@ const Card = styled.div`
             font-size: 1.5rem;
         }
         a#return-link, a#media-link {
+            display: block;
             width: 100%;
+        }
+        a#return-link {
+            font-size: 0.8rem;
         }
     }
 `
-
 const RichContent = styled.div`
     margin: 2rem 0;
     h1, h2, h3, h4, h5, p {
@@ -194,7 +204,6 @@ const RichContent = styled.div`
         }
     }
 `
-
 const Image = styled.div`
     width: 100%;
     height: 100%;

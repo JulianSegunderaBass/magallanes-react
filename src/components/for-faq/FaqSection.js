@@ -1,20 +1,20 @@
 // The list of FAQs on the FAQ page
 
+// Functional Imports
 import React, { useState } from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing "DropToggle" Component for toggling functionality
+// Component Imports
 import DropToggle from '../global/DropToggle';
-// Importing "AnimateSharedLayout" - detects a change with the toggling
-import { AnimateSharedLayout } from 'framer-motion';
-// Importing FAQ Questions Data
+// Data Imports
 import { FaqData } from './FaqData';
+// Styling + Animation Imports
+import styled from 'styled-components';
+import { AnimateSharedLayout } from 'framer-motion';
+
 
 const FaqSection = () => {
 
-    // State
     // Creating a "questions" state holding all the FAQ Data
-    const [questions, setQuestions] = useState(FaqData);
+    const [questions] = useState(FaqData);
     // Creating state for the search term
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -47,12 +47,7 @@ const FaqSection = () => {
     )
 }
 
-// Styled Components
-// We use the name "FaqSectionStyle" because using FaqSection
-// would conflict between the FaqSection component and FaqSection
-// Styled component
-
-// Color Variables
+// Styled Components + Color Variables
 const lineColor = "#E63946";
 const boxBorder = "#1D3557";
 

@@ -1,55 +1,48 @@
-// Actions for users authenticating (signing in / out)
+// Actions for users authenticating (signing in / out, setting profile image)
 
+// Functional Imports
 import sha256 from 'crypto-js/sha256';
+
 const CryptoJS = require("crypto-js");
 
+// Signing In User
 export const signInUser = (credentials) => {
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
-
         dispatch({type: 'LOGGING_IN'});
-
-        // Part of authentication service
-        firebase.auth().signInWithEmailAndPassword(
+        firebase.auth().signInWithEmailAndPassword( // Part of authentication service
             credentials.email,
             credentials.password
         ).then(() => {
-            // Note: No need to pass any data in this dispatch
-            // Changes "authError" state to null (meaning there is no error)
             dispatch({type: 'LOGIN_SUCCESS'});
         }).catch((error) => {
-            // Changes "authError" state to an error message
             dispatch({type: 'LOGIN_ERROR', error});
         });
     }
 }
 
+// Signing Out User
 export const signOutUser = () => {
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
-        // Part of authentication service
-        firebase.auth().signOut().then(() => {
+        firebase.auth().signOut().then(() => { // Part of authentication service
             dispatch({type: 'SIGNOUT_SUCCESS'});
         });
     }
 }
 
-// For Signing Up
+// Signing Up User
 export const signUpUser = (newUser) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
-        // Communicating between Firebase Auth service 
-        // and Firestore users collection
+        // Communicating between Firebase Auth service and Firestore users collection
         const firebase = getFirebase();
         const firestore = getFirestore();
-
         dispatch({type: 'CREATING_ACCOUNT'});
 
-        firebase.auth().createUserWithEmailAndPassword(
-            // Step 1: create new user in auth service
+        firebase.auth().createUserWithEmailAndPassword( // Step 1: create new user in auth service
             newUser.email,
             newUser.password
-        ).then((response) => {
-            // Step 2: create user record in collection
+        ).then((response) => { // Step 2: create user record in collection
             // response has information about the user we just created
             // Note: if this collection doesn't exist, it will be created automatically
             return firestore.collection('users').doc(response.user.uid).set({
@@ -62,8 +55,7 @@ export const signUpUser = (newUser) => {
                     benefit_3: 'Test Benefit 3'
                 }
             });
-        }).then(() => {
-            // Step 3: dispatching successful signup action
+        }).then(() => { // Step 3: dispatching successful signup action
             dispatch({type: 'SIGNUP_SUCCESS'});
         }).catch(error => {
             dispatch({type: 'SIGNUP_ERROR', error});
@@ -75,11 +67,9 @@ export const signUpUser = (newUser) => {
 export const resetPass = () => {
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
-        // Reference to logged user's email
-        const loggedEmail = getState().firebase.auth.email;
+        const loggedEmail = getState().firebase.auth.email; // Reference to logged user's email
 
-        // Sending an email to logged user to reset password
-        firebase.auth().sendPasswordResetEmail(loggedEmail).then(() => {
+        firebase.auth().sendPasswordResetEmail(loggedEmail).then(() => { // Sending an email to logged user to reset password
             dispatch({type: 'RESET_PASSWORD'});
         }).catch(error => {
             dispatch({type: 'RESET_PASSWORD_ERROR', error});
@@ -94,14 +84,13 @@ export const setProfileImage = (profilePhoto, userID) => {
         const firestore = getFirestore();
         const projectStorage = firebase.storage();
         const dt = new Date();
-
         dispatch({type: 'SETTING_PROFILE_IMAGE'});
 
+        // Hashing Variables
         let imgHashObj = sha256(`${profilePhoto.name}${dt.toLocaleDateString()}${dt.toLocaleTimeString()}`);
         let imgHashStr = imgHashObj.toString(CryptoJS.enc.Base64);
-        const uploadTask = projectStorage
-        .ref(`profile-images/${imgHashStr}`)
-        .put(profilePhoto);
+
+        const uploadTask = projectStorage.ref(`profile-images/${imgHashStr}`).put(profilePhoto);
         uploadTask.on(
             "state_changed",
             snapshot => {},
@@ -109,19 +98,15 @@ export const setProfileImage = (profilePhoto, userID) => {
                 console.log(error);
             },
             () => {
-                projectStorage
-                    .ref("profile-images")
-                    .child(imgHashStr)
-                    .getDownloadURL()
-                    .then(url => {
-                        return firestore.collection('users').doc(userID).set({
-                            profileImageURL: url
-                        }, { merge: true });
-                    }).then(() => {
-                        dispatch({type: 'PROFILE_IMAGE_SET'});
-                    }).catch(error => {
-                        dispatch({type: 'PROFILE_IMAGE_ERROR', error});
-                    })
+                projectStorage.ref("profile-images").child(imgHashStr).getDownloadURL().then(url => {
+                    return firestore.collection('users').doc(userID).set({
+                        profileImageURL: url
+                    }, { merge: true });
+                }).then(() => {
+                    dispatch({type: 'PROFILE_IMAGE_SET'});
+                }).catch(error => {
+                    dispatch({type: 'PROFILE_IMAGE_ERROR', error});
+                })
             }
         )
     }

@@ -1,60 +1,45 @@
 // Component for summarized card of news information
 
+// Functional Imports
 import React, { useState } from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing Moment.js for created date
 import moment from 'moment';
-// For card link
 import { Link } from 'react-router-dom';
-// Importing Redux Action and Tools
-import { useDispatch } from 'react-redux';
-import { deleteAnnouncement } from '../../redux-store/actions/NewsActions';
-// Importing Modal
-import Modal from 'react-modal';
-// Importing all production Icons with code names
-import * as AiIcons from 'react-icons/ai';
-import * as BsIcons from "react-icons/bs";
-// For connecting to Redux state and action
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { editAnnouncement } from '../../redux-store/actions/NewsActions';
-// For notifications
+import { deleteAnnouncement } from '../../redux-store/actions/NewsActions';
 import { store } from 'react-notifications-component';
-// Importing Rich Text Editor
+// Component Imports
+import Modal from 'react-modal';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// Testing CSS Import
+// Data + Image Imports
+import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from "react-icons/bs";
+// Styling + Animation Imports
+import styled from 'styled-components';
 import '../../assets/ModalStyle.css'
 
 Modal.setAppElement("#root");
+
 // News Item is an object holding the news data
 const NewsSummary = ({ newsItem }) => {
     
-    // Allowing the form to dispatch action
     const dispatch = useDispatch();
 
-    // Connecting to Redux auth status
+    // Selecting Redux State
     const currentUserEmail = useSelector((state) => state.firebase.auth.email);
 
-    // Modal States
-    const [deleteModalState, setDeleteModalState] = useState(false);
+    // Local State
+    const [deleteModalState, setDeleteModalState] = useState(false); // Modal States
     const [editModalState, setEditModalState] = useState(false);
-
-    // Setting a local state for the form entry
-    // Note: announcementID is the ID reference of the post being edited
-    const [newsEdits, setNewsEdits] = useState({
+    const [newsEdits, setNewsEdits] = useState({ // News Edits: announcementID is the ID reference of the post being edited
         announcementID: newsItem.id,
         heading: '',
         body: '',
         attachment: null
     });
-
-    const richEditorChange = (e, editor) => {
-        const richContent = editor.getData();
-        setNewsEdits({...newsEdits, body: richContent});
-    }
-
-    // Modal Functions
+    // Functions
     const handleEdits = (e) => {
         e.preventDefault();
         // Preventing submission if all form fields are empty
@@ -85,6 +70,10 @@ const NewsSummary = ({ newsItem }) => {
             dispatch(deleteAnnouncement(newsItem.id, ''));
         }
     };
+    const richEditorChange = (e, editor) => {
+        const richContent = editor.getData();
+        setNewsEdits({...newsEdits, body: richContent});
+    }
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
             setNewsEdits({
@@ -92,6 +81,7 @@ const NewsSummary = ({ newsItem }) => {
                 attachment: e.target.files[0]})
         }
     };
+ 
     return (
         <NewsCard>
             {/* Section inside link tag is clickable */}
@@ -119,20 +109,19 @@ const NewsSummary = ({ newsItem }) => {
                     <h5>{newsItem.authorFirstName} {newsItem.authorLastName}</h5>
                     <h5 id="sender-email">{newsItem.authorEmail}</h5>
                 </div>
-                {/* <p>{ReactHtmlParser(newsItem.body)}</p> */}
             </Link>
             <ButtonContainer>
                 {/* Update and Delete Button */}
                 {currentUserEmail === newsItem.authorEmail || currentUserEmail === "adminuser@gmail.com" ? 
-                <>
-                    <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button>
-                    <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button>
-                </>
-                 : ""
+                    <div id="inner-button-container">
+                        <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button>
+                        <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button>
+                    </div>
+                 : 
+                    ""
                 }
             </ButtonContainer>
             {/* Modal Components */}
-
             {/* Edit Post Modal */}
             <Modal
                 isOpen={editModalState}
@@ -165,7 +154,6 @@ const NewsSummary = ({ newsItem }) => {
                     </form>
                 </ModalContent>
             </Modal>
-
             {/* Delete Modal */}
             <Modal
                 isOpen={deleteModalState}
@@ -183,15 +171,14 @@ const NewsSummary = ({ newsItem }) => {
     );
 };
 
-// Color Variables
+// Styled Components + Color Variables
 const cardBackground = "#C7D1C4";
 const hoverBackground = "#457B9D";
 const contentHover = "#FFF";
 const accentColor = "#E63946";
 const deleteButtonColor = "#E63946";
 const editButtonColor = "#1D3557";
-
-// Styled Components
+const boxBorder = "#1D3557";
 
 const NewsCard = styled.div`
     margin-bottom: 2.5rem;
@@ -199,9 +186,6 @@ const NewsCard = styled.div`
     border-radius: 2rem;
     background: ${cardBackground};
     transition: background 0.5s ease;
-    /* Relative positioning for button */
-    /* position: relative;
-    overflow: hidden; */
     &:hover {
         background: ${hoverBackground};
         h4, h5, p {
@@ -239,10 +223,6 @@ const NewsCard = styled.div`
                 align-items: center;
                 #time-stamp {
                     margin-right: 1rem;
-                }
-                @media (max-width: 870px) {
-                    /* flex-direction: column;
-                    align-items: flex-start; */
                 }
             }
         }
@@ -291,40 +271,34 @@ const NewsCard = styled.div`
             font-size: 1.5rem;
         }
     }
-`;
-
+`
 const ButtonContainer = styled.div`
-    display: flex;
-    /* Buttons for triggering modals */
-    .pop-modal {
-        /* position: absolute;
-        top: -5%;
-        right: -1%;
-        border-bottom-left-radius: 2rem;
-        padding: 1rem 2.5rem 0.1rem 2rem;
-        background: ${accentColor};
-        color: ${contentHover};
-        font-size: 2rem; */
-        color: ${contentHover};
-        font-size: 2rem;
-        padding: 0.5rem 3rem;
-        margin-right: 0.5rem;
-    }
-    #edit-button {
-        background: ${editButtonColor};
-        border-color: ${editButtonColor};
-    }
-    #delete-button {
-        background: ${deleteButtonColor};
-        border-color: ${deleteButtonColor};
-    }
-    @media (max-width: 870px) {
+    #inner-button-container {
+        display: flex;
+        /* Buttons for triggering modals */
         .pop-modal {
-            font-size: 1.5rem;
+            color: ${contentHover};
+            font-size: 2rem;
+            padding: 0.5rem 3rem;
+            margin-right: 0.5rem;
+        }
+        #edit-button {
+            background: ${editButtonColor};
+            border-color: ${editButtonColor};
+        }
+        #delete-button {
+            background: ${deleteButtonColor};
+            border-color: ${deleteButtonColor};
+        }
+        @media (max-width: 870px) {
+            justify-content: space-around;
+            .pop-modal {
+                font-size: 1.5rem;
+                padding: 0.5rem 1.5rem;
+            }
         }
     }
 `
-
 const ModalContent = styled.div`
     display: flex;
     flex-direction: column;
@@ -354,7 +328,7 @@ const ModalContent = styled.div`
             margin-bottom: 1rem;
             font-size: 1.5rem;
             padding: 0.5rem;
-            border: 2px solid ${hoverBackground};
+            border: 2px solid ${boxBorder};
             outline: none;
         }
         input {
@@ -376,7 +350,6 @@ const ModalContent = styled.div`
         }
     }
 `
-
 const RichContent = styled.div`
     h1, h2, h3, h4, h5, p {
         color: black;

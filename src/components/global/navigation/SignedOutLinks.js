@@ -1,15 +1,15 @@
 // The list of navigation links for when a user is NOT signed in
 // These links assume the reader is just a regular viewer with no account
 
+// Functional Imports
 import React from 'react';
-// Importing Styled Components
-import styled from 'styled-components';
-// Importing all production Icons with code names
+// Component Imports
+import { Link } from 'react-router-dom';
+// Data + Image Imports
 import * as AiIcons from 'react-icons/ai';
 import * as MdIcons from 'react-icons/md';
-// Link Component
-import { Link } from 'react-router-dom';
-
+// Styling + Animation Imports
+import styled from 'styled-components';
 
 const SignedOutLinks = () => {
     return (
@@ -54,12 +54,11 @@ const SignedOutLinks = () => {
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const itemColor = "#F1FAEE";
 const hoverBackgroundColor = "#A8DADC";
 const hoverItemColor = "#031926";
 
-// Styled Components
 const ListContainer = styled.div`
     li {
         display: flex;

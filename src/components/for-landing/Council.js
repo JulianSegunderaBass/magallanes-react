@@ -1,10 +1,11 @@
 // The Council Section for Barangay Officials
 // On the Landing Page
 
+// Functional Imports
 import React from 'react';
-// Importing Council Data
+// Data + Image Imports
 import { CouncilData } from './CouncilData';
-// Importing Styled Components
+// Styling + Animation Imports
 import styled from 'styled-components';
 
 const Council = () => {
@@ -37,10 +38,9 @@ const Council = () => {
     )
 }
 
-// Color Variables
+// Styled Components + Color Variables
 const cardBackground = "#C7D1C4";
 
-// Styled Components
 const CouncilSection = styled.div`
     min-height: 90vh;
     padding: 5rem 10rem;
