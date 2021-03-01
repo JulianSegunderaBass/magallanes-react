@@ -190,6 +190,7 @@ const contentHover = "#FFF";
 const accentColor = "#E63946";
 const deleteButtonColor = "#E63946";
 const editButtonColor = "#1D3557";
+const boxBorder = "#1D3557";
 
 // Styled Components
 
@@ -354,7 +355,7 @@ const ModalContent = styled.div`
             margin-bottom: 1rem;
             font-size: 1.5rem;
             padding: 0.5rem;
-            border: 2px solid ${hoverBackground};
+            border: 2px solid ${boxBorder};
             outline: none;
         }
         input {
