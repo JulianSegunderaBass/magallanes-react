@@ -50,6 +50,7 @@ const NewsList = ({newsItems}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
+        setCreateModalState(false);
     }
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
@@ -98,7 +99,15 @@ const NewsList = ({newsItems}) => {
                 </HeaderSection>
             </Hide>
             <SearchSection>
-                <button onClick={() => setCreateModalState(true)}>Create an Announcement</button>
+                {/* publishingState determines what button to render */}
+                {publishingState === false ? 
+                    <button onClick={() => setCreateModalState(true)}>Create an Announcement</button> 
+                    : 
+                    <div id="loading-button">
+                        <button id="posting-announcement" disabled>Posting...</button>
+                        <img src={ReactSpinner} alt="Loading Spinner" />
+                    </div>
+                }
                 <input type="text" placeholder="Search an Announcement" onChange={e => setSearchAnnouncement(e.target.value)} />
                 {/* Edit Post Modal */}
                 <Modal
@@ -158,6 +167,7 @@ const NewsList = ({newsItems}) => {
 // Color Variables
 const dividerColor = "#E63946"
 const boxBorder = "#1D3557";
+const loadingButton = "#C7D1C4";
 
 // Styled Components
 
@@ -218,6 +228,31 @@ const SearchSection = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+    #loading-button {
+        display: flex;
+        align-items: center;
+        button#posting-announcement {
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: progress;
+            padding: 1rem 2rem;
+            border: 3px solid ${loadingButton};
+            border-radius: 1rem;
+            background: ${loadingButton};
+            color: black;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+        }
+        @media (max-width: 870px) {
+            flex-direction: column;
+            margin-bottom: 1rem;
+            button#posting-announcement {
+                margin-bottom: 1rem;
+            }
+        }
+    }
     input {
         display: block;
         width: 70%;
