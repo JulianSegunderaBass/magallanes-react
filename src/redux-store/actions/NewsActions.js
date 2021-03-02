@@ -24,7 +24,7 @@ export const createAnnouncement = (newsAnnouncement) => {
             let imgHashObj = sha256(`${newsAnnouncement.attachment.name}${dt.toLocaleDateString()}${dt.toLocaleTimeString()}`);
             let imgHashStr = `${imgHashObj.toString(CryptoJS.enc.Base64)}.${fileExt}`;
 
-            const uploadTask = projectStorage.ref(`news-images/${imgHashStr}`).put(newsAnnouncement.attachment);
+            const uploadTask = projectStorage.ref(`news-attachments/${imgHashStr}`).put(newsAnnouncement.attachment);
             uploadTask.on(
                 "state_changed",
                 snapshot => {},
@@ -32,7 +32,7 @@ export const createAnnouncement = (newsAnnouncement) => {
                     console.log(error);
                 },
                 () => {
-                    projectStorage.ref("news-images").child(imgHashStr).getDownloadURL().then(url => {
+                    projectStorage.ref("news-attachments").child(imgHashStr).getDownloadURL().then(url => {
                         // Once image is saved to Firebase Storage and URL is available
                         firestore.collection('NewsAnnouncements').add({
                             heading: newsAnnouncement.heading,
@@ -72,7 +72,7 @@ export const createAnnouncement = (newsAnnouncement) => {
 
 // Function for making edits to announcements
 // newsEdits are the edits being passed
-export const editAnnouncement = (newsEdits) => {
+export const editAnnouncement = (newsEdits, oldPostContent) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const projectStorage = firebase.storage();
@@ -81,12 +81,14 @@ export const editAnnouncement = (newsEdits) => {
 
         // If poster has decided to include an attachment
         if (newsEdits.attachment) {
+            let filenameArr = newsEdits.attachment.name.split("."); // For splitting and getting file type ending
+            let fileExt = filenameArr[filenameArr.length - 1];
             
             // Hashing Variables
             let imgHashObj = sha256(`${newsEdits.attachment.name}${dt.toLocaleDateString()}${dt.toLocaleTimeString()}`);
-            let imgHashStr = imgHashObj.toString(CryptoJS.enc.Base64);
+            let imgHashStr = `${imgHashObj.toString(CryptoJS.enc.Base64)}.${fileExt}`;
 
-            const uploadTask = projectStorage.ref(`news-images/${imgHashStr}`).put(newsEdits.attachment);
+            const uploadTask = projectStorage.ref(`news-attachments/${imgHashStr}`).put(newsEdits.attachment);
             uploadTask.on(
                 "state_changed",
                 snapshot => {},
@@ -94,7 +96,7 @@ export const editAnnouncement = (newsEdits) => {
                     console.log(error);
                 },
                 () => {
-                    projectStorage.ref("news-images").child(imgHashStr).getDownloadURL().then(url => {
+                    projectStorage.ref("news-attachments").child(imgHashStr).getDownloadURL().then(url => {
                         // Once image is saved to Firebase Storage and URL is available
                         // Referencing announcement's ID for merging changes
                         if (newsEdits.heading !== '') {
@@ -107,7 +109,13 @@ export const editAnnouncement = (newsEdits) => {
                                 body: newsEdits.body
                             }, { merge: true });
                         }
+                        // If previous post version has an attachment URL, delete old attachment from storage
+                        if (oldPostContent.attachmentURL) {
+                            var prevAttachmentReference = projectStorage.refFromURL(oldPostContent.attachmentURL);
+                            prevAttachmentReference.delete();
+                        }
                         firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                            createdAt: new Date(),
                             attachmentURL: url,
                             attachmentName: newsEdits.attachment.name,
                             attachmentType: newsEdits.attachment.type
@@ -129,6 +137,9 @@ export const editAnnouncement = (newsEdits) => {
                     body: newsEdits.body
                 }, { merge: true });
             }
+            firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                createdAt: new Date()
+            }, { merge: true });
             dispatch({type: 'UPDATE_ANNOUNCEMENT', payload: newsEdits});
         }
     }

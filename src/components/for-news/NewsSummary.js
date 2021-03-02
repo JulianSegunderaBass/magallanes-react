@@ -58,7 +58,7 @@ const NewsSummary = ({ newsItem }) => {
                 }
             });
         } else {
-            dispatch(editAnnouncement(newsEdits));
+            dispatch(editAnnouncement(newsEdits, newsItem));
             setEditModalState(false);
         }
     };
