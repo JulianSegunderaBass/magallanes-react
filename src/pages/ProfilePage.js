@@ -33,7 +33,7 @@ const ProfilePage = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(setProfileImage(profilePhoto, auth.uid));
+        dispatch(setProfileImage(profilePhoto, auth.uid, profileData.profileImageURL));
     }
     const handlePassReset = () => {
         dispatch(resetPass());
@@ -171,6 +171,7 @@ const Image = styled.div`
     height: 50%;
     img {
         width: 100%;
+        height: 100%;
         object-fit: cover;
     }
 `
