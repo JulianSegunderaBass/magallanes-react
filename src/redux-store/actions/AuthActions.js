@@ -78,7 +78,7 @@ export const resetPass = () => {
 }
 
 // For changing profile photo from profile page
-export const setProfileImage = (profilePhoto, userID) => {
+export const setProfileImage = (profilePhoto, userID, previousPhotoURL) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
@@ -99,7 +99,11 @@ export const setProfileImage = (profilePhoto, userID) => {
             },
             () => {
                 projectStorage.ref("profile-images").child(imgHashStr).getDownloadURL().then(url => {
-                    return firestore.collection('users').doc(userID).set({
+                    if (previousPhotoURL) {
+                        var prevPhotoReference = projectStorage.refFromURL(previousPhotoURL);
+                        prevPhotoReference.delete();
+                    }
+                    firestore.collection('users').doc(userID).set({
                         profileImageURL: url
                     }, { merge: true });
                 }).then(() => {
