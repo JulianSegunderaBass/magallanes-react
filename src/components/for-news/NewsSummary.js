@@ -39,6 +39,7 @@ const NewsSummary = ({ newsItem }) => {
         body: '',
         attachment: null
     });
+    
     // Functions
     const handleEdits = (e) => {
         e.preventDefault();
@@ -141,7 +142,10 @@ const NewsSummary = ({ newsItem }) => {
                             <CKEditor 
                                 id="rich-text-editor" 
                                 editor={ClassicEditor} 
-                                onChange={richEditorChange} 
+                                onChange={richEditorChange}
+                                config={{
+                                    toolbar: [ 'Heading', 'Bold', 'Italic', '|', 'bulletedList', 'numberedList', 'Link', '|', 'undo', 'redo' ]
+                                }}
                             />
                         </RichContent>
                         <input 

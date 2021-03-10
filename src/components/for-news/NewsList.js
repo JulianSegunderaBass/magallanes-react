@@ -124,6 +124,9 @@ const NewsList = ({newsItems}) => {
                                     id="rich-text-editor" 
                                     editor={ClassicEditor} 
                                     onChange={richEditorChange} 
+                                    config={{
+                                        toolbar: [ 'Heading', 'Bold', 'Italic', '|', 'bulletedList', 'numberedList', 'Link', '|', 'undo', 'redo' ]
+                                    }}
                                 />
                             </RichContent>
                             <input 
