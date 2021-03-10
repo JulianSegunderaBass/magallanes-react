@@ -12,7 +12,6 @@
         "@testing-library/react": "^11.2.2",
         "@testing-library/user-event": "^12.5.0",
         "crypto-js": "^4.0.0",
-        "draft-js": "^0.11.7",
         "firebase": "^8.2.4",
         "framer-motion": "^2.9.5",
         "moment": "^2.29.1",
