@@ -42,6 +42,12 @@ const Footer = () => {
                 <input type="hidden" name="form-name" value="contact-form" />
                 <p>Have a Concern? Get in touch with Barangay Magallanes. We'll respond to you via your email.</p>
                 <input 
+                    type="text" 
+                    placeholder="Your Full Name" 
+                    name="name"
+                    required
+                />
+                <input 
                     type="email" 
                     placeholder="Your Email" 
                     name="email"
