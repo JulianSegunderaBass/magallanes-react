@@ -29,7 +29,6 @@ const Footer = () => {
             </Socials>
             <form 
                 name="contact-form" 
-                action="/contact-form" 
                 method="post" 
             >
                 <p>Have a Concern? Get in touch. We'll respond to you via your email.</p>
