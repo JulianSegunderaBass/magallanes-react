@@ -8,12 +8,6 @@ import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import styled from 'styled-components';
 
 const Footer = () => {
-
-    // Functions
-    const handleSubmit = (e, form) => {
-        e.preventDefault();
-    }
-
     return (
         <FooterStyle>
             <Socials>
@@ -37,7 +31,6 @@ const Footer = () => {
                 name="contact-form" 
                 action="/contact-form" 
                 method="post" 
-                onSubmit={handleSubmit}
             >
                 <p>Have a Concern? Get in touch. We'll respond to you via your email.</p>
                 <input 
