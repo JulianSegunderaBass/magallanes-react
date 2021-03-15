@@ -10,6 +10,16 @@ import { motion } from 'framer-motion';
 import { revealUp, imageAnim } from '../../assets/Animations';
 
 const AboutUs = () => {
+
+    // Functions
+    const handleScroll = () => {
+        window.scroll({
+            top: document.body.scrollHeight,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }
+
     return (
         <AboutSection>
             <TextSection>
@@ -18,7 +28,7 @@ const AboutUs = () => {
                 </Hide>
                 <p>The Barangay Council of Magallanes is a local government unit that services and protects the interests of its community. It is one of 33 barangays in the City of Makati.</p>
                 <p>It has a land area of 119 hectares and comprises of 4 residential and 2 commercial communities: Ecology Village, Galeria de Magallanes, Magallanes Village, Paseo de Magallanes, Chino Roces Estates Association and Paseo de Magallanes Commercial Association.</p>
-                <button>Contact Us</button>
+                <button onClick={handleScroll}>Contact Us</button>
             </TextSection>
             <Image>
                 <motion.img variants={imageAnim} src={BrngLogo} alt="Barangay Logo" />
@@ -33,7 +43,7 @@ const AboutSection = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 5rem 10rem;
+    padding: 3rem 10rem;
     @media (max-width: 870px) {
         display: block;
         padding: 2rem 2rem;

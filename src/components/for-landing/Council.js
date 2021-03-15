@@ -57,7 +57,6 @@ const CouncilSection = styled.div`
     @media (max-width: 870px) {
         h2 {
             padding: 0;
-            text-align: center;
         }
     }
 `

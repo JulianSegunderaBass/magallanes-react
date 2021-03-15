@@ -113,7 +113,7 @@ const NewsSummary = ({ newsItem }) => {
             </Link>
             <ButtonContainer>
                 {/* Update and Delete Button */}
-                {currentUserEmail === newsItem.authorEmail || currentUserEmail === "adminuser@gmail.com" ? 
+                {currentUserEmail === newsItem.authorEmail || currentUserEmail === process.env.REACT_APP_ADMIN_EMAIL_IDENTIFIER ? 
                     <div id="inner-button-container">
                         <button className="pop-modal" id="edit-button" onClick={() => setEditModalState(true)}><AiIcons.AiFillEdit /></button>
                         <button className="pop-modal" id="delete-button" onClick={() => setDeleteModalState(true)}><AiIcons.AiFillDelete /></button>

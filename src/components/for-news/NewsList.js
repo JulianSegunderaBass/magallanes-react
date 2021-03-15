@@ -85,7 +85,7 @@ const NewsList = ({newsItems}) => {
         <MainContainer>
             <Hide>
                 <HeaderSection variants={strongRevealUp}>
-                    <h2>Browse the latest updates from Barangay</h2>
+                    <h2>Browse the latest updates from Barangay and The Community</h2>
                     <div className="divider"></div>
                 </HeaderSection>
             </Hide>
