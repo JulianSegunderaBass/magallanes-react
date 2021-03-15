@@ -43,11 +43,13 @@ const Footer = () => {
                 <input 
                     type="email" 
                     placeholder="Your Email" 
+                    name="email"
                     required
                 />
                 <textarea 
                     rows="5"
                     placeholder="Your Message" 
+                    name="message"
                     required
                 />
                 <button>Send Message</button>
