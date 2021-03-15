@@ -29,8 +29,10 @@ const Footer = () => {
             </Socials>
             <form 
                 name="contact-form" 
+                action="/contact-form"
                 method="post" 
             >
+                <input type="hidden" name="form-name" value="contact-form" />
                 <p>Have a Concern? Get in touch. We'll respond to you via your email.</p>
                 <input 
                     type="email" 
