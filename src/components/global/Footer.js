@@ -2,8 +2,9 @@
 
 // Functional Imports
 import React from 'react';
-// Icon Imports
+// Image + Icon Imports
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import APCLogo from '../../assets/images/APCLogo.png';
 // Styling + Animation Imports
 import styled from 'styled-components';
 
@@ -11,6 +12,12 @@ const Footer = () => {
     return (
         <FooterStyle>
             <Socials>
+                <div className="partner">
+                    <p>Made in partnership with <span>Asia Pacific College, Makati</span></p>
+                    <Image>
+                        <img src={APCLogo} alt="Asia Pacific College Logo"/>
+                    </Image>
+                </div>
                 <Contact>
                     <p>Lot 2, Block 6 , San Antonio Street, Paseo de Magallanes City of Makati, Republic of the Philippines</p>
                     <p><span>+632-7295114 / +632-8530564</span></p>
@@ -33,7 +40,7 @@ const Footer = () => {
                 method="post" 
             >
                 <input type="hidden" name="form-name" value="contact-form" />
-                <p>Have a Concern? Get in touch. We'll respond to you via your email.</p>
+                <p>Have a Concern? Get in touch with Barangay Magallanes. We'll respond to you via your email.</p>
                 <input 
                     type="email" 
                     placeholder="Your Email" 
@@ -54,7 +61,7 @@ const Footer = () => {
 
 // Styled Components + Color Variables
 const footerBackground = "#C7D1C4";
-const dividerColor = "#1D3557"
+const dividerColor = "rgba(29, 53, 87, 0.5)";
 
 const FooterStyle = styled.div`
     background: ${footerBackground};
@@ -98,6 +105,14 @@ const FooterStyle = styled.div`
 `
 const Socials = styled.div`
     width: 50%;
+    .partner {
+        border-bottom: 1px solid ${dividerColor};
+        margin-bottom: 1rem;
+        p {
+            font-size: 1.2rem;
+            padding: 0;
+        }
+    }
     @media (max-width: 870px) {
         width: 100%;
         text-align: center;
@@ -126,6 +141,18 @@ const Contact = styled.div`
         p {
             font-size: 1rem;
         }
+    }
+`
+const Image = styled.div`
+    width: 30%;
+    overflow: hidden;
+    @media (max-width: 870px) {
+        width: 70%;
+        margin: 0 auto;
+    }
+    img {
+        width: 100%;
+        object-fit: cover;
     }
 `
 
