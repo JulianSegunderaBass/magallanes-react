@@ -7,6 +7,7 @@ import React from 'react';
 import AboutUs from '../components/for-landing/AboutUs';
 import Statements from '../components/for-landing/Statements';
 import Council from '../components/for-landing/Council';
+import FeaturesIntro from '../components/for-landing/FeaturesIntro';
 import AutoScroll from '../assets/AutoScroll';
 // Animation Imports
 import { motion } from 'framer-motion';
@@ -26,6 +27,7 @@ const Landing = () => {
             <AboutUs />
             <Statements />
             <Council />
+            <FeaturesIntro />
         </motion.div>
     )
 }
