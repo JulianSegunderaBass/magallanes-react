@@ -4,6 +4,7 @@ import { store } from 'react-notifications-component';
 
 const initState = {
     authError: null,
+    attemptedEmail: null,
     signingIn: false,
     creatingAccount: false,
     settingProfileImage: false
@@ -15,7 +16,7 @@ const AuthReducer = (state = initState, action) => {
             console.log('Login error');
             store.addNotification({
                 title: "Authentication Error",
-                message: `Login failed: ${action.error.message}`,
+                message: `Login failed: ${action.payload.error.message}`,
                 type: "danger",
                 insert: "top",
                 container: "top-right",
@@ -28,7 +29,8 @@ const AuthReducer = (state = initState, action) => {
             });
             return {
                 ...state,
-                authError: action.error.message
+                authError: action.payload.error.message,
+                attemptedEmail: action.payload.attemptedEmail
             }
         case 'LOGGING_IN':
             console.log('Logging in...');
