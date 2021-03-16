@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { signInUser } from '../../redux-store/actions/AuthActions';
+import { signInUser, resetPass } from '../../redux-store/actions/AuthActions';
 // Component Imports
 import AutoScroll from '../../assets/AutoScroll';
 import { Redirect } from 'react-router-dom';
@@ -19,7 +19,9 @@ const SignIn = () => {
 
     // Selecting Redux State
     const auth = useSelector((state) => state.firebase.auth);
-
+    const authError = useSelector((state) => state.auth.authError);
+    const attemptedEmail = useSelector((state) => state.auth.attemptedEmail);
+    
     // Local State
     const [profile, setProfile] = useState({ // Setting a local state for the form entry
         email: '',
@@ -30,6 +32,9 @@ const SignIn = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(signInUser(profile));
+    }
+    const handlePassReset = () => {
+        dispatch(resetPass(attemptedEmail));
     }
 
     // Conditions
@@ -61,6 +66,9 @@ const SignIn = () => {
                         onChange={(e) => setProfile({...profile, password: e.target.value})}
                         required
                     />
+                    {authError &&
+                        <span id="forgot-password" onClick={handlePassReset}>Forgot your Password?</span>
+                    }
                     <button>Sign In</button>
                 </form>
             </FormSection>
@@ -113,6 +121,14 @@ const FormSection = styled.div`
             padding: 0.5rem;
             border: 2px solid ${boxBorder};
             outline: none;
+        }
+        #forgot-password {
+            display: block;
+            margin: 1rem 0 2rem 0;
+            &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
         }
         @media (max-width: 870px) {
             input {

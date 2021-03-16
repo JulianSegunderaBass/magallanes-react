@@ -36,7 +36,7 @@ const ProfilePage = () => {
         dispatch(setProfileImage(profilePhoto, auth.uid, profileData.profileImageURL));
     }
     const handlePassReset = () => {
-        dispatch(resetPass());
+        dispatch(resetPass(auth.email));
     }
 
     // Conditions

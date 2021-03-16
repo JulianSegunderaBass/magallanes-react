@@ -16,7 +16,7 @@ export const signInUser = (credentials) => {
         ).then(() => {
             dispatch({type: 'LOGIN_SUCCESS'});
         }).catch((error) => {
-            dispatch({type: 'LOGIN_ERROR', error});
+            dispatch({type: 'LOGIN_ERROR', payload: {error, attemptedEmail: credentials.email}});
         });
     }
 }
@@ -64,12 +64,11 @@ export const signUpUser = (newUser) => {
 }
 
 // For changing password from profile page
-export const resetPass = () => {
+export const resetPass = (email) => {
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
-        const loggedEmail = getState().firebase.auth.email; // Reference to logged user's email
 
-        firebase.auth().sendPasswordResetEmail(loggedEmail).then(() => { // Sending an email to logged user to reset password
+        firebase.auth().sendPasswordResetEmail(email).then(() => { // Sending an email to logged user to reset password
             dispatch({type: 'RESET_PASSWORD'});
         }).catch(error => {
             dispatch({type: 'RESET_PASSWORD_ERROR', error});
