@@ -110,14 +110,14 @@ const AuthReducer = (state = initState, action) => {
             console.log('Signup success');
             store.addNotification({
                 title: "Authentication Success",
-                message: "Signup successful. You are now logged in.",
+                message: "Please check your email to verify your account.",
                 type: "success",
                 insert: "top",
                 container: "top-right",
                 animationIn: ["animate__animated", "animate__fadeIn"],
                 animationOut: ["animate__animated", "animate__fadeOut"],
                 dismiss: {
-                    duration: 2000,
+                    duration: 6000,
                     onScreen: true
                 }
             });
@@ -156,7 +156,7 @@ const AuthReducer = (state = initState, action) => {
                 animationIn: ["animate__animated", "animate__fadeIn"],
                 animationOut: ["animate__animated", "animate__fadeOut"],
                 dismiss: {
-                    duration: 2000,
+                    duration: 6000,
                     onScreen: true
                 }
             });
@@ -172,7 +172,42 @@ const AuthReducer = (state = initState, action) => {
                 animationIn: ["animate__animated", "animate__fadeIn"],
                 animationOut: ["animate__animated", "animate__fadeOut"],
                 dismiss: {
-                    duration: 2000,
+                    duration: 6000,
+                    onScreen: true
+                }
+            });
+            return {
+                ...state,
+                authError: action.error.message
+            }
+        case 'VERIFY_EMAIL':
+            console.log('Verification Email Sent');
+            store.addNotification({
+                title: "Verification Email Sent",
+                message: "Please check your inbox.",
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 6000,
+                    onScreen: true
+                }
+            });
+            return state;
+        case 'VERIFY_EMAIL_ERROR':
+            console.log('Failed to Send Verification Email');
+            store.addNotification({
+                title: "Failed to Send Verification Email",
+                message: action.error.message,
+                type: "danger",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 6000,
                     onScreen: true
                 }
             });

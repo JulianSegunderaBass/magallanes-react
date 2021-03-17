@@ -42,7 +42,10 @@ export const signUpUser = (newUser) => {
         firebase.auth().createUserWithEmailAndPassword( // Step 1: create new user in auth service
             newUser.email,
             newUser.password
-        ).then((response) => { // Step 2: create user record in collection
+        ).then((response) => { // Step 2: create user record in collection and send email verification
+
+            firebase.auth().currentUser.sendEmailVerification();
+
             // response has information about the user we just created
             // Note: if this collection doesn't exist, it will be created automatically
             return firestore.collection('users').doc(response.user.uid).set({
@@ -59,6 +62,19 @@ export const signUpUser = (newUser) => {
             dispatch({type: 'SIGNUP_SUCCESS'});
         }).catch(error => {
             dispatch({type: 'SIGNUP_ERROR', error});
+        });
+    }
+}
+
+// For sending account verification email
+export const verifyEmail = () => {
+    return (dispatch, getState, {getFirebase}) => {
+        const firebase = getFirebase();
+        
+        firebase.auth().currentUser.sendEmailVerification().then(() => {
+            dispatch({type: 'VERIFY_EMAIL'});
+        }).catch(error => {
+            dispatch({type: 'VERIFY_EMAIL_ERROR', error});
         });
     }
 }

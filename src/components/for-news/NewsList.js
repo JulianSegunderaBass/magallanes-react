@@ -8,6 +8,7 @@ import { createAnnouncement } from '../../redux-store/actions/NewsActions';
 // Component Imports
 import NewsSummary from './NewsSummary';
 import Pagination from './Pagination';
+import { Link } from "react-router-dom";
 import Modal from 'react-modal';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -86,13 +87,14 @@ const NewsList = ({newsItems}) => {
             <Hide>
                 <HeaderSection variants={strongRevealUp}>
                     <h2>Browse the latest updates from Barangay and The Community</h2>
+                    <p>Note: Only <span><b>verified</b></span> accounts can post. You may verify through your <Link to="/my-profile" id="profile-link">Profile Page.</Link></p>
                     <div className="divider"></div>
                 </HeaderSection>
             </Hide>
             <SearchSection>
                 {/* Only render out create announcement function if authentication ID is detected */}
                 {/* publishingState determines what button to render */}
-                {auth.uid ?
+                {auth.uid && auth.emailVerified === true ?
                         publishingState === false ? 
                         <button onClick={() => setCreateModalState(true)}>Create an Announcement</button> 
                         : 
@@ -182,13 +184,16 @@ const Hide = styled.div`
     }
 `
 const HeaderSection = styled(motion.div)`
-    h2 {
-        margin-bottom: 1rem;
-    }
     .divider {
         width: 100%;
         height: 0.3rem;
         background: ${dividerColor};
+    }
+    #profile-link {
+        color: ${dividerColor};
+        &:hover {
+            font-weight: bold;
+        }
     }
     @media (max-width: 870px) {
         h2 {
