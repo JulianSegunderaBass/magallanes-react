@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { resetPass } from '../redux-store/actions/AuthActions';
+import { resetPass, verifyEmail } from '../redux-store/actions/AuthActions';
 import { setProfileImage } from '../redux-store/actions/AuthActions';
 // Component Imports
 import AutoScroll from '../assets/AutoScroll';
@@ -37,6 +37,9 @@ const ProfilePage = () => {
     }
     const handlePassReset = () => {
         dispatch(resetPass(auth.email));
+    }
+    const handleVerification = () => {
+        dispatch(verifyEmail());
     }
 
     // Conditions
@@ -72,6 +75,7 @@ const ProfilePage = () => {
                 <div className="divider"></div>
                 <h2><span>Name:</span> {profileData.firstName} {profileData.lastName}</h2>
                 <h4><span>Email:</span> <span id="email">{auth.email}</span></h4>
+                <h4><span>Status:</span> {auth.emailVerified ? 'Verified' : 'Not Verified'}</h4>
                 <div className="divider"></div>
                 <h4><span>My Benefits:</span> </h4>
                 <ul>
@@ -80,6 +84,13 @@ const ProfilePage = () => {
                     <li>{profileData.currentBenefits.benefit_3}</li>
                 </ul>
                 <div className="divider"></div>
+                {!auth.emailVerified &&
+                    <>
+                        <h5>You may verify your account here. A message will be sent to your inbox with further instructions.</h5>
+                        <button onClick={handleVerification}>Send Verification Email</button>
+                        <div className="divider" id="verification-divider"></div>
+                    </>
+                }
                 <h5>You may reset your password here. A message will be sent to your inbox with further instructions.</h5>
                 <button onClick={handlePassReset}>Change Password</button>
             </div>
@@ -120,6 +131,9 @@ const ProfileContainer = styled(motion.div)`
         background: ${dividerColor};
         margin-bottom: 3rem;
     }
+    #verification-divider {
+        margin-top: 1rem;
+    }
     @media (max-width: 1090px) {
         padding: 2rem 2rem;
     }
@@ -146,6 +160,7 @@ const ProfileContainer = styled(motion.div)`
 const ProfileDisplay = styled.div`
     margin-right: 2rem;
     width: 30%;
+    height: 100%;
     form {
         #photo-submit {
             padding: 0.2rem 0.4rem;
