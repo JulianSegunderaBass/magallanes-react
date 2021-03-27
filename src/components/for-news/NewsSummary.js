@@ -104,6 +104,21 @@ const NewsSummary = ({ newsItem }) => {
                             }
                         </>
                     </div>
+                    {/* Displaying categories per post for filtering */}
+                    <div className="post-categories">
+                        {newsItem.category1 &&
+                            <div className="category" id="category-1">Category 1</div>
+                        }
+                        {newsItem.category2 &&
+                            <div className="category" id="category-2">Category 2</div>
+                        }
+                        {newsItem.category3 &&
+                            <div className="category" id="category-3">Category 3</div>
+                        }
+                        {newsItem.category4 &&
+                            <div className="category" id="category-4">Category 4</div>
+                        }
+                    </div>
                     <div className="divider"></div>
                 </div>
                 <div className="sender-info">
@@ -227,6 +242,39 @@ const NewsCard = styled.div`
                 align-items: center;
                 #time-stamp {
                     margin-right: 1rem;
+                }
+            }
+            .post-categories {
+                margin: 0.5rem 0;
+                display: flex;
+                .category {
+                    display: inline;
+                    margin: 0.5rem;
+                    padding: 0.5rem;
+                    border-radius: 1rem;
+                    text-align: center;
+                    @media (max-width: 870px) {               
+                        font-size: 0.7rem;
+                    }
+                }
+                #category-1 {
+                    background: green;
+                    color: white;
+                }
+                #category-2 {
+                    background: blue;
+                    color: white;
+                }
+                #category-3 {
+                    background: orange;
+                    color: white;
+                }
+                #category-4 {
+                    background: purple;
+                    color: white;
+                }
+                @media (max-width: 870px) {
+                    flex-wrap: wrap;
                 }
             }
         }
