@@ -38,6 +38,7 @@ const NewsList = ({newsItems}) => {
     let initialCurrentAnnouncements = newsItems && newsItems.slice(indexOfFirstPost, indexOfLastPost); // Slicing initial state of News Items
     let currentAnnouncements = initialCurrentAnnouncements;
     const [createModalState, setCreateModalState] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [newsAnnouncement, setNewsAnnouncement] = useState({ // For creating a News Announcement
         heading: '',
         body: '',
@@ -51,9 +52,15 @@ const NewsList = ({newsItems}) => {
     // Functions
     const handleSubmit = (e) => {
         e.preventDefault();
-        // dispatch(createAnnouncement(newsAnnouncement));
-        // setCreateModalState(false);
-        console.log(newsAnnouncement);
+        dispatch(createAnnouncement(newsAnnouncement));
+        setCreateModalState(false);
+        setNewsAnnouncement({
+            ...newsAnnouncement,
+            category1Selected: false,
+            category2Selected: false,
+            category3Selected: false,
+            category4Selected: false
+        })
     }
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
@@ -74,6 +81,30 @@ const NewsList = ({newsItems}) => {
             return (item.heading.toLowerCase()).includes(searchAnnouncement.toLowerCase()) || (item.body.toLowerCase()).includes(searchAnnouncement.toLowerCase());
         });
         currentAnnouncements = filteredNewsItems;
+    } else {
+        currentAnnouncements = initialCurrentAnnouncements;
+    }
+
+    if (selectedCategory === 'Category 1') {
+        let category1Items = newsItems.filter(item => {
+            return item.category1 == true;
+        });
+        currentAnnouncements = category1Items;
+    } else if (selectedCategory === 'Category 2') {
+        let category2Items = newsItems.filter(item => {
+            return item.category2 == true;
+        });
+        currentAnnouncements = category2Items;
+    } else if (selectedCategory === 'Category 3') {
+        let category3Items = newsItems.filter(item => {
+            return item.category3 == true;
+        });
+        currentAnnouncements = category3Items;
+    } else if (selectedCategory === 'Category 4') {
+        let category4Items = newsItems.filter(item => {
+            return item.category4 == true;
+        });
+        currentAnnouncements = category4Items;
     } else {
         currentAnnouncements = initialCurrentAnnouncements;
     }
@@ -111,6 +142,13 @@ const NewsList = ({newsItems}) => {
                         ''
                 }
                 <input type="text" placeholder="Search an Announcement" onChange={e => setSearchAnnouncement(e.target.value)} />
+                <select onChange={(e) => setSelectedCategory(e.target.value)}>
+                    <option value="All">All Posts</option>
+                    <option value="Category 1">Category 1</option>
+                    <option value="Category 2">Category 2</option>
+                    <option value="Category 3">Category 3</option>
+                    <option value="Category 4">Category 4</option>
+                </select>
                 {/* Create Post Modal */}
                 <Modal
                     isOpen={createModalState}
@@ -283,15 +321,20 @@ const SearchSection = styled.div`
     }
     input {
         display: block;
-        width: 70%;
+        width: 60%;
         font-size: 1.5rem;
         padding: 0.5rem;
         border: 2px solid ${boxBorder};
         outline: none;
     }
+    select {
+        padding: 0.5rem;
+        border: 2px solid ${boxBorder};
+    }
     @media (max-width: 1100px) {
         input {
             width: 50%;
+            margin-bottom: 1rem;
         }
     }
     @media (max-width: 870px) {

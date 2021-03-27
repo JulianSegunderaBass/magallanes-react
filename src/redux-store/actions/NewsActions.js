@@ -37,6 +37,10 @@ export const createAnnouncement = (newsAnnouncement) => {
                         firestore.collection('NewsAnnouncements').add({
                             heading: newsAnnouncement.heading,
                             body: newsAnnouncement.body,
+                            category1: newsAnnouncement.category1Selected,
+                            category2: newsAnnouncement.category2Selected,
+                            category3: newsAnnouncement.category3Selected,
+                            category4: newsAnnouncement.category4Selected,
                             attachmentURL: url,
                             attachmentName: newsAnnouncement.attachment.name,
                             attachmentType: newsAnnouncement.attachment.type,
@@ -57,6 +61,10 @@ export const createAnnouncement = (newsAnnouncement) => {
             firestore.collection('NewsAnnouncements').add({
                 heading: newsAnnouncement.heading,
                 body: newsAnnouncement.body,
+                category1: newsAnnouncement.category1Selected,
+                category2: newsAnnouncement.category2Selected,
+                category3: newsAnnouncement.category3Selected,
+                category4: newsAnnouncement.category4Selected,
                 createdAt: new Date(),
                 authorFirstName: loggedProfile.firstName,
                 authorLastName: loggedProfile.lastName,
