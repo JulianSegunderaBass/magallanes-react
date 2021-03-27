@@ -41,14 +41,19 @@ const NewsList = ({newsItems}) => {
     const [newsAnnouncement, setNewsAnnouncement] = useState({ // For creating a News Announcement
         heading: '',
         body: '',
-        attachment: null
+        attachment: null,
+        category1Selected: false,
+        category2Selected: false,
+        category3Selected: false,
+        category4Selected: false
     });
 
     // Functions
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createAnnouncement(newsAnnouncement));
-        setCreateModalState(false);
+        // dispatch(createAnnouncement(newsAnnouncement));
+        // setCreateModalState(false);
+        console.log(newsAnnouncement);
     }
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
@@ -106,7 +111,7 @@ const NewsList = ({newsItems}) => {
                         ''
                 }
                 <input type="text" placeholder="Search an Announcement" onChange={e => setSearchAnnouncement(e.target.value)} />
-                {/* Edit Post Modal */}
+                {/* Create Post Modal */}
                 <Modal
                     isOpen={createModalState}
                     onRequestClose={() => setCreateModalState(false)}
@@ -136,6 +141,22 @@ const NewsList = ({newsItems}) => {
                                 accept="image/png, image/jpeg, .pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                 onChange={handleAttachment}
                             />
+                            {/* Toggling post categories */}
+                            <div className="post-categories">
+                                <div className={newsAnnouncement.category1Selected ? 'category active' : 'category'} id="category-1"
+                                    onClick={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category1Selected: !prevState.category1Selected}))}
+                                ><span>Barangay Announcements</span></div>
+                                <div className={newsAnnouncement.category2Selected ? 'category active' : 'category'} id="category-2"
+                                    onClick={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category2Selected: !prevState.category2Selected}))}
+                                ><span>Category 2</span></div>
+                                <div className={newsAnnouncement.category3Selected ? 'category active' : 'category'} id="category-3"
+                                    onClick={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category3Selected: !prevState.category3Selected}))}
+                                ><span>Category 3</span></div>
+                                <div className={newsAnnouncement.category4Selected ? 'category active' : 'category'} id="category-4"
+                                    onClick={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category4Selected: !prevState.category4Selected}))}
+                                ><span>Category 4</span></div>
+                            </div>
+
                             <button className="edit-modal-button">Create Post</button>
                             <button className="edit-modal-button" onClick={() => setCreateModalState(false)}>Cancel</button>
                         </form>
@@ -300,22 +321,74 @@ const ModalContent = styled.div`
     }
     form {
         width: 100%;
-        input {
+        input[type=text] {
             display: block;
+            width: 100%;
             margin-bottom: 1rem;
             font-size: 1.5rem;
             padding: 0.5rem;
             border: 2px solid ${boxBorder};
             outline: none;
         }
-        input {
-            width: 100%;
-        }
         input[type=file] {
             border: none;
         }
+        .post-categories {
+            display: flex;
+            margin: 2rem 0;
+            .category {
+                margin-right: 1rem;
+                padding: 0.5rem;
+                border: 1px solid black;
+                cursor: pointer;
+                height: 30px;
+                border-radius: 0.5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.5s ease;
+                span {
+                    color: black;
+                }
+            }
+            #category-1.active {
+                background: black;
+                border-color: black;
+                span {
+                    color: white;
+                }
+            }
+            #category-2.active {
+                background: blue;
+                border-color: blue;
+                span {
+                    color: white;
+                }
+            }
+            #category-3.active {
+                background: green;
+                border-color: green;
+                span {
+                    color: white;
+                }
+            }
+            #category-4.active {
+                background: purple;
+                border-color: purple;
+                span {
+                    color: white;
+                }
+            }
+            @media (max-width: 870px) {
+                flex-direction: column;
+                align-items: center;
+                .category {
+                    
+                }
+            }
+        }
         @media (max-width: 870px) {
-            input {
+            input[type=text] {
                 font-size: 1rem;
             }
         }
