@@ -143,20 +143,31 @@ const NewsList = ({newsItems}) => {
                             />
                             {/* Toggling post categories */}
                             <div className="post-categories">
-                                <div className={newsAnnouncement.category1Selected ? 'category active' : 'category'} id="category-1"
-                                    onClick={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category1Selected: !prevState.category1Selected}))}
-                                ><span>Barangay Announcements</span></div>
-                                <div className={newsAnnouncement.category2Selected ? 'category active' : 'category'} id="category-2"
-                                    onClick={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category2Selected: !prevState.category2Selected}))}
-                                ><span>Category 2</span></div>
-                                <div className={newsAnnouncement.category3Selected ? 'category active' : 'category'} id="category-3"
-                                    onClick={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category3Selected: !prevState.category3Selected}))}
-                                ><span>Category 3</span></div>
-                                <div className={newsAnnouncement.category4Selected ? 'category active' : 'category'} id="category-4"
-                                    onClick={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category4Selected: !prevState.category4Selected}))}
-                                ><span>Category 4</span></div>
+                                <div className="category">
+                                    <input type="checkbox" id="category-1"
+                                        onChange={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category1Selected: !prevState.category1Selected}))}
+                                    />
+                                    <label htmlFor="category-1">Category 1</label>
+                                </div>
+                                <div className="category">
+                                    <input type="checkbox" id="category-2" 
+                                        onChange={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category2Selected: !prevState.category2Selected}))}
+                                    />
+                                    <label htmlFor="category-2">Category 2</label>
+                                </div>
+                                <div className="category">
+                                    <input type="checkbox" id="category-3" 
+                                        onChange={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category3Selected: !prevState.category3Selected}))}
+                                    />
+                                    <label htmlFor="category-3">Category 3</label>
+                                </div>
+                                <div className="category">
+                                    <input type="checkbox" id="category-4" 
+                                        onChange={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category4Selected: !prevState.category4Selected}))}
+                                    />
+                                    <label htmlFor="category-4">Category 4</label>
+                                </div>
                             </div>
-
                             <button className="edit-modal-button">Create Post</button>
                             <button className="edit-modal-button" onClick={() => setCreateModalState(false)}>Cancel</button>
                         </form>
@@ -334,56 +345,23 @@ const ModalContent = styled.div`
             border: none;
         }
         .post-categories {
-            display: flex;
             margin: 2rem 0;
+            display: flex;
             .category {
-                margin-right: 1rem;
-                padding: 0.5rem;
-                border: 1px solid black;
+                margin-right: 1.5rem;
                 cursor: pointer;
-                height: 30px;
-                border-radius: 0.5rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transition: all 0.5s ease;
-                span {
-                    color: black;
+                input, label {
+                    cursor: pointer;
                 }
-            }
-            #category-1.active {
-                background: black;
-                border-color: black;
-                span {
-                    color: white;
-                }
-            }
-            #category-2.active {
-                background: blue;
-                border-color: blue;
-                span {
-                    color: white;
-                }
-            }
-            #category-3.active {
-                background: green;
-                border-color: green;
-                span {
-                    color: white;
-                }
-            }
-            #category-4.active {
-                background: purple;
-                border-color: purple;
-                span {
-                    color: white;
+                input {
+                    margin-right: 0.5rem;
                 }
             }
             @media (max-width: 870px) {
                 flex-direction: column;
                 align-items: center;
                 .category {
-                    
+                    margin-bottom: 1rem;
                 }
             }
         }
