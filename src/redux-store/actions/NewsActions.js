@@ -123,6 +123,10 @@ export const editAnnouncement = (newsEdits, oldPostContent) => {
                             prevAttachmentReference.delete();
                         }
                         firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                            category1: newsEdits.category1Selected,
+                            category2: newsEdits.category2Selected,
+                            category3: newsEdits.category3Selected,
+                            category4: newsEdits.category4Selected,
                             createdAt: new Date(),
                             attachmentURL: url,
                             attachmentName: newsEdits.attachment.name,
@@ -146,6 +150,10 @@ export const editAnnouncement = (newsEdits, oldPostContent) => {
                 }, { merge: true });
             }
             firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                category1: newsEdits.category1Selected,
+                category2: newsEdits.category2Selected,
+                category3: newsEdits.category3Selected,
+                category4: newsEdits.category4Selected,
                 createdAt: new Date()
             }, { merge: true });
             dispatch({type: 'UPDATE_ANNOUNCEMENT', payload: newsEdits});

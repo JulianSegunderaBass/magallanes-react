@@ -37,7 +37,11 @@ const NewsSummary = ({ newsItem }) => {
         announcementID: newsItem.id,
         heading: '',
         body: '',
-        attachment: null
+        attachment: null,
+        category1Selected: false,
+        category2Selected: false,
+        category3Selected: false,
+        category4Selected: false
     });
     
     // Functions
@@ -61,6 +65,13 @@ const NewsSummary = ({ newsItem }) => {
         } else {
             dispatch(editAnnouncement(newsEdits, newsItem));
             setEditModalState(false);
+            setNewsEdits({
+                ...newsEdits,
+                category1Selected: false,
+                category2Selected: false,
+                category3Selected: false,
+                category4Selected: false
+            })
         }
     };
     const handleDelete = () => {
@@ -168,6 +179,33 @@ const NewsSummary = ({ newsItem }) => {
                             accept="image/png, image/jpeg, .pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                             onChange={handleAttachment}
                         />
+                        {/* Toggling post categories */}
+                        <div className="post-categories">
+                            <div className="category">
+                                <input type="checkbox" id="category-1"
+                                    onChange={() => setNewsEdits(prevState => ({...newsEdits, category1Selected: !prevState.category1Selected}))}
+                                />
+                                <label htmlFor="category-1">Category 1</label>
+                            </div>
+                            <div className="category">
+                                <input type="checkbox" id="category-2" 
+                                    onChange={() => setNewsEdits(prevState => ({...newsEdits, category2Selected: !prevState.category2Selected}))}
+                                />
+                                <label htmlFor="category-2">Category 2</label>
+                            </div>
+                            <div className="category">
+                                <input type="checkbox" id="category-3" 
+                                    onChange={() => setNewsEdits(prevState => ({...newsEdits, category3Selected: !prevState.category3Selected}))}
+                                />
+                                <label htmlFor="category-3">Category 3</label>
+                            </div>
+                            <div className="category">
+                                <input type="checkbox" id="category-4" 
+                                    onChange={() => setNewsEdits(prevState => ({...newsEdits, category4Selected: !prevState.category4Selected}))}
+                                />
+                                <label htmlFor="category-4">Category 4</label>
+                            </div>
+                        </div>
                         <button className="edit-modal-button">Save Edits</button>
                         <button className="edit-modal-button" onClick={() => setEditModalState(false)}>Cancel</button>
                     </form>
@@ -375,29 +413,42 @@ const ModalContent = styled.div`
     }
     form {
         width: 100%;
-        input, textarea {
+        input[type=text] {
             display: block;
+            width: 100%;
             margin-bottom: 1rem;
             font-size: 1.5rem;
             padding: 0.5rem;
             border: 2px solid ${boxBorder};
             outline: none;
         }
-        input {
-            width: 100%;
-        }
         input[type=file] {
             border: none;
         }
-        textarea {
-            width: 100%;
+        .post-categories {
+            margin: 2rem 0;
+            display: flex;
+            .category {
+                margin-right: 1.5rem;
+                cursor: pointer;
+                input, label {
+                    cursor: pointer;
+                }
+                input {
+                    margin-right: 0.5rem;
+                }
+            }
+            @media (max-width: 870px) {
+                flex-direction: column;
+                align-items: center;
+                .category {
+                    margin-bottom: 1rem;
+                }
+            }
         }
         @media (max-width: 870px) {
-            input, textarea {
+            input {
                 font-size: 1rem;
-            }
-            textarea {
-                /* column-count: 10; */
             }
         }
     }
