@@ -37,6 +37,10 @@ export const createAnnouncement = (newsAnnouncement) => {
                         firestore.collection('NewsAnnouncements').add({
                             heading: newsAnnouncement.heading,
                             body: newsAnnouncement.body,
+                            category1: newsAnnouncement.category1Selected,
+                            category2: newsAnnouncement.category2Selected,
+                            category3: newsAnnouncement.category3Selected,
+                            category4: newsAnnouncement.category4Selected,
                             attachmentURL: url,
                             attachmentName: newsAnnouncement.attachment.name,
                             attachmentType: newsAnnouncement.attachment.type,
@@ -57,6 +61,10 @@ export const createAnnouncement = (newsAnnouncement) => {
             firestore.collection('NewsAnnouncements').add({
                 heading: newsAnnouncement.heading,
                 body: newsAnnouncement.body,
+                category1: newsAnnouncement.category1Selected,
+                category2: newsAnnouncement.category2Selected,
+                category3: newsAnnouncement.category3Selected,
+                category4: newsAnnouncement.category4Selected,
                 createdAt: new Date(),
                 authorFirstName: loggedProfile.firstName,
                 authorLastName: loggedProfile.lastName,
@@ -115,6 +123,10 @@ export const editAnnouncement = (newsEdits, oldPostContent) => {
                             prevAttachmentReference.delete();
                         }
                         firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                            category1: newsEdits.category1Selected,
+                            category2: newsEdits.category2Selected,
+                            category3: newsEdits.category3Selected,
+                            category4: newsEdits.category4Selected,
                             createdAt: new Date(),
                             attachmentURL: url,
                             attachmentName: newsEdits.attachment.name,
@@ -138,6 +150,10 @@ export const editAnnouncement = (newsEdits, oldPostContent) => {
                 }, { merge: true });
             }
             firestore.collection('NewsAnnouncements').doc(newsEdits.announcementID).set({
+                category1: newsEdits.category1Selected,
+                category2: newsEdits.category2Selected,
+                category3: newsEdits.category3Selected,
+                category4: newsEdits.category4Selected,
                 createdAt: new Date()
             }, { merge: true });
             dispatch({type: 'UPDATE_ANNOUNCEMENT', payload: newsEdits});

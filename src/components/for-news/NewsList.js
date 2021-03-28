@@ -31,17 +31,22 @@ const NewsList = ({newsItems}) => {
 
     // Local State
     const [currentPage, setCurrentPage] = useState(1); // For Pagination: Pagination Variables
-    const [postsPerPage] = useState(5);
+    const [postsPerPage] = useState(2);
     const [searchAnnouncement, setSearchAnnouncement] = useState("");
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     let initialCurrentAnnouncements = newsItems && newsItems.slice(indexOfFirstPost, indexOfLastPost); // Slicing initial state of News Items
     let currentAnnouncements = initialCurrentAnnouncements;
     const [createModalState, setCreateModalState] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('All');
     const [newsAnnouncement, setNewsAnnouncement] = useState({ // For creating a News Announcement
         heading: '',
         body: '',
-        attachment: null
+        attachment: null,
+        category1Selected: false,
+        category2Selected: false,
+        category3Selected: false,
+        category4Selected: false
     });
 
     // Functions
@@ -49,6 +54,13 @@ const NewsList = ({newsItems}) => {
         e.preventDefault();
         dispatch(createAnnouncement(newsAnnouncement));
         setCreateModalState(false);
+        setNewsAnnouncement({
+            ...newsAnnouncement,
+            category1Selected: false,
+            category2Selected: false,
+            category3Selected: false,
+            category4Selected: false
+        })
     }
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
@@ -71,6 +83,35 @@ const NewsList = ({newsItems}) => {
         currentAnnouncements = filteredNewsItems;
     } else {
         currentAnnouncements = initialCurrentAnnouncements;
+    }
+
+    if (selectedCategory === 'Category 1') {
+        let categoryItems = newsItems.filter(item => {
+            return item.category1 == true;
+        });
+        var categoryLength = categoryItems.length;
+        currentAnnouncements = categoryItems.slice(indexOfFirstPost, indexOfLastPost);
+    } 
+    if (selectedCategory === 'Category 2') {
+        let categoryItems = newsItems.filter(item => {
+            return item.category2 == true;
+        });
+        var categoryLength = categoryItems.length;
+        currentAnnouncements = categoryItems.slice(indexOfFirstPost, indexOfLastPost);
+    } 
+    if (selectedCategory === 'Category 3') {
+        let categoryItems = newsItems.filter(item => {
+            return item.category3 == true;
+        });
+        var categoryLength = categoryItems.length;
+        currentAnnouncements = categoryItems.slice(indexOfFirstPost, indexOfLastPost);
+    } 
+    if (selectedCategory === 'Category 4') {
+        let categoryItems = newsItems.filter(item => {
+            return item.category4 == true;
+        });
+        var categoryLength = categoryItems.length;
+        currentAnnouncements = categoryItems.slice(indexOfFirstPost, indexOfLastPost);
     }
 
     if (!currentAnnouncements) { // Render out loading spinner gif
@@ -106,7 +147,14 @@ const NewsList = ({newsItems}) => {
                         ''
                 }
                 <input type="text" placeholder="Search an Announcement" onChange={e => setSearchAnnouncement(e.target.value)} />
-                {/* Edit Post Modal */}
+                <select onChange={(e) => setSelectedCategory(e.target.value)}>
+                    <option value="All">All Posts</option>
+                    <option value="Category 1">Category 1</option>
+                    <option value="Category 2">Category 2</option>
+                    <option value="Category 3">Category 3</option>
+                    <option value="Category 4">Category 4</option>
+                </select>
+                {/* Create Post Modal */}
                 <Modal
                     isOpen={createModalState}
                     onRequestClose={() => setCreateModalState(false)}
@@ -136,6 +184,33 @@ const NewsList = ({newsItems}) => {
                                 accept="image/png, image/jpeg, .pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                 onChange={handleAttachment}
                             />
+                            {/* Toggling post categories */}
+                            <div className="post-categories">
+                                <div className="category">
+                                    <input type="checkbox" id="category-1"
+                                        onChange={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category1Selected: !prevState.category1Selected}))}
+                                    />
+                                    <label htmlFor="category-1">Category 1</label>
+                                </div>
+                                <div className="category">
+                                    <input type="checkbox" id="category-2" 
+                                        onChange={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category2Selected: !prevState.category2Selected}))}
+                                    />
+                                    <label htmlFor="category-2">Category 2</label>
+                                </div>
+                                <div className="category">
+                                    <input type="checkbox" id="category-3" 
+                                        onChange={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category3Selected: !prevState.category3Selected}))}
+                                    />
+                                    <label htmlFor="category-3">Category 3</label>
+                                </div>
+                                <div className="category">
+                                    <input type="checkbox" id="category-4" 
+                                        onChange={() => setNewsAnnouncement(prevState => ({...newsAnnouncement, category4Selected: !prevState.category4Selected}))}
+                                    />
+                                    <label htmlFor="category-4">Category 4</label>
+                                </div>
+                            </div>
                             <button className="edit-modal-button">Create Post</button>
                             <button className="edit-modal-button" onClick={() => setCreateModalState(false)}>Cancel</button>
                         </form>
@@ -153,7 +228,7 @@ const NewsList = ({newsItems}) => {
                     {!searchAnnouncement &&
                         <Pagination
                             postsPerPage={postsPerPage}
-                            totalPosts={newsItems.length}
+                            totalPosts={selectedCategory === "All" ? newsItems.length : categoryLength}
                             paginate={paginate}
                             currentPage={currentPage}
                         />
@@ -251,15 +326,20 @@ const SearchSection = styled.div`
     }
     input {
         display: block;
-        width: 70%;
+        width: 60%;
         font-size: 1.5rem;
         padding: 0.5rem;
         border: 2px solid ${boxBorder};
         outline: none;
     }
+    select {
+        padding: 0.5rem;
+        border: 2px solid ${boxBorder};
+    }
     @media (max-width: 1100px) {
         input {
             width: 50%;
+            margin-bottom: 1rem;
         }
     }
     @media (max-width: 870px) {
@@ -300,22 +380,41 @@ const ModalContent = styled.div`
     }
     form {
         width: 100%;
-        input {
+        input[type=text] {
             display: block;
+            width: 100%;
             margin-bottom: 1rem;
             font-size: 1.5rem;
             padding: 0.5rem;
             border: 2px solid ${boxBorder};
             outline: none;
         }
-        input {
-            width: 100%;
-        }
         input[type=file] {
             border: none;
         }
+        .post-categories {
+            margin: 2rem 0;
+            display: flex;
+            .category {
+                margin-right: 1.5rem;
+                cursor: pointer;
+                input, label {
+                    cursor: pointer;
+                }
+                input {
+                    margin-right: 0.5rem;
+                }
+            }
+            @media (max-width: 870px) {
+                flex-direction: column;
+                align-items: center;
+                .category {
+                    margin-bottom: 1rem;
+                }
+            }
+        }
         @media (max-width: 870px) {
-            input {
+            input[type=text] {
                 font-size: 1rem;
             }
         }
