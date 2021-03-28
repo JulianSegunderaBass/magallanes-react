@@ -31,14 +31,14 @@ const NewsList = ({newsItems}) => {
 
     // Local State
     const [currentPage, setCurrentPage] = useState(1); // For Pagination: Pagination Variables
-    const [postsPerPage] = useState(5);
+    const [postsPerPage] = useState(2);
     const [searchAnnouncement, setSearchAnnouncement] = useState("");
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     let initialCurrentAnnouncements = newsItems && newsItems.slice(indexOfFirstPost, indexOfLastPost); // Slicing initial state of News Items
     let currentAnnouncements = initialCurrentAnnouncements;
     const [createModalState, setCreateModalState] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All');
     const [newsAnnouncement, setNewsAnnouncement] = useState({ // For creating a News Announcement
         heading: '',
         body: '',
@@ -86,27 +86,32 @@ const NewsList = ({newsItems}) => {
     }
 
     if (selectedCategory === 'Category 1') {
-        let category1Items = newsItems.filter(item => {
+        let categoryItems = newsItems.filter(item => {
             return item.category1 == true;
         });
-        currentAnnouncements = category1Items;
-    } else if (selectedCategory === 'Category 2') {
-        let category2Items = newsItems.filter(item => {
+        var categoryLength = categoryItems.length;
+        currentAnnouncements = categoryItems.slice(indexOfFirstPost, indexOfLastPost);
+    } 
+    if (selectedCategory === 'Category 2') {
+        let categoryItems = newsItems.filter(item => {
             return item.category2 == true;
         });
-        currentAnnouncements = category2Items;
-    } else if (selectedCategory === 'Category 3') {
-        let category3Items = newsItems.filter(item => {
+        var categoryLength = categoryItems.length;
+        currentAnnouncements = categoryItems.slice(indexOfFirstPost, indexOfLastPost);
+    } 
+    if (selectedCategory === 'Category 3') {
+        let categoryItems = newsItems.filter(item => {
             return item.category3 == true;
         });
-        currentAnnouncements = category3Items;
-    } else if (selectedCategory === 'Category 4') {
-        let category4Items = newsItems.filter(item => {
+        var categoryLength = categoryItems.length;
+        currentAnnouncements = categoryItems.slice(indexOfFirstPost, indexOfLastPost);
+    } 
+    if (selectedCategory === 'Category 4') {
+        let categoryItems = newsItems.filter(item => {
             return item.category4 == true;
         });
-        currentAnnouncements = category4Items;
-    } else {
-        currentAnnouncements = initialCurrentAnnouncements;
+        var categoryLength = categoryItems.length;
+        currentAnnouncements = categoryItems.slice(indexOfFirstPost, indexOfLastPost);
     }
 
     if (!currentAnnouncements) { // Render out loading spinner gif
@@ -223,7 +228,7 @@ const NewsList = ({newsItems}) => {
                     {!searchAnnouncement &&
                         <Pagination
                             postsPerPage={postsPerPage}
-                            totalPosts={newsItems.length}
+                            totalPosts={selectedCategory === "All" ? newsItems.length : categoryLength}
                             paginate={paginate}
                             currentPage={currentPage}
                         />
