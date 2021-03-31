@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { resetPass, verifyEmail, deleteAccount } from '../redux-store/actions/AuthActions';
 import { setProfileImage } from '../redux-store/actions/AuthActions';
+import { store } from 'react-notifications-component';
 // Component Imports
 import AutoScroll from '../assets/AutoScroll';
 import { Redirect } from 'react-router-dom';
@@ -36,7 +37,23 @@ const ProfilePage = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(setProfileImage(profilePhoto, auth.uid, profileData.profileImageURL));
+        if (profilePhoto) {
+            dispatch(setProfileImage(profilePhoto, auth.uid, profileData.profileImageURL));
+        } else {
+            store.addNotification({
+                title: "No Photo Detected",
+                message: "Please choose a new image before submitting.",
+                type: "warning",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 3000,
+                    onScreen: true
+                }
+            });
+        }
     }
     const handlePassReset = () => {
         dispatch(resetPass(auth.email));
