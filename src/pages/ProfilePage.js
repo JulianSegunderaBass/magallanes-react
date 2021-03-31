@@ -46,7 +46,11 @@ const ProfilePage = () => {
     }
     const handleDelete = () => {
         setModalState(false);
-        dispatch(deleteAccount(auth.uid));
+        if (profileData.profileImageURL) {
+            dispatch(deleteAccount(auth.uid, profileData.profileImageURL));
+        } else {
+            dispatch(deleteAccount(auth.uid, ''));
+        }    
     }
 
     // Conditions
