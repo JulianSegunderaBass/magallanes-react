@@ -9,10 +9,12 @@ import { setProfileImage } from '../redux-store/actions/AuthActions';
 // Component Imports
 import AutoScroll from '../assets/AutoScroll';
 import { Redirect } from 'react-router-dom';
+import Modal from 'react-modal';
 // Styling + Animation Imports
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { imageAnim, pageLoad } from '../assets/Animations';
+import '../assets/ModalStyle.css';
 
 const ProfilePage = () => {
 
@@ -24,6 +26,7 @@ const ProfilePage = () => {
 
     // Local State
     const [profilePhoto, setProfilePhoto] = useState(null);
+    const [modalState, setModalState] = useState(false);
 
     // Functions
     const handleAttachment = (e) => {
@@ -40,6 +43,9 @@ const ProfilePage = () => {
     }
     const handleVerification = () => {
         dispatch(verifyEmail());
+    }
+    const handleDelete = () => {
+        setModalState(false);
     }
 
     // Conditions
@@ -93,6 +99,21 @@ const ProfilePage = () => {
                 }
                 <h5>You may reset your password here. A message will be sent to your inbox with further instructions.</h5>
                 <button onClick={handlePassReset}>Change Password</button>
+                <div className="divider"></div>
+                <button onClick={() => setModalState(true)}>Delete Your Account</button>
+                {/* Delete Modal */}
+                <Modal
+                    isOpen={modalState}
+                    onRequestClose={() => setModalState(false)}
+                    className="delete-modal"
+                    overlayClassName="delete-modal-overlay"
+                >
+                    <ModalContent>
+                        <h4 className="modal-text">Are you sure you wish to delete your account?</h4>
+                        <button onClick={handleDelete}>Delete Account</button>
+                        <button onClick={() => setModalState(false)}>Cancel</button>
+                    </ModalContent>
+                </Modal>
             </div>
         </ProfileContainer>
     )
@@ -130,6 +151,9 @@ const ProfileContainer = styled(motion.div)`
         height: 0.3rem;
         background: ${dividerColor};
         margin-bottom: 3rem;
+    }
+    .divider:last-of-type {
+        margin-top: 1.5rem;
     }
     #verification-divider {
         margin-top: 1rem;
@@ -188,6 +212,22 @@ const Image = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+`
+
+const ModalContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button {
+        width: 50%;
+        margin: 0.5rem 0;
+        @media (max-width: 870px) {
+            width: 100%;
+        }
+    }
+    .modal-text {
+        margin-bottom: 1rem;
     }
 `
 
