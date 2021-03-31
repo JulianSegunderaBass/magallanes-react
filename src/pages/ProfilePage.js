@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { resetPass, verifyEmail } from '../redux-store/actions/AuthActions';
+import { resetPass, verifyEmail, deleteAccount } from '../redux-store/actions/AuthActions';
 import { setProfileImage } from '../redux-store/actions/AuthActions';
 // Component Imports
 import AutoScroll from '../assets/AutoScroll';
@@ -46,6 +46,7 @@ const ProfilePage = () => {
     }
     const handleDelete = () => {
         setModalState(false);
+        dispatch(deleteAccount(auth.uid));
     }
 
     // Conditions

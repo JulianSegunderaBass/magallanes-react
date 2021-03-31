@@ -215,6 +215,57 @@ const AuthReducer = (state = initState, action) => {
                 ...state,
                 authError: action.error.message
             }
+        case 'DELETING_ACCOUNT':
+            console.log('Deleting Account...');
+            store.addNotification({
+                title: "Deleting your account...",
+                message: "Give us some time.",
+                type: "warning",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 3000,
+                    onScreen: true
+                }
+            });
+            return state;
+        case 'ACCOUNT_DELETED':
+            console.log('Account Deleted');
+            store.addNotification({
+                title: "Your account has been deleted.",
+                message: "You'll have to create a new one to make posts.",
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 6000,
+                    onScreen: true
+                }
+            });
+            return state;
+        case 'DELETE_ACCOUNT_ERROR':
+            console.log('Failed to Delete Account');
+            store.addNotification({
+                title: "Sorry, we could not delete your account.",
+                message: action.error.message,
+                type: "danger",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 6000,
+                    onScreen: true
+                }
+            });
+            return {
+                ...state,
+                authError: action.error.message
+            }
         case 'SETTING_PROFILE_IMAGE':
             console.log('Setting profile image...');
             store.addNotification({

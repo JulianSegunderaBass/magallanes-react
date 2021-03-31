@@ -130,3 +130,18 @@ export const setProfileImage = (profilePhoto, userID, previousPhotoURL) => {
         )
     }
 }
+
+export const deleteAccount = (userID) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase();
+        const firestore = getFirestore();
+        dispatch({type: 'DELETING_ACCOUNT'});
+
+        firebase.auth().currentUser.delete().then(() => {
+            firestore.collection('users').doc(userID).delete();
+            dispatch({type: 'ACCOUNT_DELETED'});
+        }).catch(error => {
+            dispatch({type: 'DELETE_ACCOUNT_ERROR', error});
+        });
+    }
+}
