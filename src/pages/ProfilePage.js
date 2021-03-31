@@ -11,6 +11,8 @@ import { store } from 'react-notifications-component';
 import AutoScroll from '../assets/AutoScroll';
 import { Redirect } from 'react-router-dom';
 import Modal from 'react-modal';
+// Icon Imports
+import * as AiIcons from "react-icons/ai";
 // Styling + Animation Imports
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
@@ -105,13 +107,6 @@ const ProfilePage = () => {
                 <h4><span>Email:</span> <span id="email">{auth.email}</span></h4>
                 <h4><span>Status:</span> {auth.emailVerified ? 'Verified' : 'Not Verified'}</h4>
                 <div className="divider"></div>
-                <h4><span>My Benefits:</span> </h4>
-                <ul>
-                    <li>{profileData.currentBenefits.benefit_1}</li>
-                    <li>{profileData.currentBenefits.benefit_2}</li>
-                    <li>{profileData.currentBenefits.benefit_3}</li>
-                </ul>
-                <div className="divider"></div>
                 {!auth.emailVerified &&
                     <>
                         <h5>You may verify your account here. A message will be sent to your inbox with further instructions.</h5>
@@ -122,6 +117,7 @@ const ProfilePage = () => {
                 <h5>You may reset your password here. A message will be sent to your inbox with further instructions.</h5>
                 <button onClick={handlePassReset}>Change Password</button>
                 <div className="divider"></div>
+                <h5 id="warning"><AiIcons.AiOutlineWarning id="warning-logo" /><span><b>Warning:</b> This action is irreversible.</span></h5>
                 <button onClick={() => setModalState(true)}>Delete Your Account</button>
                 {/* Delete Modal */}
                 <Modal
@@ -168,6 +164,14 @@ const ProfileContainer = styled(motion.div)`
     #email {
         color: ${mainFontColor};
     }
+    #warning {
+        display: flex;
+        align-items: center;
+        #warning-logo {
+            color: #E63946;
+            font-size: 1.8rem;
+        }
+    }
     .divider {
         width: 100%;
         height: 0.3rem;
@@ -194,6 +198,15 @@ const ProfileContainer = styled(motion.div)`
         #email {
             color: ${mainFontColor};
             font-size: 1.2rem;
+        }
+        #warning {
+            flex-direction: column;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            #warning-logo {
+                color: #E63946;
+                font-size: 3.5rem;
+            }
         }
         button {
             display: block;
