@@ -130,3 +130,24 @@ export const setProfileImage = (profilePhoto, userID, previousPhotoURL) => {
         )
     }
 }
+
+export const deleteAccount = (userID, profileImage) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase();
+        const firestore = getFirestore();
+        const projectStorage = firebase.storage();
+        dispatch({type: 'DELETING_ACCOUNT'});
+
+        if (profileImage !== '') { // Delete user's profile image if it exists
+            var profileImageReference = projectStorage.refFromURL(profileImage);
+            profileImageReference.delete();
+        }
+
+        firestore.collection('users').doc(userID).delete().then(() => { // First delete user from Firestore 'users' collection
+            firebase.auth().currentUser.delete(); // Then delete user from Firebase Authentication
+            dispatch({type: 'ACCOUNT_DELETED'});
+        }).catch(error => {
+            dispatch({type: 'DELETE_ACCOUNT_ERROR', error});
+        });
+    }
+}

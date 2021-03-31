@@ -48,20 +48,43 @@ const NewsSummary = ({ newsItem }) => {
     const handleEdits = (e) => {
         e.preventDefault();
         // Preventing submission if all form fields are empty
-        if (newsEdits.heading === '' && newsEdits.body === '' && newsEdits.attachment === null) {
-            store.addNotification({
-                title: "Please provide an edit",
-                message: "No entries detected",
-                type: "danger",
-                insert: "top",
-                container: "top-right",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                    duration: 2000,
-                    onScreen: true
-                }
-            });
+        if (
+            newsEdits.heading === '' && 
+            newsEdits.body === '' && 
+            newsEdits.attachment === null
+            ) {
+                store.addNotification({
+                    title: "Please provide a content edit",
+                    message: "No content changes detected",
+                    type: "warning",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 6000,
+                        onScreen: true
+                    }
+                });
+        } else if (
+            newsEdits.category1Selected === false && 
+            newsEdits.category2Selected === false && 
+            newsEdits.category3Selected === false && 
+            newsEdits.category4Selected === false
+            ) {
+                store.addNotification({
+                    title: "Please provide a post category",
+                    message: "No categories selected",
+                    type: "warning",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 6000,
+                        onScreen: true
+                    }
+                });
         } else {
             dispatch(editAnnouncement(newsEdits, newsItem));
             setEditModalState(false);
@@ -162,6 +185,7 @@ const NewsSummary = ({ newsItem }) => {
                         <input 
                             type="text" 
                             placeholder="Enter your news headline here" 
+                            defaultValue={newsItem.heading} // Default value is the old news item heading
                             onChange={(e) => setNewsEdits({...newsEdits, heading: e.target.value})}
                         />
                         <RichContent>
@@ -169,6 +193,7 @@ const NewsSummary = ({ newsItem }) => {
                                 id="rich-text-editor" 
                                 editor={ClassicEditor} 
                                 onChange={richEditorChange}
+                                data={newsItem.body} // Data is the default value (the original post body)
                                 config={{
                                     toolbar: [ 'Heading', 'Bold', 'Italic', '|', 'bulletedList', 'numberedList', 'Link', '|', 'undo', 'redo' ]
                                 }}

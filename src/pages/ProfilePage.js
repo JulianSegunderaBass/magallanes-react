@@ -4,15 +4,20 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { resetPass, verifyEmail } from '../redux-store/actions/AuthActions';
+import { resetPass, verifyEmail, deleteAccount } from '../redux-store/actions/AuthActions';
 import { setProfileImage } from '../redux-store/actions/AuthActions';
+import { store } from 'react-notifications-component';
 // Component Imports
 import AutoScroll from '../assets/AutoScroll';
 import { Redirect } from 'react-router-dom';
+import Modal from 'react-modal';
+// Icon Imports
+import * as AiIcons from "react-icons/ai";
 // Styling + Animation Imports
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { imageAnim, pageLoad } from '../assets/Animations';
+import '../assets/ModalStyle.css';
 
 const ProfilePage = () => {
 
@@ -24,6 +29,7 @@ const ProfilePage = () => {
 
     // Local State
     const [profilePhoto, setProfilePhoto] = useState(null);
+    const [modalState, setModalState] = useState(false);
 
     // Functions
     const handleAttachment = (e) => {
@@ -33,13 +39,37 @@ const ProfilePage = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(setProfileImage(profilePhoto, auth.uid, profileData.profileImageURL));
+        if (profilePhoto) {
+            dispatch(setProfileImage(profilePhoto, auth.uid, profileData.profileImageURL));
+        } else {
+            store.addNotification({
+                title: "No Photo Detected",
+                message: "Please choose a new image before submitting.",
+                type: "warning",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 3000,
+                    onScreen: true
+                }
+            });
+        }
     }
     const handlePassReset = () => {
         dispatch(resetPass(auth.email));
     }
     const handleVerification = () => {
         dispatch(verifyEmail());
+    }
+    const handleDelete = () => {
+        setModalState(false);
+        if (profileData.profileImageURL) {
+            dispatch(deleteAccount(auth.uid, profileData.profileImageURL));
+        } else {
+            dispatch(deleteAccount(auth.uid, ''));
+        }    
     }
 
     // Conditions
@@ -77,13 +107,6 @@ const ProfilePage = () => {
                 <h4><span>Email:</span> <span id="email">{auth.email}</span></h4>
                 <h4><span>Status:</span> {auth.emailVerified ? 'Verified' : 'Not Verified'}</h4>
                 <div className="divider"></div>
-                <h4><span>My Benefits:</span> </h4>
-                <ul>
-                    <li>{profileData.currentBenefits.benefit_1}</li>
-                    <li>{profileData.currentBenefits.benefit_2}</li>
-                    <li>{profileData.currentBenefits.benefit_3}</li>
-                </ul>
-                <div className="divider"></div>
                 {!auth.emailVerified &&
                     <>
                         <h5>You may verify your account here. A message will be sent to your inbox with further instructions.</h5>
@@ -93,6 +116,22 @@ const ProfilePage = () => {
                 }
                 <h5>You may reset your password here. A message will be sent to your inbox with further instructions.</h5>
                 <button onClick={handlePassReset}>Change Password</button>
+                <div className="divider"></div>
+                <h5 id="warning"><AiIcons.AiOutlineWarning id="warning-logo" /><span><b>Warning:</b> This action is irreversible.</span></h5>
+                <button onClick={() => setModalState(true)}>Delete Your Account</button>
+                {/* Delete Modal */}
+                <Modal
+                    isOpen={modalState}
+                    onRequestClose={() => setModalState(false)}
+                    className="delete-modal"
+                    overlayClassName="delete-modal-overlay"
+                >
+                    <ModalContent>
+                        <h4 className="modal-text">Are you sure you wish to delete your account?</h4>
+                        <button onClick={handleDelete}>Delete Account</button>
+                        <button onClick={() => setModalState(false)}>Cancel</button>
+                    </ModalContent>
+                </Modal>
             </div>
         </ProfileContainer>
     )
@@ -125,11 +164,22 @@ const ProfileContainer = styled(motion.div)`
     #email {
         color: ${mainFontColor};
     }
+    #warning {
+        display: flex;
+        align-items: center;
+        #warning-logo {
+            color: #E63946;
+            font-size: 1.8rem;
+        }
+    }
     .divider {
         width: 100%;
         height: 0.3rem;
         background: ${dividerColor};
         margin-bottom: 3rem;
+    }
+    .divider:last-of-type {
+        margin-top: 1.5rem;
     }
     #verification-divider {
         margin-top: 1rem;
@@ -148,6 +198,15 @@ const ProfileContainer = styled(motion.div)`
         #email {
             color: ${mainFontColor};
             font-size: 1.2rem;
+        }
+        #warning {
+            flex-direction: column;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            #warning-logo {
+                color: #E63946;
+                font-size: 3.5rem;
+            }
         }
         button {
             display: block;
@@ -188,6 +247,22 @@ const Image = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+`
+
+const ModalContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button {
+        width: 50%;
+        margin: 0.5rem 0;
+        @media (max-width: 870px) {
+            width: 100%;
+        }
+    }
+    .modal-text {
+        margin-bottom: 1rem;
     }
 `
 
