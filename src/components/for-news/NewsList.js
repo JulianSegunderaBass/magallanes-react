@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { createAnnouncement } from '../../redux-store/actions/NewsActions';
+import { store } from 'react-notifications-component';
 // Component Imports
 import NewsSummary from './NewsSummary';
 import Pagination from './Pagination';
@@ -52,15 +53,36 @@ const NewsList = ({newsItems}) => {
     // Functions
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createAnnouncement(newsAnnouncement));
-        setCreateModalState(false);
-        setNewsAnnouncement({
-            ...newsAnnouncement,
-            category1Selected: false,
-            category2Selected: false,
-            category3Selected: false,
-            category4Selected: false
-        })
+        if (
+            newsAnnouncement.category1Selected === false && 
+            newsAnnouncement.category2Selected === false && 
+            newsAnnouncement.category3Selected === false && 
+            newsAnnouncement.category4Selected === false
+            ) {
+                store.addNotification({
+                    title: "Please provide a post category",
+                    message: "No categories selected",
+                    type: "warning",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 6000,
+                        onScreen: true
+                    }
+                });
+        } else {
+            dispatch(createAnnouncement(newsAnnouncement));
+            setCreateModalState(false);
+            setNewsAnnouncement({
+                ...newsAnnouncement,
+                category1Selected: false,
+                category2Selected: false,
+                category3Selected: false,
+                category4Selected: false
+            });
+        }
     }
     const handleAttachment = (e) => {
         if (e.target.files[0]) {
