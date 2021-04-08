@@ -38,7 +38,6 @@ export const signUpUser = (newUser) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
         const randomPass = Math.random().toString(36).slice(-10); // Random password
-        console.log(randomPass);
         dispatch({type: 'CREATING_ACCOUNT'});
 
         firebase.auth().createUserWithEmailAndPassword( // Step 1: create new user in auth service
