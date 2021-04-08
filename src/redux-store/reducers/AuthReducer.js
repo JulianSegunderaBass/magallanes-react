@@ -88,7 +88,7 @@ const AuthReducer = (state = initState, action) => {
             });
             return state;
         case 'CREATING_ACCOUNT':
-            console.log('Creating your account...');
+            console.log('Creating account...');
             store.addNotification({
                 title: "Creating your account...",
                 message: "Give us some time.",
@@ -109,15 +109,15 @@ const AuthReducer = (state = initState, action) => {
         case 'SIGNUP_SUCCESS':
             console.log('Signup success');
             store.addNotification({
-                title: "Authentication Success",
-                message: "Please check your email to verify your account.",
+                title: "Account created!",
+                message: "The user will need to verify and change their password through email.",
                 type: "success",
                 insert: "top",
                 container: "top-right",
                 animationIn: ["animate__animated", "animate__fadeIn"],
                 animationOut: ["animate__animated", "animate__fadeOut"],
                 dismiss: {
-                    duration: 6000,
+                    duration: 9000,
                     onScreen: true
                 }
             });
@@ -180,41 +180,6 @@ const AuthReducer = (state = initState, action) => {
                 ...state,
                 authError: action.error.message
             }
-        case 'VERIFY_EMAIL':
-            console.log('Verification Email Sent');
-            store.addNotification({
-                title: "Verification Email Sent",
-                message: "Please check your inbox.",
-                type: "success",
-                insert: "top",
-                container: "top-right",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                    duration: 6000,
-                    onScreen: true
-                }
-            });
-            return state;
-        case 'VERIFY_EMAIL_ERROR':
-            console.log('Failed to Send Verification Email');
-            store.addNotification({
-                title: "Failed to Send Verification Email",
-                message: action.error.message,
-                type: "danger",
-                insert: "top",
-                container: "top-right",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                    duration: 6000,
-                    onScreen: true
-                }
-            });
-            return {
-                ...state,
-                authError: action.error.message
-            }
         case 'DELETING_ACCOUNT':
             console.log('Deleting Account...');
             store.addNotification({
@@ -235,7 +200,7 @@ const AuthReducer = (state = initState, action) => {
             console.log('Account Deleted');
             store.addNotification({
                 title: "Your account has been deleted.",
-                message: "You'll have to create a new one to make posts.",
+                message: " ",
                 type: "success",
                 insert: "top",
                 container: "top-right",

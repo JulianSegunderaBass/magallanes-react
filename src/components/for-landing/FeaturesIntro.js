@@ -18,8 +18,8 @@ const FeaturesIntro = () => {
                 <Hide>
                     <motion.h3 variants={revealUp}>Have something you want to share with the community?</motion.h3>
                 </Hide>
-                <p>This website supports a news announcements section for you to post any concerns or ideas you feel need to be raised with the community.</p>
-                <p>Simply create an account and you're good to go!</p>
+                <p>This website supports a news announcements section for you to post important information or updates to be raised with the community.</p>
+                <p>As a constituent of Magallanes, kindly contact us if your account has not yet been created.</p>
                 <Link to="/news">
                     <button>View Latest Community Posts</button>
                 </Link>

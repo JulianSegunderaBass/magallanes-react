@@ -36,6 +36,13 @@ const SignIn = () => {
     const handlePassReset = () => {
         dispatch(resetPass(attemptedEmail));
     }
+    const handleScroll = () => {
+        window.scroll({
+            top: document.body.scrollHeight,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }
 
     // Conditions
     if (auth.uid) { // If an authentication UID is present (user is already signed in), redirect to home
@@ -53,7 +60,7 @@ const SignIn = () => {
                         Sign in to create your own news announcements. 
                         If you do not have an account, you may contact us to have one made.
                     </p>
-                    <button>Contact Us</button>
+                    <button onClick={handleScroll}>Contact Us</button>
                 </TextSection>
             </Hide>
             <FormSection>

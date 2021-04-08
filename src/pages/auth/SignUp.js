@@ -23,7 +23,6 @@ const SignUp = () => {
     // Local State
     const [profile, setProfile] = useState({ // Setting a local state for the form entry
         email: '',
-        password: '',
         firstName: '',
         lastName: ''
     });
@@ -50,7 +49,9 @@ const SignUp = () => {
                     <h2><span>Sign Up</span> a User</h2>
                     <p>
                         As the website admin, you may use this page to create accounts for others.
-                        Note that created users will still need to verify through email to create announcements.
+                    </p>
+                    <p>
+                        Created users will receive two emails: one to verify, and another to change their password.
                     </p>
                 </TextSection>
             </Hide>
@@ -60,12 +61,6 @@ const SignUp = () => {
                         type="email" 
                         placeholder="email" 
                         onChange={(e) => setProfile({...profile, email: e.target.value})}
-                        required
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="password" 
-                        onChange={(e) => setProfile({...profile, password: e.target.value})}
                         required
                     />
                     <input 

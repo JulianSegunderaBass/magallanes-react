@@ -48,7 +48,7 @@ const GlobalStyle = createGlobalStyle`
         font-weight: lighter;
     }
     p {
-        padding: 1.5rem 0rem;
+        padding: 1rem 0rem;
         color: ${mainFontColor};
         font-size: 1.4rem;
     }

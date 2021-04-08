@@ -37,14 +37,16 @@ export const signUpUser = (newUser) => {
         // Communicating between Firebase Auth service and Firestore users collection
         const firebase = getFirebase();
         const firestore = getFirestore();
+        const randomPass = Math.random().toString(36).slice(-10); // Random password
+        console.log(randomPass);
         dispatch({type: 'CREATING_ACCOUNT'});
 
         firebase.auth().createUserWithEmailAndPassword( // Step 1: create new user in auth service
             newUser.email,
-            newUser.password
-        ).then((response) => { // Step 2: create user record in collection and send email verification
+            randomPass
+        ).then((response) => { // Step 2: create user record in collection and send password reset email to verify
 
-            firebase.auth().currentUser.sendEmailVerification();
+            firebase.auth().sendPasswordResetEmail(newUser.email);
 
             // response has information about the user we just created
             // Note: if this collection doesn't exist, it will be created automatically
@@ -53,23 +55,11 @@ export const signUpUser = (newUser) => {
                 lastName: newUser.lastName,
                 createdAt: new Date()
             });
-        }).then(() => { // Step 3: dispatching successful signup action
+        }).then(() => { // Step 3: dispatching successful signup action then signing back out
             dispatch({type: 'SIGNUP_SUCCESS'});
+            firebase.auth().signOut();
         }).catch(error => {
             dispatch({type: 'SIGNUP_ERROR', error});
-        });
-    }
-}
-
-// For sending account verification email
-export const verifyEmail = () => {
-    return (dispatch, getState, {getFirebase}) => {
-        const firebase = getFirebase();
-        
-        firebase.auth().currentUser.sendEmailVerification().then(() => {
-            dispatch({type: 'VERIFY_EMAIL'});
-        }).catch(error => {
-            dispatch({type: 'VERIFY_EMAIL_ERROR', error});
         });
     }
 }

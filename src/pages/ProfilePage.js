@@ -60,9 +60,6 @@ const ProfilePage = () => {
     const handlePassReset = () => {
         dispatch(resetPass(auth.email));
     }
-    const handleVerification = () => {
-        dispatch(verifyEmail());
-    }
     const handleDelete = () => {
         setModalState(false);
         if (profileData.profileImageURL) {
@@ -107,13 +104,6 @@ const ProfilePage = () => {
                 <h4><span>Email:</span> <span id="email">{auth.email}</span></h4>
                 <h4><span>Status:</span> {auth.emailVerified ? 'Verified' : 'Not Verified'}</h4>
                 <div className="divider"></div>
-                {!auth.emailVerified &&
-                    <>
-                        <h5>You may verify your account here. A message will be sent to your inbox with further instructions.</h5>
-                        <button onClick={handleVerification}>Send Verification Email</button>
-                        <div className="divider" id="verification-divider"></div>
-                    </>
-                }
                 <h5>You may reset your password here. A message will be sent to your inbox with further instructions.</h5>
                 <button onClick={handlePassReset}>Change Password</button>
                 <div className="divider"></div>
