@@ -10,13 +10,16 @@ export const signInUser = (credentials) => {
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
         dispatch({type: 'LOGGING_IN'});
-        firebase.auth().signInWithEmailAndPassword( // Part of authentication service
-            credentials.email,
-            credentials.password
-        ).then(() => {
-            dispatch({type: 'LOGIN_SUCCESS'});
-        }).catch((error) => {
-            dispatch({type: 'LOGIN_ERROR', payload: {error, attemptedEmail: credentials.email}});
+
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => { // Setting local tab auth persistence
+            return firebase.auth().signInWithEmailAndPassword(
+                credentials.email,
+                credentials.password
+            ).then(() => {
+                dispatch({type: 'LOGIN_SUCCESS'});
+            }).catch((error) => {
+                dispatch({type: 'LOGIN_ERROR', payload: {error, attemptedEmail: credentials.email}});
+            });
         });
     }
 }

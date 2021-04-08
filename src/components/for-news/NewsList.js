@@ -152,7 +152,7 @@ const NewsList = ({newsItems}) => {
                     <h2>Browse the latest updates from Barangay and The Community</h2>
                     <p>
                         Note: Only <span><b>verified</b></span> accounts can post. 
-                        You may verify through your <Link to="/my-profile" id="profile-link">Profile Page.</Link>
+                        You may view your <Link to="/my-profile" id="profile-link">Profile Page</Link> here.
                     </p>
                     <div className="divider"></div>
                 </HeaderSection>
