@@ -10,13 +10,16 @@ export const signInUser = (credentials) => {
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
         dispatch({type: 'LOGGING_IN'});
-        firebase.auth().signInWithEmailAndPassword( // Part of authentication service
-            credentials.email,
-            credentials.password
-        ).then(() => {
-            dispatch({type: 'LOGIN_SUCCESS'});
-        }).catch((error) => {
-            dispatch({type: 'LOGIN_ERROR', payload: {error, attemptedEmail: credentials.email}});
+
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => { // Setting local tab auth persistence
+            return firebase.auth().signInWithEmailAndPassword(
+                credentials.email,
+                credentials.password
+            ).then(() => {
+                dispatch({type: 'LOGIN_SUCCESS'});
+            }).catch((error) => {
+                dispatch({type: 'LOGIN_ERROR', payload: {error, attemptedEmail: credentials.email}});
+            });
         });
     }
 }
@@ -37,44 +40,28 @@ export const signUpUser = (newUser) => {
         // Communicating between Firebase Auth service and Firestore users collection
         const firebase = getFirebase();
         const firestore = getFirestore();
+        const randomPass = Math.random().toString(36).slice(-10); // Random password
         dispatch({type: 'CREATING_ACCOUNT'});
 
         firebase.auth().createUserWithEmailAndPassword( // Step 1: create new user in auth service
             newUser.email,
-            newUser.password
-        ).then((response) => { // Step 2: create user record in collection and send email verification
+            randomPass
+        ).then((response) => { // Step 2: create user record in collection and send password reset email to verify
 
-            firebase.auth().currentUser.sendEmailVerification();
+            firebase.auth().sendPasswordResetEmail(newUser.email);
 
             // response has information about the user we just created
             // Note: if this collection doesn't exist, it will be created automatically
             return firestore.collection('users').doc(response.user.uid).set({
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
-                createdAt: new Date(),
-                currentBenefits: {
-                    benefit_1: 'Test Benefit 1',
-                    benefit_2: 'Test Benefit 2',
-                    benefit_3: 'Test Benefit 3'
-                }
+                createdAt: new Date()
             });
-        }).then(() => { // Step 3: dispatching successful signup action
+        }).then(() => { // Step 3: dispatching successful signup action then signing back out
             dispatch({type: 'SIGNUP_SUCCESS'});
+            firebase.auth().signOut();
         }).catch(error => {
             dispatch({type: 'SIGNUP_ERROR', error});
-        });
-    }
-}
-
-// For sending account verification email
-export const verifyEmail = () => {
-    return (dispatch, getState, {getFirebase}) => {
-        const firebase = getFirebase();
-        
-        firebase.auth().currentUser.sendEmailVerification().then(() => {
-            dispatch({type: 'VERIFY_EMAIL'});
-        }).catch(error => {
-            dispatch({type: 'VERIFY_EMAIL_ERROR', error});
         });
     }
 }

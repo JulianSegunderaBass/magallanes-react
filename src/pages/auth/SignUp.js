@@ -23,7 +23,6 @@ const SignUp = () => {
     // Local State
     const [profile, setProfile] = useState({ // Setting a local state for the form entry
         email: '',
-        password: '',
         firstName: '',
         lastName: ''
     });
@@ -35,9 +34,11 @@ const SignUp = () => {
     }
 
     // Conditions
-    if (auth.uid) { // If an authentication UID is present (user is already signed in), redirect to home
+    if (!auth.uid) { // If user is not authenticated, redirect to home
         return <Redirect to='/' />;
-    }
+    } else if (auth.uid && auth.email !== process.env.REACT_APP_ADMIN_EMAIL_IDENTIFIER) { // If user is authenticated but not admin, redirect to home
+        return <Redirect to='/' />;
+    } // Otherwise, if user is authenticated and admin account email is detected, load sign up page
 
     return (
         <MainContainer variants={pageLoad} initial="hidden" animate="show" exit="exit">
@@ -45,8 +46,13 @@ const SignUp = () => {
             <AutoScroll />
             <Hide>
                 <TextSection variants={newsFormReveal}>
-                    <h2>Sign <span>Up</span></h2>
-                    <p>Sign up to create your own news announcements.</p>
+                    <h2><span>Sign Up</span> a User</h2>
+                    <p>
+                        As the website admin, you may use this page to create accounts for others.
+                    </p>
+                    <p>
+                        Created users will receive two emails: one to verify, and another to change their password.
+                    </p>
                 </TextSection>
             </Hide>
             <FormSection>
@@ -55,12 +61,6 @@ const SignUp = () => {
                         type="email" 
                         placeholder="email" 
                         onChange={(e) => setProfile({...profile, email: e.target.value})}
-                        required
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="password" 
-                        onChange={(e) => setProfile({...profile, password: e.target.value})}
                         required
                     />
                     <input 
@@ -75,7 +75,7 @@ const SignUp = () => {
                         onChange={(e) => setProfile({...profile, lastName: e.target.value})}
                         required
                     />
-                    <button>Sign Up</button>
+                    <button>Create User</button>
                 </form>
             </FormSection>
         </MainContainer>
@@ -101,6 +101,10 @@ const MainContainer = styled(motion.div)`
 `
 const Hide = styled.div`
     overflow: hidden;
+    width: 50%;
+    @media (max-width: 1500px) {
+        width: 100%;
+    }
 `
 const TextSection = styled(motion.div)`
     padding-right: 5rem;

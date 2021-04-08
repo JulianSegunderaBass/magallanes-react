@@ -150,7 +150,10 @@ const NewsList = ({newsItems}) => {
             <Hide>
                 <HeaderSection variants={strongRevealUp}>
                     <h2>Browse the latest updates from Barangay and The Community</h2>
-                    <p>Note: Only <span><b>verified</b></span> accounts can post. You may verify through your <Link to="/my-profile" id="profile-link">Profile Page.</Link></p>
+                    <p>
+                        Note: Only <span><b>verified</b></span> accounts can post. 
+                        You may view your <Link to="/my-profile" id="profile-link">Profile Page</Link> here.
+                    </p>
                     <div className="divider"></div>
                 </HeaderSection>
             </Hide>
@@ -326,11 +329,8 @@ const SearchSection = styled.div`
         align-items: center;
         button#posting-announcement {
             font-weight: bold;
-            font-size: 1.1rem;
             cursor: progress;
-            padding: 1rem 2rem;
             border: 3px solid ${loadingButton};
-            border-radius: 1rem;
             background: ${loadingButton};
             color: black;
         }
@@ -368,9 +368,6 @@ const SearchSection = styled.div`
         flex-direction: column;
         button {
             margin-bottom: 1.5rem;
-            font-size: 1rem;
-            padding: 0.5rem 0.7rem;
-            border-radius: 0.8rem;
         }
         input {
             width: 100%;

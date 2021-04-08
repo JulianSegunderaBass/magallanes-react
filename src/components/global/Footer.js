@@ -100,8 +100,6 @@ const FooterStyle = styled.div`
             resize: none;
         }
         button {
-            padding: 0.2rem 0.4rem;
-            border-radius: 0.6rem;
             @media (max-width: 870px) {
                 display: block;
                 margin: 0 auto;
@@ -125,9 +123,6 @@ const Socials = styled.div`
     }
 `
 const SocialLinks = styled.div`
-    /* Auto margin centers the container div */
-    /* margin: 1.2rem auto;  */
-    /* width: 25%; */
     display: flex;
     @media (max-width: 870px) {
         margin: 0 auto;

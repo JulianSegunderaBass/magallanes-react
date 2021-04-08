@@ -126,16 +126,16 @@ const Card = styled.div`
     }
     a#return-link {
         display: block;
-        width: 35%;
+        width: 30%;
         text-decoration: none;
         text-align: center;
         margin: 1rem auto;
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1rem;
         cursor: pointer;
-        padding: 1rem 2rem;
+        padding: 0.5rem 0.7rem;
         border: 3px solid ${accentColor};
-        border-radius: 1rem;
+        border-radius: 0.8rem;
         background: transparent;
         color: ${mainFontColor};
         /* Adding a transition for hover */

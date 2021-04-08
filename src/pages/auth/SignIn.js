@@ -36,6 +36,13 @@ const SignIn = () => {
     const handlePassReset = () => {
         dispatch(resetPass(attemptedEmail));
     }
+    const handleScroll = () => {
+        window.scroll({
+            top: document.body.scrollHeight,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }
 
     // Conditions
     if (auth.uid) { // If an authentication UID is present (user is already signed in), redirect to home
@@ -49,7 +56,11 @@ const SignIn = () => {
             <Hide>
                 <TextSection variants={newsFormReveal}>
                     <h2>Sign <span>In</span></h2>
-                    <p>Sign in to create your own news announcements.</p>
+                    <p>
+                        Sign in to create your own news announcements. 
+                        If you do not have an account, you may contact us to have one made.
+                    </p>
+                    <button onClick={handleScroll}>Contact Us</button>
                 </TextSection>
             </Hide>
             <FormSection>
@@ -95,6 +106,10 @@ const MainContainer = styled(motion.div)`
 `
 const Hide = styled.div`
     overflow: hidden;
+    width: 50%;
+    @media (max-width: 1500px) {
+        width: 100%;
+    }
 `
 const TextSection = styled(motion.div)`
     padding-right: 5rem;
@@ -108,6 +123,10 @@ const TextSection = styled(motion.div)`
         padding: 0;
         h2 {
             font-size: 2rem;
+        }
+        button {
+            display: block;
+            margin: 0 auto 2rem auto;
         }
     }
 `
