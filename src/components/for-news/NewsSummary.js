@@ -255,8 +255,7 @@ const NewsSummary = ({ newsItem }) => {
 
 // Styled Components + Color Variables
 const cardBackground = "#C7D1C4";
-const hoverBackground = "#457B9D";
-const contentHover = "#FFF";
+const modalColor = "#FFF";
 const accentColor = "#E63946";
 const deleteButtonColor = "#E63946";
 const editButtonColor = "#1D3557";
@@ -267,15 +266,10 @@ const NewsCard = styled.div`
     padding: 1.5rem;
     border-radius: 2rem;
     background: ${cardBackground};
-    transition: background 0.5s ease;
+    transition: all 0.5s ease;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
     &:hover {
-        background: ${hoverBackground};
-        h4, h5, p {
-            color: ${contentHover};
-        }
-        .divider {
-            background: ${contentHover};
-        }
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
     }
     h4 {
         margin-top: 1.2rem;
@@ -392,7 +386,7 @@ const ButtonContainer = styled.div`
         display: flex;
         /* Buttons for triggering modals */
         .pop-modal {
-            color: ${contentHover};
+            color: ${modalColor};
             font-size: 2rem;
             padding: 0.5rem 3rem;
             margin-right: 0.5rem;
