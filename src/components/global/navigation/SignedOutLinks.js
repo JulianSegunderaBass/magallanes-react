@@ -43,13 +43,6 @@ const SignedOutLinks = () => {
                     <span>Sign In</span>
                 </Link>
             </li>
-            <li>
-                {/* Link: Sign Up Page */}
-                <Link to='/sign-up'>
-                    <MdIcons.MdPersonAdd />
-                    <span>Sign Up</span>
-                </Link>
-            </li>
         </ListContainer>
     )
 }

@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 // Component Imports
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
+import AdminLinks from './AdminLinks';
 // Data + Image Imports
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
@@ -28,7 +29,10 @@ const SideNav = () => {
     }
 
     // Conditions
-    const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />; // Determining links to display based on auth status
+    const links = auth.uid ? 
+        auth.email === process.env.REACT_APP_ADMIN_EMAIL_IDENTIFIER ? <AdminLinks /> : <SignedInLinks />
+        : <SignedOutLinks />
+    ; // Determining links to display based on auth status
 
     return (
         <RootContainer>
