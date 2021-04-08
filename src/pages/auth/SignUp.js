@@ -80,7 +80,7 @@ const SignUp = () => {
                         onChange={(e) => setProfile({...profile, lastName: e.target.value})}
                         required
                     />
-                    <button>Sign Up</button>
+                    <button>Create User</button>
                 </form>
             </FormSection>
         </MainContainer>
@@ -106,6 +106,10 @@ const MainContainer = styled(motion.div)`
 `
 const Hide = styled.div`
     overflow: hidden;
+    width: 50%;
+    @media (max-width: 1500px) {
+        width: 100%;
+    }
 `
 const TextSection = styled(motion.div)`
     padding-right: 5rem;

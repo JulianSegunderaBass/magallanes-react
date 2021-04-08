@@ -77,11 +77,11 @@ const GlobalStyle = createGlobalStyle`
     }
     button {
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1rem;
         cursor: pointer;
-        padding: 1rem 2rem;
+        padding: 0.5rem 0.7rem;
         border: 3px solid ${accentColor};
-        border-radius: 1rem;
+        border-radius: 0.8rem;
         background: transparent;
         color: ${mainFontColor};
         transition: all 0.5s ease;

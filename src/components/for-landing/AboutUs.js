@@ -69,9 +69,6 @@ const TextSection = styled.div`
         }
         button {
             margin: 1rem auto 3rem auto;
-            padding: 0.5rem 0.7rem;
-            border-radius: 0.8rem;
-            font-size: 1rem;
         }
     }
 `
