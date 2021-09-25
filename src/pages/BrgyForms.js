@@ -3,13 +3,13 @@
 // Functional Imports
 import React from "react";
 // Styling + Animation Imports
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const BrgyForms = () => {
   return (
     <FormContainer>
       <FormIframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLScYarwDi-xSpRAadDFt047ZhpTu2YDJFzrclVG_ue8uPf4opA/viewform?embedded=true"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSexhdw_HgzxaZx8UoABphpiFmiYM4_ulRSybstTYER9VtsHbg/viewform?embedded=true"
         // width="640"
         // height="1500"
         frameborder="0"
@@ -29,10 +29,10 @@ const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 const FormIframe = styled.iframe`
   flex: 1;
   height: 100%;
-`
+`;
 
 export default BrgyForms;
