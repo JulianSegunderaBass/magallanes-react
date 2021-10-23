@@ -1,16 +1,26 @@
-## An Information Website Prototype for Barangay Magallanes created with React, Framer Motion and Styled Components
+## An Information Website Prototype for Barangay Magallanes
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Apart from holding general Barangay information like contact details, addresses and alternate social accounts in the footer, an FAQ section is currently in development and is planned to help answer general queries from readers. A searchbar is in place to filter through the FAQ headers, but the keyword sensitivity may still be tweaked.
+Features include:
+* CRUD operations for news announcement posts through Redux and Firebase Firestore
+* Post filtering by test categories
+* File and image upload with Firebase storage
+* Authentication through Redux and Firebase Authentication
+* An admin role to create other users
+* Footer form submission with Netlify forms
 
 ---
-### Other tools and services used for the project
+#### Built with
 
-* **Framer Motion** - A React library that lets you animate elements in your components. https://www.framer.com/motion/
-* **Styled Components** - A React library that adds extended styling functionality with nesting capabilities like with Sass. https://styled-components.com/
-* **Netlify** - Netlify is a hosting service that can work via automatic github building with push detection, or just raw file uploads to the project site. Form handling is also offered as an optional service that connects project forms submissions to the Netlify project dashboard where they can be viewed. Some additional benefits of the platform include additional form validation built in with Netlify to detect bots in the form, or reCaptcha for added security when needed. A notification system through email can also be set up to trigger with form submissions
-  * Our hosted Netlify build for this project can be found here: https://magallanes-react.netlify.app/
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
+![FramerMotion](https://img.shields.io/badge/Framer--Motion-a2e?style=for-the-badge&logo=framer&logoColor=white)
+![StyledComponents](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
+
+[View project on Netlify](https://magallanes-react.netlify.app/)
 
 ---
 ### Notes for your local development environment
